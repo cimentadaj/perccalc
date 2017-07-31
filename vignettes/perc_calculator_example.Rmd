@@ -1,0 +1,82 @@
+---
+title: Calculating percentile differences from ordered categorical and continuous variables
+author: "Jorge Cimentada"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Calculating percentile differences from ordered categorical and continuous variables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Reardon(2011) introduced a very interesting concept in which we can calculate percentile differences from ordered categorical variables. He explains his procedure very much in detail in the appendix to the book chapter but no formal implementation has been yet available on the web. With this package I introduce a function that applies the proceedure, following step-by-step a Stata script that Sean Reardon kindly sent me.
+
+In this vignette I show you how to use the function and match the results to the Stata code provided by Reardon himself.
+
+
+For this example, we'll use a real world data set, one I'm very much familiar with: PISA. We'll use the PISA 2012 wave for Germany because it asked parents about their income category. For this example we'll need the packages below to make it easier.
+```{r}
+# install.packages(c("devtools", "matrixStats", "tidyverse"))
+# devtools::install_github("pbiecek/PISA2012lite")
+
+library(matrixStats)
+library(tidyverse)
+library(haven)
+library(PISA2012lite)
+```
+
+If you haven't installed any of the packages above, uncomment the first two lines to install. Beware that the `PISA2012lite` package contains the PISA 2012 wave data and takes a while to download. Let's prepare the data.
+
+Here we just filter the German students, select only the math variables and calculate a median of all plausible values. Finally, we match each student with their corresponding income data from their parents and their sample weights.
+
+```{r, message = FALSE}
+ger_student <- student2012 %>%
+  filter(CNT == "Germany") %>%
+  select(CNT, STIDSTD, matches("^PV*.MATH$")) %>%
+  transmute(CNT, STIDSTD,
+            avg_score = rowMeans(student2012[student2012$CNT == "Germany", paste0("PV", 1:5, "MATH")]))
+
+ger_parent <- parent2012 %>% filter(CNT == "Germany") %>% select(CNT, STIDSTD, PA07Q01)
+ger_weights <- student2012weights %>% filter(CNT == "Germany") %>% select(CNT, STIDSTD, W_FSTUWT)
+
+dataset_ready <-
+  ger_student %>%
+  left_join(ger_parent, by = c("CNT", "STIDSTD")) %>%
+  left_join(ger_weights, by = c("CNT", "STIDSTD")) %>%
+  as_tibble() %>%
+  rename(income = PA07Q01,
+         score = avg_score,
+         wt = W_FSTUWT) %>%
+  select(-CNT, -STIDSTD)
+```
+
+The final results is this dataset:
+```{r, echo = FALSE}
+dataset_ready %>%
+  arrange(income) %>%
+  head(5)
+```
+
+This is the type of dataset that the function will accept. It needs to have at least a categorical variable and a continuous variable. We can install the package with this
+
+```{r}
+devtools::install_github("cimentadaj/perccalc", force)
+library(perccalc)
+```
+
+The `perccalc` package has only one function called `perc_calculator` and it's very easy to use.
+
+```{r}
+perccalc::perc_calculator(dataset_ready, income, score, percentiles = c(90, 10))
+```
+
+We specify the dataset and the bare unquoted names of the categorical and continuous variables.
+
+```{r}
+  mutate(PA07Q01 = factor(PA07Q01, ordered = TRUE))
+```
+dataset_ready %>%
+  write_dta(path = "/Users/cimentadaj/Downloads/pisa_income.dta", version = 13)
+
+
+perc_calculator(dataset_ready, PA07Q01, avg_score, weights = W_FSTUWT, percentiles = c(90, 10))

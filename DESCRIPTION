@@ -16,3 +16,6 @@ Imports: magrittr,
     broom,
     tidyr,
     multcomp
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
