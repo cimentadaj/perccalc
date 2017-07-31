@@ -60,7 +60,7 @@ dataset_ready %>%
 This is the type of dataset that the function will accept. It needs to have at least a categorical variable and a continuous variable. We can install the package with this
 
 ```{r}
-devtools::install_github("cimentadaj/perccalc")
+devtools::install_github("cimentadaj/perccalc", force = TRUE)
 library(perccalc)
 ```
 
