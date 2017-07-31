@@ -93,7 +93,7 @@ category_summary <- function(data_model,
                              weights,
                              prefix = "cat_") {
 
-  stopifnot(class(data_model[[categorical_var]]) %in% c("ordered", "factor"))
+  stopifnot(all(class(data_model[[categorical_var]]) %in% c("ordered", "factor")))
   data_model <- data_model[stats::complete.cases(data_model), ]
 
   category_columns <- levels(data_model[[categorical_var]])
