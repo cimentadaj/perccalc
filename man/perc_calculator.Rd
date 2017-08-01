@@ -47,5 +47,4 @@ mutate(type = factor(type, levels = unique(type), ordered = TRUE))
 
 
 perc_calculator(toy_data, type, score)
-
 }

@@ -19,7 +19,9 @@ Imports: magrittr,
     haven,
     matrixStats,
     tidyverse,
-    PISA2012lite
+    PISA2012lite,
+    ggplot2,
+    devtools
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

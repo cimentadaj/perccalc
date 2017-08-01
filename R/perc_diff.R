@@ -39,7 +39,6 @@
 #' perc_diff(toy_data, type, score, percentiles = c(50, 10))
 #'
 #' perc_diff(toy_data, type, score, weights = wt, percentiles = c(30, 10))
-#'
 perc_diff <- function(data_model,
                             categorical_var,
                             continuous_var,

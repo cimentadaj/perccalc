@@ -53,5 +53,4 @@ perc_diff(toy_data, type, score, percentiles = c(90, 10))
 perc_diff(toy_data, type, score, percentiles = c(50, 10))
 
 perc_diff(toy_data, type, score, weights = wt, percentiles = c(30, 10))
-
 }

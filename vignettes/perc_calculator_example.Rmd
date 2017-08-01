@@ -73,7 +73,7 @@ devtools::install_github("cimentadaj/perccalc")
 library(perccalc)
 ```
 
-The package only has one function called `perc_diff` and it's very easy to use, we just specify the data, the name of the categorical and continuous variable and the percentile difference we want. 
+The package has two functions, which I'll show some examples. The first one is called `perc_diff` and it's very easy to use, we just specify the data, the name of the categorical and continuous variable and the percentile difference we want. 
 
 Let's put it to use!
 
@@ -205,6 +205,42 @@ I get that the 90/10 difference is `95.22` with a standard error of `8.45`. Does
 perc_diff(dataset_ready, income, score, weights = wt, percentiles = c(90, 10))
 ```
 
-I hope this was a convincing example, I know this will be useful for me. All the intelectual ideas come from Sean Reardon, as well as the Stata code. The R implemention is my own work.
+The second function of the package is called `perc_calculator` and instead of calculating the difference of two percentiles, it returns the score and standard error of every percentile. The arguments of the function are exactly the same but without the `percentiles` argument, because this will return the whole set of percentiles.
+
+```{r}
+perc_calculator(dataset_ready, income, score)
+```
+
+We can also add the optional set of weights and graph it:
+
+```{r, fig.align = 'center', fig.width = 6, fig.height = 5}
+perc_calculator(dataset_ready, income, score, wt) %>%
+  mutate(ci_low = score - 1.96 * se,
+         ci_hi = score + 1.96 * se) %>%
+  ggplot(aes(percentile, score)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = ci_low, ymax = ci_hi))
+```
+
+Please note that for calculating the difference between two percentiles it is more accurate to use the `perc_diff` function. The `perc_diff` calculates the difference through a linear combination of coefficients resulting in a different standard error.
+
+For example:
+
+```{r}
+perc_calculator(dataset_ready, income, score, wt) %>%
+  filter(percentile %in% c(90, 10)) %>%
+  summarize(diff = diff(score),
+            se_diff = diff(se))
+```
+
+compared to 
+
+```{r}
+perc_diff(dataset_ready, income, score, weights = wt, percentiles = c(90, 10))
+```
+
+They both have the same point estimate but a different standard error.
+
+I hope this was a convincing example, I know this will be useful for me. All the intelectual ideas come from Sean Reardon and the Stata code was written by Sean Reardon, Ximena Portilla, and Jenna Finch. The R implemention is my own work.
 
 - Reardon, Sean F. "The widening academic achievement gap between the rich and the poor: New evidence and possible explanations." Whither opportunity (2011): 91-116.

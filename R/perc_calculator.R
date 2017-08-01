@@ -1,6 +1,6 @@
 #' Calculate percentiles from an ordered categorical variable and a continuous variable.
 #'
-#' @param data_model A data frame with at least the categorical and continuous variables from
+#' @param data_model A data frame with at least the categorical and continuous variables from which
 #' to estimate the percentiles
 #' @param categorical_var The bare unquoted name of the categorical variable. This variable SHOULD be
 #' an ordered factor. If not, the function will stop.
@@ -9,7 +9,7 @@
 #' @param weights The bare unquoted name of the optional weight variable. If not specified, then estimation
 #' is done without weights
 #'
-#' @return A data frame with the scores and standard errors for each percentiles
+#' @return A data frame with the scores and standard errors for each percentile
 #' @importFrom magrittr "%>%"
 #' @export
 #'
@@ -35,7 +35,6 @@
 #'
 #'
 #' perc_calculator(toy_data, type, score)
-#'
 perc_calculator <- function(data_model,
                             categorical_var,
                             continuous_var,
