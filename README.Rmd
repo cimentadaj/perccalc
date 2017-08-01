@@ -6,7 +6,7 @@ output:
 
 ## Calculating percentile differences from ordered categorical and continuous variables
 
-```{r}
+```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
