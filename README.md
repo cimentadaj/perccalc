@@ -1,13 +1,8 @@
----
-title: Calculating percentile differences from ordered categorical and continuous variables
-author: "Jorge Cimentada"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
----
+## Calculating percentile differences from ordered categorical and continuous variables
 
-Reardon (2011) introduced a very interesting concept in which he calculates percentile differences from ordered categorical variables. He explains his procedure very much in detail in the appendix of the book chapter but no formal implementation has been yet available on the web. With this package I introduce a function that applies the proceedure, following a step-by-step Stata script that Sean Reardon kindly sent me.
+Reardon (2011) introduced a very interesting concept in which he calculates percentile differences from ordered categorical variables. He explains his procedure very much in detail in the appendix of the book chapter but no formal implementation has been yet available on the web. With this package I introduce a function that applies the procedure, following a step-by-step Stata script that Sean Reardon kindly sent me.
 
-In this vignette I show you how to use the function and match the results to the Stata code provided by Reardon himself.
+In this document I show you how to use the function and match the results to the Stata code provided by Reardon himself.
 
 For this example, we'll use a real world data set, one I'm very much familiar with: PISA. We'll use the PISA 2012 wave for Germany because it asked parents about their income category. For this example we'll need the packages below.
 
