@@ -2,15 +2,6 @@
 Calculating percentile differences from ordered categorical and continuous variables
 ------------------------------------------------------------------------------------
 
-``` r
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "README-"
-)
-options(tibble.print_min = 5, tibble.print_max = 5)
-```
-
 Reardon (2011) introduced a very interesting concept in which he calculates percentile differences from ordered categorical variables. He explains his procedure very much in detail in the appendix of the book chapter but no formal implementation has been yet available on the web. With this package I introduce a function that applies the procedure, following a step-by-step Stata script that Sean Reardon kindly sent me.
 
 In this vignette I show you how to use the function and match the results to the Stata code provided by Reardon himself.
