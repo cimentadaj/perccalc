@@ -1,8 +1,12 @@
+---
+output:
+  github_document:
+    html_preview: false
+---
 
-Calculating percentile differences from ordered categorical and continuous variables
-------------------------------------------------------------------------------------
+## Calculating percentile differences from ordered categorical and continuous variables
 
-``` r
+```{r}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -17,7 +21,7 @@ In this vignette I show you how to use the function and match the results to the
 
 For this example, we'll use a real world data set, one I'm very much familiar with: PISA. We'll use the PISA 2012 wave for Germany because it asked parents about their income category. For this example we'll need the packages below.
 
-``` r
+```{r, message = FALSE, warning = FALSE}
 # install.packages(c("devtools", "matrixStats", "tidyverse"))
 # devtools::install_github("pbiecek/PISA2012lite")
 
@@ -31,7 +35,7 @@ If you haven't installed any of the packages above, uncomment the first two line
 
 Let's prepare the data. Below we filter only German students, select only the math test results and calculate the median of all math plausible values to get one single math score. Finally, we match each student with their corresponding income data from their parents data and their sample weights.
 
-``` r
+```{r, message = FALSE, warning = FALSE}
 ger_student <- student2012 %>%
   filter(CNT == "Germany") %>%
   select(CNT, STIDSTD, matches("^PV*.MATH$")) %>%
@@ -60,40 +64,34 @@ dataset_ready <-
 ```
 
 The final results is this dataset:
-
-    #> # A tibble: 10 x 3
-    #>      score         income       wt
-    #>      <dbl>         <fctr>    <dbl>
-    #> 1 439.5622 Less than <$A> 137.3068
-    #> 2 523.1422 Less than <$A> 170.0566
-    #> 3 291.4083 Less than <$A> 162.3794
-    #> 4 436.6023 Less than <$A> 162.3794
-    #> 5 367.4326 Less than <$A> 114.6644
-    #> # ... with 5 more rows
+```{r, echo = FALSE}
+dataset_ready %>%
+  arrange(income) %>%
+  head(10)
+```
 
 This is the minimum dataset that the function will accept. This means that it needs to have at least a categorical variable and a continuous variable (the vector of weights is optional).
 
 The package is called `perccalc`, short for percentile calculator and we can install and load it with this code:
 
-``` r
+```{r, message = FALSE, warning = FALSE}
 devtools::install_github("cimentadaj/perccalc")
 library(perccalc)
 ```
 
-The package has two functions, which I'll show some examples. The first one is called `perc_diff` and it's very easy to use, we just specify the data, the name of the categorical and continuous variable and the percentile difference we want.
+The package has two functions, which I'll show some examples. The first one is called `perc_diff` and it's very easy to use, we just specify the data, the name of the categorical and continuous variable and the percentile difference we want. 
 
 Let's put it to use!
 
-``` r
+```{r, error = TRUE}
 perc_diff(dataset_ready, income, score, percentiles = c(90, 10))
-#> Error: all(c("ordered", "factor") %in% class(data_model[[categorical_var]])) is not TRUE
 ```
 
 I generated that error on purpose to raise a very important requirement of the function. The categorical variable needs to be an ordered factor (categorical). It is very important because otherwise we could be calculating percentile differences of categorical variables such as married, single and widowed, which doesn't make a lot of sense.
 
 We can turn it into an ordered factor with the code below.
 
-``` r
+```{r}
 dataset_ready <-
   dataset_ready %>%
   mutate(income = factor(income, ordered = TRUE))
@@ -101,31 +99,25 @@ dataset_ready <-
 
 Now it'll work.
 
-``` r
+```{r}
 perc_diff(dataset_ready, income, score, percentiles = c(90, 10))
-#> difference         se 
-#>   97.00706    8.74790
 ```
 
 We can play around with other percentiles
 
-``` r
+```{r}
 perc_diff(dataset_ready, income, score, percentiles = c(50, 10))
-#> difference         se 
-#>  58.776200   8.291083
 ```
 
 And we can add a vector of weights
 
-``` r
+```{r}
 perc_diff(dataset_ready, income, score, weights = wt, percentiles = c(90, 10))
-#> difference         se 
-#>  95.220358   8.451136
 ```
 
 Now, how are we sure that these estimates are as accurate as the Reardon (2011) implementation? We can compare the Stata ouput using this data set.
 
-``` r
+```{r, eval = FALSE}
 # Saving the dataset to a path
 dataset_ready %>%
   write_dta(path = "/Users/cimentadaj/Downloads/pisa_income.dta", version = 13)
@@ -133,7 +125,7 @@ dataset_ready %>%
 
 Running the code below using the `pisa_income.dta`..
 
-``` r
+```{r, eval = F}
 *--------
 use "/Users/cimentadaj/Downloads/pisa_income.dta", clear
 
@@ -141,10 +133,10 @@ tab income, gen(inc)
 *--------
 
 /*-----------------------
-    Making a data set that has 
-    one observation per income category
-    and has mean and se(mean) in each category
-    and percent of population in the category
+	Making a data set that has 
+	one observation per income category
+	and has mean and se(mean) in each category
+	and percent of population in the category
 ------------------------*/
 
 tempname memhold
@@ -152,93 +144,82 @@ tempfile results
 postfile `memhold' income mean se_mean per using `results'
 
 forv i = 1/6 {
-    qui sum inc`i' [aw=wt]
-    loc per`i' = r(mean)    
-                                
-    qui sum score if inc`i'==1 
-                            
-    if `r(N)'>0 {
-        qui regress score if inc`i'==1 [aw=wt]
-        post `memhold' (`i') (_b[_cons]) (_se[_cons]) (`per`i'')
-                            
-    }               
+	qui sum inc`i' [aw=wt]
+	loc per`i' = r(mean)	
+								
+	qui sum score if inc`i'==1 
+							
+	if `r(N)'>0 {
+		qui regress score if inc`i'==1 [aw=wt]
+		post `memhold' (`i') (_b[_cons]) (_se[_cons]) (`per`i'')
+							
+	}				
 }
-postclose `memhold' 
+postclose `memhold'	
 
 /*-----------------------
-    Making income categories
-    into percentiles
+	Making income categories
+	into percentiles
 ------------------------*/
 
 
-    use `results', clear
+	use `results', clear
 
-    sort income
-    gen cathi = sum(per)
-    gen catlo = cathi[_n-1]
-    replace catlo = 0 if income==1
-    gen catmid = (catlo+cathi)/2
-    
-    /*-----------------------
-        Calculate income 
-        achievement gaps
-    ------------------------*/
+	sort income
+	gen cathi = sum(per)
+	gen catlo = cathi[_n-1]
+	replace catlo = 0 if income==1
+	gen catmid = (catlo+cathi)/2
+	
+	/*-----------------------
+		Calculate income 
+		achievement gaps
+	------------------------*/
 
-    sort income
-    
-    g x1 = catmid
-    g x2 = catmid^2 + ((cathi-catlo)^2)/12
-    g x3 = catmid^3 + ((cathi-catlo)^2)/4
+	sort income
+	
+	g x1 = catmid
+	g x2 = catmid^2 + ((cathi-catlo)^2)/12
+	g x3 = catmid^3 + ((cathi-catlo)^2)/4
 
-    g cimnhi = mean + 1.96*se_mean
-    g cimnlo = mean - 1.96*se_mean
+	g cimnhi = mean + 1.96*se_mean
+	g cimnlo = mean - 1.96*se_mean
 
-    reg mean x1 x2 x3 [aw=1/se_mean^2] 
+	reg mean x1 x2 x3 [aw=1/se_mean^2] 
 
-    twoway (rcap cimnhi cimnlo catmid) (scatter mean catmid) ///
-        (function y = _b[_cons] + _b[x1]*x + _b[x2]*x^2 + _b[x3]*x^3, ran(0 1)) 
-    
-    loc hi_p = 90
-    loc lo_p = 10
+	twoway (rcap cimnhi cimnlo catmid) (scatter mean catmid) ///
+		(function y = _b[_cons] + _b[x1]*x + _b[x2]*x^2 + _b[x3]*x^3, ran(0 1))	
+	
+	loc hi_p = 90
+	loc lo_p = 10
 
-    loc d1 = [`hi_p' - `lo_p']/100
-    loc d2 = [(`hi_p')^2 - (`lo_p')^2]/(100^2)
-    loc d3 = [(`hi_p')^3 - (`lo_p')^3]/(100^3)
+	loc d1 = [`hi_p' - `lo_p']/100
+	loc d2 = [(`hi_p')^2 - (`lo_p')^2]/(100^2)
+	loc d3 = [(`hi_p')^3 - (`lo_p')^3]/(100^3)
 
-    lincom `d1'*x1 + `d2'*x2 + `d3'*x3
-    loc diff`hi_p'`lo_p' = r(estimate)
-    loc se`hi_p'`lo_p' = r(se)
-    
-    di "`hi_p'-`lo_p' gap:     `diff`hi_p'`lo_p''"
-    di "se(`hi_p'-`lo_p' gap): `se`hi_p'`lo_p''"
+	lincom `d1'*x1 + `d2'*x2 + `d3'*x3
+	loc diff`hi_p'`lo_p' = r(estimate)
+	loc se`hi_p'`lo_p' = r(se)
+	
+	di "`hi_p'-`lo_p' gap:     `diff`hi_p'`lo_p''"
+	di "se(`hi_p'-`lo_p' gap): `se`hi_p'`lo_p''"
 ```
 
 I get that the 90/10 difference is `95.22` with a standard error of `8.45`. Does it sound familiar?
 
-``` r
+```{r}
 perc_diff(dataset_ready, income, score, weights = wt, percentiles = c(90, 10))
-#> difference         se 
-#>  95.220358   8.451136
 ```
 
 The second function of the package is called `perc_calculator` and instead of calculating the difference of two percentiles, it returns the score and standard error of every percentile. The arguments of the function are exactly the same but without the `percentiles` argument, because this will return the whole set of percentiles.
 
-``` r
+```{r}
 perc_calculator(dataset_ready, income, score)
-#> # A tibble: 100 x 3
-#>   percentile     score       se
-#>        <int>     <dbl>    <dbl>
-#> 1          1  3.693889 1.327722
-#> 2          2  7.280584 2.591314
-#> 3          3 10.762009 3.792189
-#> 4          4 14.140090 4.931759
-#> 5          5 17.416754 6.011441
-#> # ... with 95 more rows
 ```
 
 We can also add the optional set of weights and graph it:
 
-``` r
+```{r, fig.align = 'center', fig.width = 6, fig.height = 5}
 perc_calculator(dataset_ready, income, score, wt) %>%
   mutate(ci_low = score - 1.96 * se,
          ci_hi = score + 1.96 * se) %>%
@@ -247,33 +228,25 @@ perc_calculator(dataset_ready, income, score, wt) %>%
   geom_errorbar(aes(ymin = ci_low, ymax = ci_hi))
 ```
 
-<img src="README-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
-
 Please note that for calculating the difference between two percentiles it is more accurate to use the `perc_diff` function. The `perc_diff` calculates the difference through a linear combination of coefficients resulting in a different standard error.
 
 For example:
 
-``` r
+```{r}
 perc_calculator(dataset_ready, income, score, wt) %>%
   filter(percentile %in% c(90, 10)) %>%
   summarize(diff = diff(score),
             se_diff = diff(se))
-#> # A tibble: 1 x 2
-#>       diff  se_diff
-#>      <dbl>    <dbl>
-#> 1 95.22036 5.675275
 ```
 
-compared to
+compared to 
 
-``` r
+```{r}
 perc_diff(dataset_ready, income, score, weights = wt, percentiles = c(90, 10))
-#> difference         se 
-#>  95.220358   8.451136
 ```
 
 They both have the same point estimate but a different standard error.
 
 I hope this was a convincing example, I know this will be useful for me. All the intelectual ideas come from Sean Reardon and the Stata code was written by Sean Reardon, Ximena Portilla, and Jenna Finch. The R implemention is my own work.
 
--   Reardon, Sean F. "The widening academic achievement gap between the rich and the poor: New evidence and possible explanations." Whither opportunity (2011): 91-116.
+- Reardon, Sean F. "The widening academic achievement gap between the rich and the poor: New evidence and possible explanations." Whither opportunity (2011): 91-116.
