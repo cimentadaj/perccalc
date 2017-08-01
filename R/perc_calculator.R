@@ -80,6 +80,6 @@ perc_calculator <- function(data_model,
 
   all_perc %>%
     stats::setNames(1:100) %>%
-    purrr::reduce(bind_rows) %>%
-    transmute(percentile = 1:100, score, se)
+    purrr::reduce(dplyr::bind_rows) %>%
+    dplyr::transmute(percentile = 1:100, score, se)
 }

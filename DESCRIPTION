@@ -15,7 +15,11 @@ Imports: magrittr,
     tibble,
     broom,
     tidyr,
-    multcomp
+    multcomp,
+    haven,
+    matrixStats,
+    tidyverse,
+    PISA2012lite
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

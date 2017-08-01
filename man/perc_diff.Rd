@@ -41,7 +41,7 @@ score = rnorm(N, sd = 2),
 type = rep(paste0("inc", 1:20), each = N/K),
 wt = 1)
 
-# perc_calculator(toy_data, type, score)
+# perc_diff(toy_data, type, score)
 # type is not an ordered factor!
 
 toy_data <-
