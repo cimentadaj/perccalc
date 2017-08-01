@@ -73,12 +73,12 @@ devtools::install_github("cimentadaj/perccalc")
 library(perccalc)
 ```
 
-The package only has one function called `perc_calculator` and it's very easy to use, we just specify the data, the name of the categorical and continuous variable and the percentile difference we want. 
+The package only has one function called `perc_diff` and it's very easy to use, we just specify the data, the name of the categorical and continuous variable and the percentile difference we want. 
 
 Let's put it to use!
 
 ```{r, error = TRUE}
-perc_calculator(dataset_ready, income, score, percentiles = c(90, 10))
+perc_diff(dataset_ready, income, score, percentiles = c(90, 10))
 ```
 
 I generated that error on purpose to raise a very important requirement of the function. The categorical variable needs to be an ordered factor (categorical). It is very important because otherwise we could be calculating percentile differences of categorical variables such as married, single and widowed, which doesn't make a lot of sense.
@@ -94,19 +94,19 @@ dataset_ready <-
 Now it'll work.
 
 ```{r}
-perccalc::perc_calculator(dataset_ready, income, score, percentiles = c(90, 10))
+perc_diff(dataset_ready, income, score, percentiles = c(90, 10))
 ```
 
 We can play around with other percentiles
 
 ```{r}
-perccalc::perc_calculator(dataset_ready, income, score, percentiles = c(50, 10))
+perc_diff(dataset_ready, income, score, percentiles = c(50, 10))
 ```
 
 And we can add a vector of weights
 
 ```{r}
-perccalc::perc_calculator(dataset_ready, income, score, weights = wt, percentiles = c(90, 10))
+perc_diff(dataset_ready, income, score, weights = wt, percentiles = c(90, 10))
 ```
 
 Now, how are we sure that these estimates are as accurate as the Reardon (2011) implementation? We can compare the Stata ouput using this data set.
@@ -202,7 +202,7 @@ postclose `memhold'
 I get that the 90/10 difference is `95.22` with a standard error of `8.45`. Does it sound familiar?
 
 ```{r}
-perc_calculator(dataset_ready, income, score, weights = wt, percentiles = c(90, 10))
+perc_diff(dataset_ready, income, score, weights = wt, percentiles = c(90, 10))
 ```
 
 I hope this was a convincing example, I know this will be useful for me. All the intelectual ideas come from Sean Reardon, as well as the Stata code. The R implemention is my own work.
