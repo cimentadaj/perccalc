@@ -41,9 +41,7 @@ wt = 1)
 # perc_calculator(toy_data, type, score)
 # type is not an ordered factor!
 
-toy_data <-
-toy_data \%>\%
-mutate(type = factor(type, levels = unique(type), ordered = TRUE))
+toy_data <- toy_data \%>\% mutate(type = factor(type, levels = unique(type), ordered = TRUE))
 
 
 perc_calculator(toy_data, type, score)

@@ -29,9 +29,7 @@
 #' # perc_calculator(toy_data, type, score)
 #' # type is not an ordered factor!
 #'
-#' toy_data <-
-#' toy_data %>%
-#' mutate(type = factor(type, levels = unique(type), ordered = TRUE))
+#' toy_data <- toy_data %>% mutate(type = factor(type, levels = unique(type), ordered = TRUE))
 #'
 #'
 #' perc_calculator(toy_data, type, score)
@@ -45,31 +43,28 @@ perc_calculator <- function(data_model,
 
   data_model <- category_summary(data_model, variable_name, continuous_name, weights)
 
-  data_ready <-
-    data_model %>%
-    dplyr::mutate(cathi = cumsum(per),
-                  catlo = dplyr::lag(cathi, default = 0),
-                  catmid = (catlo+cathi) / 2,
-                  x1 = catmid,
-                  x2 = catmid^2 + ((cathi-catlo)^2)/12,
-                  x3 = catmid^3 + ((cathi-catlo)^2)/4,
-                  cimnhi = mean + 1.96 * se_mean,
-                  cimnlo = mean - 1.96 * se_mean
-    )
+  data_model$cathi <- cumsum(data_model$per)
+  data_model$catlo <- dplyr::lag(data_model$cathi, default = 0)
+  data_model$catmid <- (data_model$catlo + data_model$cathi) / 2
+  data_model$x1 <- data_model$catmid
+  data_model$x2 <- data_model$catmid^2 + ((data_model$cathi - data_model$catlo)^2) / 12
+  data_model$x3 <- data_model$catmid^3 + ((data_model$cathi - data_model$catlo)^2) / 4
+  data_model$cimnhi <- data_model$mean + 1.96 * data_model$se_mean
+  data_model$cimnlo <- data_model$mean - 1.96 * data_model$se_mean
 
-  model_data <-
-    data_ready %>%
-    stats::lm(mean ~ x1 + x2 + x3, weights = 1/se_mean^2, data = .)
+  data_ready <- data_model
+
+  model_data <- stats::lm(mean ~ x1 + x2 + x3, weights = 1/data_ready$se_mean^2, data = data_ready)
 
   all_perc <- purrr::map(1:100, ~ {
     d1 <- (.x)/100
     d2 <- (.x^2)/(100^2)
     d3 <- (.x^3)/(100^3)
 
-    lcmb <- multcomp::glht(model_data,
-                     linfct = paste0(d1, '*x1 + ', d2, '*x2 + ', d3, '*x3', " = 0")) %>%
-      summary() %>%
-      broom::tidy()
+    lcmb <-
+      broom::tidy(summary(
+        multcomp::glht(model_data, linfct = paste0(d1, '*x1 + ', d2, '*x2 + ', d3, '*x3', " = 0"))
+        ))
 
     diff_hip_lop <- lcmb[1, 3, drop = TRUE]
     se_hip_lop <- lcmb[1, 4, drop = TRUE]
@@ -77,8 +72,8 @@ perc_calculator <- function(data_model,
     c(score = diff_hip_lop, se = se_hip_lop)
   })
 
-  all_perc %>%
-    stats::setNames(1:100) %>%
-    purrr::reduce(dplyr::bind_rows) %>%
-    dplyr::transmute(percentile = 1:100, score, se)
+  percentile_data <- purrr::reduce(stats::setNames(all_perc, 1:100), dplyr::bind_rows)
+  percentile_data$percentile <- 1:100
+
+  percentile_data[, c(3, 1, 2)]
 }

@@ -50,21 +50,19 @@ perc_diff <- function(data_model,
 
   data_model <- category_summary(data_model, variable_name, continuous_name, weights)
 
-  data_ready <-
-    data_model %>%
-    dplyr::mutate(cathi = cumsum(per),
-                  catlo = dplyr::lag(cathi, default = 0),
-                  catmid = (catlo+cathi) / 2,
-                  x1 = catmid,
-                  x2 = catmid^2 + ((cathi-catlo)^2)/12,
-                  x3 = catmid^3 + ((cathi-catlo)^2)/4,
-                  cimnhi = mean + 1.96 * se_mean,
-                  cimnlo = mean - 1.96 * se_mean
-    )
+  data_model$cathi <- cumsum(data_model$per)
+  data_model$catlo <- dplyr::lag(data_model$cathi, default = 0)
+  data_model$catmid <- (data_model$catlo + data_model$cathi) / 2
+  data_model$x1 <- data_model$catmid
+  data_model$x2 <- data_model$catmid^2 + ((data_model$cathi - data_model$catlo)^2) / 12
+  data_model$x3 <- data_model$catmid^3 + ((data_model$cathi - data_model$catlo)^2) / 4
+  data_model$cimnhi <- data_model$mean + 1.96 * data_model$se_mean
+  data_model$cimnlo <- data_model$mean - 1.96 * data_model$se_mean
+
+  data_ready <- data_model
 
   model_data <-
-    data_ready %>%
-    stats::lm(mean ~ x1 + x2 + x3, weights = 1/se_mean^2, data = .)
+    stats::lm(mean ~ x1 + x2 + x3, weights = 1/data_ready$se_mean^2, data = data_ready)
 
   hi_p <- percentiles[1]
   lo_p <- percentiles[2]
@@ -74,10 +72,12 @@ perc_diff <- function(data_model,
   d3 <- (hi_p^3 - lo_p^3)/(100^3)
 
   lcmb <-
-    multcomp::glht(model_data,
-                   linfct = paste0(d1, '*x1 + ', d2, '*x2 + ', d3, '*x3', " = 0")) %>%
-    summary() %>%
-    broom::tidy()
+    broom::tidy(
+      summary(
+      multcomp::glht(model_data,
+                   linfct = paste0(d1, '*x1 + ', d2, '*x2 + ', d3, '*x3', " = 0"))
+      )
+    )
 
   diff_hip_lop <- lcmb[1, 3, drop = TRUE]
   se_hip_lop <- lcmb[1, 4, drop = TRUE]
