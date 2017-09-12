@@ -17,18 +17,24 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 
 Reardon (2011) introduced a very interesting concept in which he calculates percentile differences from ordered categorical variables. He explains his procedure very much in detail in the appendix of the book chapter but no formal implementation has been yet available on the web. With this package I introduce two functions that apply the procedure.
 
-You can install and load the package with these commands:
-```{r, eval = F}
-devtools::install_github("cimentadaj/perccalc")
-library(perccalc)
-```
-
 The package has two main functions:
 
 * `perc_diff`, for calculating percentile differences
 * `perc_calculator`, for calculating scores for all percentiles
 
-and each one performs percentile calculations. Suppose we have a dataset with one continuous variable and one categorical variable:
+## Installation
+
+You can install and load the package with these commands:
+
+```{r, eval = F}
+devtools::install_github("cimentadaj/perccalc")
+library(perccalc)
+```
+
+
+## Usage
+
+Suppose we have a dataset with one continuous variable and one categorical variable:
 ```{r, echo = F}
 library(perccalc)
 ```
