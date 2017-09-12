@@ -2,31 +2,35 @@
 % Please edit documentation in R/perc_diff.R
 \name{perc_diff}
 \alias{perc_diff}
-\title{Calculate percentile differences from an ordered categorical variable and a continuous variable.}
+\title{Calculate percentile differences from an ordered categorical variable
+ and a continuous variable.}
 \usage{
 perc_diff(data_model, categorical_var, continuous_var, weights,
   percentiles = c(90, 10))
 }
 \arguments{
-\item{data_model}{A data frame with at least the categorical and continuous variables from
-to estimate tue percentile differences}
+\item{data_model}{A data frame with at least the categorical and continuous
+variables from which to estimate the percentile differences}
 
-\item{categorical_var}{The bare unquoted name of the categorical variable. This variable SHOULD be
-an ordered factor. If not, the function will stop.}
+\item{categorical_var}{The bare unquoted name of the categorical variable.
+This variable SHOULD be an ordered factor. If not, the function will stop.}
 
-\item{continuous_var}{The bare unquoted name of the continuous variable from which to estimate
-the percentiles}
+\item{continuous_var}{The bare unquoted name of the continuous variable from
+which to estimate the percentiles}
 
-\item{weights}{The bare unquoted name of the optional weight variable. If not specified, then estimation
-is done without weights}
+\item{weights}{The bare unquoted name of the optional weight variable.
+If not specified, then estimation is done without weights}
 
-\item{percentiles}{A numeric vector of two numbers specifying which percentiles to subtract}
+\item{percentiles}{A numeric vector of two numbers specifying which
+percentiles to subtract}
 }
 \value{
-A vector with the percentile difference and it's associated standard error
+A vector with the percentile difference and it's associated
+ standard error
 }
 \description{
-Calculate percentile differences from an ordered categorical variable and a continuous variable.
+Calculate percentile differences from an ordered categorical variable
+ and a continuous variable.
 }
 \examples{
 

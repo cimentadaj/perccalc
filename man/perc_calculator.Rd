@@ -2,28 +2,30 @@
 % Please edit documentation in R/perc_calculator.R
 \name{perc_calculator}
 \alias{perc_calculator}
-\title{Calculate percentiles from an ordered categorical variable and a continuous variable.}
+\title{Calculate percentiles from an ordered categorical variable and a
+continuous variable.}
 \usage{
 perc_calculator(data_model, categorical_var, continuous_var, weights)
 }
 \arguments{
-\item{data_model}{A data frame with at least the categorical and continuous variables from which
-to estimate the percentiles}
+\item{data_model}{A data frame with at least the categorical and continuous
+variables from which to estimate the percentiles}
 
-\item{categorical_var}{The bare unquoted name of the categorical variable. This variable SHOULD be
-an ordered factor. If not, the function will stop.}
+\item{categorical_var}{The bare unquoted name of the categorical variable.
+This variable SHOULD be an ordered factor. If not, the function will stop.}
 
-\item{continuous_var}{The bare unquoted name of the continuous variable from which to estimate
-the percentiles}
+\item{continuous_var}{The bare unquoted name of the continuous variable from
+which to estimate the percentiles}
 
-\item{weights}{The bare unquoted name of the optional weight variable. If not specified, then estimation
-is done without weights}
+\item{weights}{The bare unquoted name of the optional weight variable.
+If not specified, then estimation is done without weights}
 }
 \value{
 A data frame with the scores and standard errors for each percentile
 }
 \description{
-Calculate percentiles from an ordered categorical variable and a continuous variable.
+Calculate percentiles from an ordered categorical variable and a
+continuous variable.
 }
 \examples{
 
@@ -41,7 +43,9 @@ wt = 1)
 # perc_calculator(toy_data, type, score)
 # type is not an ordered factor!
 
-toy_data <- toy_data \%>\% mutate(type = factor(type, levels = unique(type), ordered = TRUE))
+toy_data <-
+ toy_data \%>\%
+ mutate(type = factor(type, levels = unique(type), ordered = TRUE))
 
 
 perc_calculator(toy_data, type, score)
