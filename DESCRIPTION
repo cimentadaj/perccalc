@@ -1,8 +1,8 @@
 Package: perccalc
-Title: Estimate percentile differences from an ordered categorical variable and a continuous variable
+Title: Estimate percentiles from an ordered categorical variable
 Version: 0.0.0.9000
 Authors@R: person("Jorge", "Cimentada", email = "cimentadaj@gmail.com", role = c("aut", "cre"))
-Description: The package contains one function that estimates percentile differences from an ordered categorical variable and a continuous variable. It returns the difference and the associated standard error.
+Description: This package contains two functions that estimate values for percentiles from an ordered categorical variable. One function estimates percentile differences from two percentiles while the other returns the values for every percentile from 1 to 100.
 Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
