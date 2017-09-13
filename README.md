@@ -25,7 +25,6 @@ devtools::install_github("cimentadaj/perccalc")
 library(perccalc)
 ```
 
-
 ## Usage
 
 Suppose we have a dataset with one continuous variable and one categorical variable:
@@ -37,8 +36,10 @@ library(tidyverse)
 
 df <-
   tibble(
-  continuous = rnorm(100) + 1:100,
-  categorical = rep(letters[1:5], each = 20) %>% factor(ordered = TRUE))
+    continuous = rnorm(100) + 1:100,
+    categorical = rep(letters[1:5], each = 20) %>% factor(ordered = TRUE),
+    wt = rnorm(100, mean = 5)
+  )
 ```
 
 Note that the categorical variable has to be an ordered factor (this is a requirement of both functions). For example, `perc_calc` calculates percentile differences using both variables.
@@ -47,23 +48,31 @@ Note that the categorical variable has to be an ordered factor (this is a requir
 ```r
 perc_diff(df, categorical, continuous, percentiles = c(90, 10))
 #> difference         se 
-#> 80.0163730  0.3375946
+#> 80.1730512  0.3286733
 ```
 
-You can also use the `weights` argument to specify weights. On the other hand, the `perc_calculator` allows you to estimate the score for every percentile.
+You can optionally add weights with the `weights` argument.
 
 
 ```r
-perc_calculator(df, categorical, continuous)
-#> # A tibble: 100 x 3
-#>   percentile     score         se
-#>        <int>     <dbl>      <dbl>
-#> 1          1 0.9202637 0.05122108
-#> 2          2 1.8442792 0.10007389
-#> 3          3 2.7719745 0.14660827
-#> 4          4 3.7032774 0.19087408
-#> 5          5 4.6381158 0.23292121
-#> # ... with 95 more rows
+perc_diff(df, categorical, continuous, weights = wt, percentiles = c(90, 10))
+#> difference         se 
+#> 80.1862875  0.2515871
+```
+
+On the other hand, the `perc_calculator` allows you to estimate the score for every percentile.
+
+
+```r
+perc_calculator(df, categorical, continuous) %>%
+  head()
+#>   percentile estimate  std.error
+#> 1          1 1.007971 0.04701287
+#> 2          2 2.015665 0.09186739
+#> 3          3 3.023088 0.13460900
+#> 4          4 4.030244 0.17528318
+#> 5          5 5.037140 0.21393541
+#> 6          6 6.043780 0.25061119
 ```
 
 This function also allows the use of weights. For an example with a a real-world dataset, please see the vignette example.

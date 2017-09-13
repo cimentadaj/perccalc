@@ -31,7 +31,6 @@ devtools::install_github("cimentadaj/perccalc")
 library(perccalc)
 ```
 
-
 ## Usage
 
 Suppose we have a dataset with one continuous variable and one categorical variable:
@@ -44,8 +43,10 @@ library(tidyverse)
 
 df <-
   tibble(
-  continuous = rnorm(100) + 1:100,
-  categorical = rep(letters[1:5], each = 20) %>% factor(ordered = TRUE))
+    continuous = rnorm(100) + 1:100,
+    categorical = rep(letters[1:5], each = 20) %>% factor(ordered = TRUE),
+    wt = rnorm(100, mean = 5)
+  )
 ```
 
 Note that the categorical variable has to be an ordered factor (this is a requirement of both functions). For example, `perc_calc` calculates percentile differences using both variables.
@@ -54,10 +55,17 @@ Note that the categorical variable has to be an ordered factor (this is a requir
 perc_diff(df, categorical, continuous, percentiles = c(90, 10))
 ```
 
-You can also use the `weights` argument to specify weights. On the other hand, the `perc_calculator` allows you to estimate the score for every percentile.
+You can optionally add weights with the `weights` argument.
 
 ```{r}
-perc_calculator(df, categorical, continuous)
+perc_diff(df, categorical, continuous, weights = wt, percentiles = c(90, 10))
+```
+
+On the other hand, the `perc_calculator` allows you to estimate the score for every percentile.
+
+```{r}
+perc_calculator(df, categorical, continuous) %>%
+  head()
 ```
 
 This function also allows the use of weights. For an example with a a real-world dataset, please see the vignette example.
