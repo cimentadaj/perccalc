@@ -45,12 +45,12 @@
 perc_diff <- function(data_model,
                       categorical_var,
                       continuous_var,
-                      weights,
+                      weights = NULL,
                       percentiles = c(90, 10)) {
 
   variable_name <- as.character(substitute(categorical_var))
   continuous_name <- as.character(substitute(continuous_var))
-  weights <- as.character(substitute(weights))
+  weights <- if (is.null(weights)) NULL else as.character(substitute(weights))
 
   data_model <-
     category_summary(
@@ -87,14 +87,29 @@ perc_diff <- function(data_model,
   d2 <- (hi_p ^ 2 - lo_p ^ 2) / (100 ^ 2)
   d3 <- (hi_p ^ 3 - lo_p ^ 3) / (100 ^ 3)
 
-  lcmb <-
-    broom::tidy(
-      summary(
-        multcomp::glht(
-          model = model_data,
-          linfct = paste0(d1, "*x1 + ", d2, "*x2 + ", d3, "*x3", " = 0"))
-      )
+  linear_combination <-
+    multcomp::glht(
+    model = model_data,
+    linfct = paste0(d1, "*x1 + ", d2, "*x2 + ", d3, "*x3", " = 0")
+  )
+
+  if (is.nan(vcov(linear_combination))) {
+    warning(
+      "Too few categories in categorical variable to estimate standard errors.
+      Proceeding without estimated standard errors but perhaps you should
+      increase the number of categories"
     )
+
+    lcmb <- broom::tidy(linear_combination)
+  } else {
+    lcmb <-
+      broom::tidy(
+        summary(
+          linear_combination
+        )
+      )
+  }
+
 
   diff_hip_lop <- lcmb[1, 3, drop = TRUE]
   se_hip_lop <- lcmb[1, 4, drop = TRUE]
@@ -130,15 +145,16 @@ category_summary <- function(data_model,
 
   coefs <- purrr::map(new_category_columns, ~ {
 
-    wts <-
+    data_model <-
       data_model %>%
-      dplyr::filter_(paste0("`", .x, "`", " == 1")) %>%
-      .[[weights]]
+      dplyr::filter_(paste0("`", .x, "`", " == 1"))
+
+    use_weights <- if (is.null(weights)) NULL else data_model %>% .[[weights]]
 
     data_model %>%
       dplyr::filter_(paste0("`", .x, "`", " == 1")) %>%
       stats::lm(formula = stats::as.formula(paste(continuous_var, "~ 1")),
-                weights = wts,
+                weights = use_weights,
                 data = .) %>%
       broom::tidy() %>%
       .[1, c(2, 3)]
