@@ -95,7 +95,7 @@ perc_diff <- function(data_model,
     linfct = paste0(d1, "*x1 + ", d2, "*x2 + ", d3, "*x3", " = 0")
   )
 
-  if (is.nan(vcov(linear_combination))) {
+  if (is.nan(stats::vcov(linear_combination))) {
     warning(
       "Too few categories in categorical variable to estimate the
       variance-covariance matrix and standard errors. Proceeding without
@@ -146,7 +146,7 @@ category_summary <- function(data_model,
 
   perc <-
     data_model[, new_category_columns, drop = FALSE] %>%
-    map_dbl(stats::weighted.mean, w = use_weights)
+    purrr::map_dbl(stats::weighted.mean, w = use_weights)
 
   coefs <- purrr::map(new_category_columns, ~ {
 
