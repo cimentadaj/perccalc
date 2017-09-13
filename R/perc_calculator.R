@@ -89,7 +89,7 @@ perc_calculator <- function(data_model,
 
 
   all_perc <-
-    map(all_lcmb, ~ {
+    purrr::map(all_lcmb, ~ {
       enough_categories <- is.nan(stats::vcov(.x))
 
       if (enough_categories) {
