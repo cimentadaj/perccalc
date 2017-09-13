@@ -50,7 +50,9 @@ perc_diff <- function(data_model,
 
   variable_name <- as.character(substitute(categorical_var))
   continuous_name <- as.character(substitute(continuous_var))
-  weights <- if (is.null(weights)) NULL else as.character(substitute(weights))
+
+  weights <- as.character(substitute(weights))
+  weights <- if (purrr::is_empty(weights)) NULL else weights
 
   data_model <-
     category_summary(
@@ -150,7 +152,7 @@ category_summary <- function(data_model,
       data_model %>%
       dplyr::filter_(paste0("`", .x, "`", " == 1"))
 
-    use_weights <- if (is.null(weights)) NULL else data_model %>% .[[weights]]
+    use_weights <- if (is.null(weights)) NULL else data_model[[weights]]
 
     data_model %>%
       dplyr::filter_(paste0("`", .x, "`", " == 1")) %>%
