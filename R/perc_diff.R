@@ -95,9 +95,10 @@ perc_diff <- function(data_model,
 
   if (is.nan(vcov(linear_combination))) {
     warning(
-      "Too few categories in categorical variable to estimate standard errors.
-      Proceeding without estimated standard errors but perhaps you should
-      increase the number of categories"
+      "Too few categories in categorical variable to estimate the
+      variance-covariance matrix and standard errors. Proceeding without
+      estimated standard errors but perhaps you should increase the number
+      of categories"
     )
 
     lcmb <- broom::tidy(linear_combination)
