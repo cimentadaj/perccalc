@@ -5,7 +5,7 @@
 \title{Calculate percentiles from an ordered categorical variable and a
 continuous variable.}
 \usage{
-perc_calculator(data_model, categorical_var, continuous_var, weights)
+perc_calculator(data_model, categorical_var, continuous_var, weights = NULL)
 }
 \arguments{
 \item{data_model}{A data frame with at least the categorical and continuous

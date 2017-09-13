@@ -5,7 +5,7 @@
 \title{Calculate percentile differences from an ordered categorical variable
  and a continuous variable.}
 \usage{
-perc_diff(data_model, categorical_var, continuous_var, weights,
+perc_diff(data_model, categorical_var, continuous_var, weights = NULL,
   percentiles = c(90, 10))
 }
 \arguments{
