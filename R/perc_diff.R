@@ -142,22 +142,20 @@ category_summary <- function(data_model,
       category_columns, ~ ifelse(data_model[[categorical_var]] == .x, 1, 0)
     )
 
+  use_weights <- if (is.null(weights)) rep(1, nrow(data_model)) else data_model[[weights]]
+
   perc <-
     data_model[, new_category_columns, drop = FALSE] %>%
-    colMeans(na.rm = TRUE)
+    map_dbl(stats::weighted.mean, w = use_weights)
 
   coefs <- purrr::map(new_category_columns, ~ {
 
-    data_model <-
-      data_model %>%
-      dplyr::filter_(paste0("`", .x, "`", " == 1"))
-
-    use_weights <- if (is.null(weights)) NULL else data_model[[weights]]
+    category_selection <- eval(parse(text = paste0("`", .x, "`", " == 1")), data_model)
 
     data_model %>%
-      dplyr::filter_(paste0("`", .x, "`", " == 1")) %>%
+      dplyr::filter(category_selection) %>%
       stats::lm(formula = stats::as.formula(paste(continuous_var, "~ 1")),
-                weights = use_weights,
+                weights = use_weights[category_selection],
                 data = .) %>%
       broom::tidy() %>%
       .[1, c(2, 3)]
