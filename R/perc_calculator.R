@@ -39,10 +39,12 @@
 perc_calculator <- function(data_model,
                             categorical_var,
                             continuous_var,
-                            weights) {
+                            weights = NULL) {
   variable_name <- as.character(substitute(categorical_var))
   continuous_name <- as.character(substitute(continuous_var))
+
   weights <- as.character(substitute(weights))
+  weights <- if (purrr::is_empty(weights)) NULL else weights
 
   data_model <-
     category_summary(
@@ -71,32 +73,56 @@ perc_calculator <- function(data_model,
                           data = data_ready)
 
   all_perc <- purrr::map(1:100, ~ {
+
     d1 <- (.x) / 100
     d2 <- (.x ^ 2) / (100 ^ 2)
     d3 <- (.x ^ 3) / (100 ^ 3)
 
-    lcmb <-
-      broom::tidy(
-        summary(
-        multcomp::glht(
-          model = model_data,
-          linfct = paste0(d1, "*x1 + ", d2, "*x2 + ", d3, "*x3", " = 0")
-          )
-        )
+    linear_combination <-
+      multcomp::glht(
+        model = model_data,
+        linfct = paste0(d1, "*x1 + ", d2, "*x2 + ", d3, "*x3", " = 0")
       )
 
-    diff_hip_lop <- lcmb[1, 3, drop = TRUE]
-    se_hip_lop <- lcmb[1, 4, drop = TRUE]
+    enough_categories <<- is.nan(vcov(linear_combination))
 
-    c(score = diff_hip_lop, se = se_hip_lop)
+    if (enough_categories) {
+
+      lcmb <- broom::tidy(linear_combination)
+      lcmb
+
+    } else {
+      lcmb <-
+        broom::tidy(
+          summary(
+            linear_combination
+          )
+        )
+      lcmb
+    }
   })
 
-  percentile_data <- purrr::reduce(
-    stats::setNames(all_perc, 1:100),
+  if (enough_categories) {
+    warning(
+      "Too few categories in categorical variable to estimate the
+      variance-covariance matrix and standard errors. Proceeding without
+      estimated standard errors but perhaps you should increase the number
+      of categories"
+    )
+    only_estimates <- map(all_perc, ~ .x[3])
+    final_column_selection <- 2:1
+  } else {
+    only_estimates <- map(all_perc, ~ .x[c(3, 4)])
+    final_column_selection <- c(3, 1, 2)
+  }
+
+  percentile_data <-
+    purrr::reduce(
+    stats::setNames(only_estimates, 1:100),
     dplyr::bind_rows
     )
 
   percentile_data$percentile <- 1:100
 
-  percentile_data[, c(3, 1, 2)]
+  percentile_data[, final_column_selection]
 }
