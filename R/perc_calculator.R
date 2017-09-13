@@ -72,7 +72,7 @@ perc_calculator <- function(data_model,
                           weights = 1 / data_ready$se_mean ^ 2,
                           data = data_ready)
 
-  all_perc <- purrr::map(1:100, ~ {
+  all_lcmb <- purrr::map(1:100, ~ {
 
     d1 <- (.x) / 100
     d2 <- (.x ^ 2) / (100 ^ 2)
@@ -84,23 +84,36 @@ perc_calculator <- function(data_model,
         linfct = paste0(d1, "*x1 + ", d2, "*x2 + ", d3, "*x3", " = 0")
       )
 
-    enough_categories <<- is.nan(vcov(linear_combination))
-
-    if (enough_categories) {
-
-      lcmb <- broom::tidy(linear_combination)
-      lcmb
-
-    } else {
-      lcmb <-
-        broom::tidy(
-          summary(
-            linear_combination
-          )
-        )
-      lcmb
-    }
+    linear_combination
   })
+
+
+  all_perc <-
+    map(all_lcmb, ~ {
+      enough_categories <- is.nan(stats::vcov(.x))
+
+      if (enough_categories) {
+
+        lcmb <- broom::tidy(.x)
+        lcmb
+
+      } else {
+        lcmb <-
+          broom::tidy(
+            summary(
+              .x
+            )
+          )
+        lcmb
+      }
+    })
+
+  enough_categories <-
+    is.nan(
+      stats::vcov(
+        all_lcmb[[100]]
+      )
+    )
 
   if (enough_categories) {
     warning(
@@ -109,10 +122,10 @@ perc_calculator <- function(data_model,
       estimated standard errors but perhaps you should increase the number
       of categories"
     )
-    only_estimates <- map(all_perc, ~ .x[3])
+    only_estimates <- purrr::map(all_perc, ~ .x[3])
     final_column_selection <- 2:1
   } else {
-    only_estimates <- map(all_perc, ~ .x[c(3, 4)])
+    only_estimates <- purrr::map(all_perc, ~ .x[c(3, 4)])
     final_column_selection <- c(3, 1, 2)
   }
 
