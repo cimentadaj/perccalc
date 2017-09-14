@@ -9,7 +9,7 @@ vignette: >
   usepackage[UTF-8]{inputenc}
 ---
 
-Reardon (2011) introduced a very interesting concept in which he calculates percentile differences from ordered categorical variables. He explains his procedure very much in detail in the appendix of the book chapter but no formal implementation has been yet available on the web. With this package I introduce a function that applies the proceedure, following a step-by-step Stata script that Sean Reardon kindly sent me.
+Reardon (2011) introduced a very interesting concept in which he calculates percentile differences from ordered categorical variables. He explains his procedure very much in detail in the appendix of the book chapter but no formal implementation has been yet available on the web. With this package I introduce a function that applies the procedure, following a step-by-step Stata script that Sean Reardon kindly sent me.
 
 In this vignette I show you how to use the function and match the results to the Stata code provided by Reardon himself.
 
@@ -93,7 +93,7 @@ And we can add a vector of weights
 perc_diff(gss, income, prestige, weights = wt)
 ```
 
-Now, how are we sure that these estimates are as accurate as the Reardon (2011) implementation? We can compare the Stata ouput using this data set.
+Now, how are we sure that these estimates are as accurate as the Reardon (2011) implementation? We can compare the Stata output using this data set.
 
 ```{r, eval = FALSE}
 # Saving the dataset to a path
@@ -199,7 +199,7 @@ perc_dist(gss, income, prestige) %>%
   head()
 ```
 
-We can also add the optional set of weights and graph it in a more conveniente way.
+We can also add the optional set of weights and graph it in a more convenient way.
 
 ```{r, fig.align = 'center', fig.width = 6, fig.height = 5}
 gss %>%
@@ -230,6 +230,6 @@ perc_diff(gss, income, prestige, weights = wt, percentiles = c(90, 10))
 
 Note how the coefficients are the same but the standard error is different.
 
-I hope this was a convincing example, I know this will be useful for me. All the intellectual ideas come from Sean Reardon, as well as the Stata code. The R implemention is my own work.
+I hope this was a convincing example, I know this will be useful for me. All the intellectual ideas come from Sean Reardon, as well as the Stata code. The R implementation is my own work.
 
 - Reardon, Sean F. "The widening academic achievement gap between the rich and the poor: New evidence and possible explanations." Whither opportunity (2011): 91-116.

@@ -21,6 +21,7 @@ Imports: magrittr,
     ggplot2,
     devtools,
     MASS
-Suggests: knitr,
+Suggests:
+    spelling, knitr,
     rmarkdown
 VignetteBuilder: knitr
