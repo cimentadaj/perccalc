@@ -142,7 +142,12 @@ category_summary <- function(data_model,
       category_columns, ~ ifelse(data_model[[categorical_var]] == .x, 1, 0)
     )
 
-  use_weights <- if (is.null(weights)) rep(1, nrow(data_model)) else data_model[[weights]]
+  use_weights <-
+    if (is.null(weights)) {
+    rep(1, nrow(data_model))
+    } else {
+      data_model[[weights]]
+    }
 
   perc <-
     data_model[, new_category_columns, drop = FALSE] %>%
@@ -150,7 +155,8 @@ category_summary <- function(data_model,
 
   coefs <- purrr::map(new_category_columns, ~ {
 
-    category_selection <- eval(parse(text = paste0("`", .x, "`", " == 1")), data_model)
+    category_selection <-
+      eval(parse(text = paste0("`", .x, "`", " == 1")), data_model)
 
     data_model %>%
       dplyr::filter(category_selection) %>%
