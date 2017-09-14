@@ -56,7 +56,7 @@ library(perccalc)
 library(perccalc)
 ```
 
-The package only has two functions called `perc_diff` and `perc_calculator`. They're very easy to use, we just specify the data, the name of the categorical and continuous variable and the percentile difference we want. 
+The package only has two functions called `perc_diff` and `perc_dist`. They're very easy to use, we just specify the data, the name of the categorical and continuous variable and the percentile difference we want. 
 
 Let's put it to use!
 
@@ -192,10 +192,10 @@ I get that the 90/10 difference is `15.25` with a standard error of `.972`. Does
 perc_diff(gss, income, prestige, weights = wt)
 ```
 
-Finally, there's `perc_calculator` that shares a lot of similarity with `perc_diff`. It calculates the estimate for every percentile. You can use this to perform your own analysis. For example,
+Finally, there's `perc_dist` that shares a lot of similarity with `perc_diff`. It calculates the estimate for every percentile. You can use this to perform your own analysis. For example,
 
 ```{r}
-perc_calculator(gss, income, prestige) %>%
+perc_dist(gss, income, prestige) %>%
   head()
 ```
 
@@ -203,7 +203,7 @@ We can also add the optional set of weights and graph it in a more conveniente w
 
 ```{r, fig.align = 'center', fig.width = 6, fig.height = 5}
 gss %>%
-  perc_calculator(income, prestige, wt) %>%
+  perc_dist(income, prestige, wt) %>%
   mutate(ci_low = estimate - 1.96 * std.error,
          ci_hi = estimate + 1.96 * std.error) %>%
   ggplot(aes(percentile, estimate)) +
@@ -216,7 +216,7 @@ Please note that for calculating the difference between two percentiles it is mo
 For example:
 
 ```{r}
-perc_calculator(gss, income, prestige, wt) %>%
+perc_dist(gss, income, prestige, wt) %>%
   filter(percentile %in% c(90, 10)) %>%
   summarize(diff = diff(estimate),
             se_diff = diff(std.error))

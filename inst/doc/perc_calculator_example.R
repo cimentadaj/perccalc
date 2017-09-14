@@ -138,12 +138,12 @@ perc_diff(gss, income, prestige, weights = wt)
 perc_diff(gss, income, prestige, weights = wt)
 
 ## ------------------------------------------------------------------------
-perc_calculator(gss, income, prestige) %>%
+perc_dist(gss, income, prestige) %>%
   head()
 
 ## ---- fig.align = 'center', fig.width = 6, fig.height = 5----------------
 gss %>%
-  perc_calculator(income, prestige, wt) %>%
+  perc_dist(income, prestige, wt) %>%
   mutate(ci_low = estimate - 1.96 * std.error,
          ci_hi = estimate + 1.96 * std.error) %>%
   ggplot(aes(percentile, estimate)) +
@@ -151,7 +151,7 @@ gss %>%
   geom_errorbar(aes(ymin = ci_low, ymax = ci_hi))
 
 ## ------------------------------------------------------------------------
-perc_calculator(gss, income, prestige, wt) %>%
+perc_dist(gss, income, prestige, wt) %>%
   filter(percentile %in% c(90, 10)) %>%
   summarize(diff = diff(estimate),
             se_diff = diff(std.error))

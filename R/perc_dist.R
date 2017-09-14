@@ -1,4 +1,4 @@
-#' Calculate percentiles from an ordered categorical variable and a
+#' Calculate a distribution of percentiles from an ordered categorical variable and a
 #' continuous variable.
 #'
 #' @param data_model A data frame with at least the categorical and continuous
@@ -27,7 +27,7 @@
 #' type = rep(paste0("inc", 1:20), each = N/K),
 #' wt = 1)
 #'
-#' # perc_calculator(toy_data, type, score)
+#' # perc_dist(toy_data, type, score)
 #' # type is not an ordered factor!
 #'
 #' toy_data <-
@@ -35,8 +35,8 @@
 #'  mutate(type = factor(type, levels = unique(type), ordered = TRUE))
 #'
 #'
-#' perc_calculator(toy_data, type, score)
-perc_calculator <- function(data_model,
+#' perc_dist(toy_data, type, score)
+perc_dist <- function(data_model,
                             categorical_var,
                             continuous_var,
                             weights = NULL) {

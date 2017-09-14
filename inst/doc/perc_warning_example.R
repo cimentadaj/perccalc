@@ -28,6 +28,6 @@ smoking_data <-
 perc_diff(smoking_data, smoke, pulse_rate)
 
 ## ------------------------------------------------------------------------
-perc_calculator(smoking_data, smoke, pulse_rate) %>%
+perc_dist(smoking_data, smoke, pulse_rate) %>%
   head()
 

@@ -117,10 +117,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 ##       of categories</code></pre>
 <pre><code>## difference 
 ##   385.1357</code></pre>
-<p><code>perc_diff</code> returns the estimated coefficient but also warns you that it’s difficult for the function to estimate the standard error. This happens similarly for <code>perc_calculator</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">perc_calculator</span>(smoking_data, smoke, pulse_rate) %&gt;%
+<p><code>perc_diff</code> returns the estimated coefficient but also warns you that it’s difficult for the function to estimate the standard error. This happens similarly for <code>perc_dist</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">perc_dist</span>(smoking_data, smoke, pulse_rate) %&gt;%
 <span class="st">  </span><span class="kw">head</span>()</code></pre></div>
-<pre><code>## Warning in perc_calculator(smoking_data, smoke, pulse_rate): Too few categories in categorical variable to estimate the
+<pre><code>## Warning in perc_dist(smoking_data, smoke, pulse_rate): Too few categories in categorical variable to estimate the
 ##       variance-covariance matrix and standard errors. Proceeding without
 ##       estimated standard errors but perhaps you should increase the number
 ##       of categories</code></pre>
