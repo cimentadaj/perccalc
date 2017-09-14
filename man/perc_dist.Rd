@@ -2,8 +2,8 @@
 % Please edit documentation in R/perc_dist.R
 \name{perc_dist}
 \alias{perc_dist}
-\title{Calculate a distribution of percentiles from an ordered categorical variable and a
-continuous variable.}
+\title{Calculate a distribution of percentiles from an ordered categorical variable
+ and a continuous variable.}
 \usage{
 perc_dist(data_model, categorical_var, continuous_var, weights = NULL)
 }
@@ -24,8 +24,8 @@ If not specified, then estimation is done without weights}
 A data frame with the scores and standard errors for each percentile
 }
 \description{
-Calculate a distribution of percentiles from an ordered categorical variable and a
-continuous variable.
+Calculate a distribution of percentiles from an ordered categorical variable
+ and a continuous variable.
 }
 \examples{
 
