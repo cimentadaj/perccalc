@@ -1,7 +1,5 @@
 ---
-output:
-  github_document:
-    html_preview: false
+output: md_document
 ---
 
 ## Overview
@@ -14,6 +12,9 @@ knitr::opts_chunk$set(
 )
 options(tibble.print_min = 5, tibble.print_max = 5)
 ```
+
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/perccalc)](http://cran.r-project.org/package=perccalc)
+
 
 Reardon (2011) introduced a very interesting concept in which he calculates percentile differences from ordered categorical variables. He explains his procedure very much in detail in the appendix of the book chapter but no formal implementation has been yet available on the web. With this package I introduce two functions that apply the procedure.
 
