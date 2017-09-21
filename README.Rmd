@@ -1,5 +1,8 @@
 ---
-output: md_document
+output:
+  github_document:
+    html_preview: false
+
 ---
 
 # perccalc
