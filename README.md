@@ -1,7 +1,10 @@
-Overview
---------
+perccalc
+========
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/perccalc)](http://cran.r-project.org/package=perccalc)
+
+Overview
+--------
 
 Reardon (2011) introduced a very interesting concept in which he
 calculates percentile differences from ordered categorical variables. He
@@ -42,27 +45,27 @@ a requirement of both functions). For example, `perc_diff` calculates
 percentile differences using both variables.
 
     perc_diff(df, categorical, continuous, percentiles = c(90, 10))
-    #> difference         se 
-    #> 80.2036783  0.1780654
+    #>  difference          se 
+    #> 79.80784221  0.08769345
 
 You can optionally add weights with the `weights` argument.
 
     perc_diff(df, categorical, continuous, weights = wt, percentiles = c(90, 10))
     #> difference         se 
-    #> 81.5266344  0.1261735
+    #> 80.4464316  0.2480369
 
 On the other hand, the `perc_dist` (short for percentile distribution)
 allows you to estimate the score for every percentile.
 
     perc_dist(df, categorical, continuous) %>%
       head()
-    #>   percentile estimate  std.error
-    #> 1          1 1.053517 0.02597837
-    #> 2          2 2.104579 0.05076806
-    #> 3          3 3.153235 0.07439407
-    #> 4          4 4.199533 0.09688140
-    #> 5          5 5.243521 0.11825505
-    #> 6          6 6.285246 0.13854007
+    #>   percentile  estimate  std.error
+    #> 1          1 0.9843332 0.01299658
+    #> 2          2 1.9698260 0.02539664
+    #> 3          3 2.9564483 0.03721271
+    #> 4          4 3.9441699 0.04845732
+    #> 5          5 4.9329608 0.05914303
+    #> 6          6 5.9227909 0.06928238
 
 This function also allows the use of weights. For an example with a a
 real-world dataset, please see the vignette example.
