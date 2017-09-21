@@ -13,6 +13,7 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 ```
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/perccalc)](http://cran.r-project.org/package=perccalc)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/cimentadaj/perccalc?branch=master&svg=true)](https://ci.appveyor.com/project/cimentadaj/perccalc)
 
 
 ## Overview
@@ -29,7 +30,9 @@ The package has two main functions:
 You can install and load the package with these commands:
 
 ```{r, eval = F}
-devtools::install_github("cimentadaj/perccalc")
+devtools::install_github("cimentadaj/perccalc") # for development version
+# or
+install.packages("perccalc") # for stable version
 library(perccalc)
 ```
 

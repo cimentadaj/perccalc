@@ -2,6 +2,8 @@ perccalc
 ========
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/perccalc)](http://cran.r-project.org/package=perccalc)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/cimentadaj/perccalc?branch=master&svg=true)](https://ci.appveyor.com/project/cimentadaj/perccalc)
 
 Overview
 --------
@@ -22,7 +24,9 @@ Installation
 
 You can install and load the package with these commands:
 
-    devtools::install_github("cimentadaj/perccalc")
+    devtools::install_github("cimentadaj/perccalc") # for development version
+    # or
+    install.packages("perccalc") # for stable version
     library(perccalc)
 
 Usage
@@ -46,26 +50,26 @@ percentile differences using both variables.
 
     perc_diff(df, categorical, continuous, percentiles = c(90, 10))
     #>  difference          se 
-    #> 79.80784221  0.08769345
+    #> 79.93087313  0.05516833
 
 You can optionally add weights with the `weights` argument.
 
     perc_diff(df, categorical, continuous, weights = wt, percentiles = c(90, 10))
     #> difference         se 
-    #> 80.4464316  0.2480369
+    #> 79.3131968  0.7011859
 
 On the other hand, the `perc_dist` (short for percentile distribution)
 allows you to estimate the score for every percentile.
 
     perc_dist(df, categorical, continuous) %>%
       head()
-    #>   percentile  estimate  std.error
-    #> 1          1 0.9843332 0.01299658
-    #> 2          2 1.9698260 0.02539664
-    #> 3          3 2.9564483 0.03721271
-    #> 4          4 3.9441699 0.04845732
-    #> 5          5 4.9329608 0.05914303
-    #> 6          6 5.9227909 0.06928238
+    #>   percentile estimate   std.error
+    #> 1          1 1.003895 0.007996873
+    #> 2          2 2.008064 0.015624241
+    #> 3          3 3.012492 0.022889889
+    #> 4          4 4.017169 0.029801605
+    #> 5          5 5.022081 0.036367184
+    #> 6          6 6.027216 0.042594420
 
 This function also allows the use of weights. For an example with a a
 real-world dataset, please see the vignette example.
