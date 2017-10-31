@@ -23,5 +23,6 @@ Imports: magrittr,
     MASS
 Suggests:
     spelling, knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr

@@ -2,7 +2,7 @@
 perccalc
 ========
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/perccalc)](http://cran.r-project.org/package=perccalc) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/cimentadaj/perccalc?branch=master&svg=true)](https://ci.appveyor.com/project/cimentadaj/perccalc)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/perccalc)](http://cran.r-project.org/package=perccalc) [![Travis-CI Build Status](https://travis-ci.org/cimentadaj/perccalc.svg?branch=master)](https://travis-ci.org/cimentadaj/perccalc)
 
 Overview
 --------
@@ -47,7 +47,7 @@ Note that the categorical variable has to be an ordered factor (this is a requir
 ``` r
 perc_diff(df, categorical, continuous, percentiles = c(90, 10))
 #> difference         se 
-#> 80.1770518  0.2290125
+#> 79.5738847  0.3862681
 ```
 
 You can optionally add weights with the `weights` argument.
@@ -55,7 +55,7 @@ You can optionally add weights with the `weights` argument.
 ``` r
 perc_diff(df, categorical, continuous, weights = wt, percentiles = c(90, 10))
 #> difference         se 
-#> 79.5660193  0.5970977
+#>  79.899449   0.573022
 ```
 
 On the other hand, the `perc_dist` (short for percentile distribution) allows you to estimate the score for every percentile.
@@ -63,13 +63,13 @@ On the other hand, the `perc_dist` (short for percentile distribution) allows yo
 ``` r
 perc_dist(df, categorical, continuous) %>%
   head()
-#>   percentile estimate  std.error
-#> 1          1 1.033228 0.03524072
-#> 2          2 2.065759 0.06884538
-#> 3          3 3.097595 0.10084844
-#> 4          4 4.128739 0.13128434
-#> 5          5 5.159192 0.16018757
-#> 6          6 6.188957 0.18759263
+#>   percentile  estimate std.error
+#> 1          1 0.9809612 0.0563256
+#> 2          2 1.9626848 0.1100880
+#> 3          3 2.9451542 0.1613409
+#> 4          4 3.9283532 0.2101378
+#> 5          5 4.9122653 0.2565324
+#> 6          6 5.8968743 0.3005784
 ```
 
 This function also allows the use of weights. For an example with a a real-world dataset, please see the vignette example.
