@@ -3,3 +3,4 @@
 ^README\.Rmd$
 ^cran_comments\.md$
 ^README\.md$
+^\.travis\.yml$
