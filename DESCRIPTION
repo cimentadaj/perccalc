@@ -6,6 +6,7 @@ Description: An implementation of two functions that estimate values for percent
 Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
+Language: en-GB
 LazyData: true
 RoxygenNote: 6.0.1
 Imports: magrittr,
