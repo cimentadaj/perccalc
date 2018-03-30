@@ -1,7 +1,7 @@
  Test environments
-* local OS X install, R version 3.4.0 (2017-04-21)
-* Windows 7, Enterprise, R version 3.4.1 (2017-06-30)
-* Ubuntu 16.04.3 x64, R version 3.4.1 (2017-06-30)
+* local OS X install, R version 3.4.4 (2018-03-30)
+* Windows 10, R version 3.4.4 (2018-03-30)
+* Ubuntu 16.04.3 x64, R version 3.4.4 (Travis-CI) (2018-03-30)
 * win-builder (devel and release)
 
 ## R CMD check results
@@ -12,5 +12,5 @@ R CMD check results
 0 errors | 0 warnings | 0 notes
 
 
-- Just to highlight that this is my first submission
+- 
 
