@@ -4,7 +4,7 @@ author: "Jorge Cimentada"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{"Warning message with perccalc package"}
+  %\VignetteIndexEntry{Warning message with perccalc package}
   %\VignetteEngine{knitr::rmarkdown}
   usepackage[UTF-8]{inputenc}
 ---

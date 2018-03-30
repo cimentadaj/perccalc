@@ -4,7 +4,7 @@ author: "Jorge Cimentada"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{"Calculating percentile differences from ordered categorical and continuous variables"}
+  %\VignetteIndexEntry{Calculating percentile differences from ordered categorical and continuous variables}
   %\VignetteEngine{knitr::rmarkdown}
   usepackage[UTF-8]{inputenc}
 ---
