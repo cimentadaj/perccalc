@@ -1,6 +1,8 @@
 ## ---- warning = FALSE, message = FALSE-----------------------------------
 library(perccalc)
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
+
 
 ## ---- message = FALSE, warning = FALSE-----------------------------------
 

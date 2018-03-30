@@ -15,7 +15,8 @@ Let's load our packages.
 
 ```{r, warning = FALSE, message = FALSE}
 library(perccalc)
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
 ```
 
 For example, take the `survey` data on smoking habits.

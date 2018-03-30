@@ -47,7 +47,9 @@ library(perccalc)
 ```
 
 ```{r, message = FALSE, warning = FALSE}
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
+
 
 df <-
   tibble(

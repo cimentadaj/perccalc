@@ -17,12 +17,12 @@ Imports: magrittr,
     tidyr,
     multcomp,
     haven,
-    tidyverse,
     ggplot2,
     devtools,
     MASS
 Suggests:
-    spelling, knitr,
+    spelling,
+    knitr,
     rmarkdown,
     testthat
 VignetteBuilder: knitr

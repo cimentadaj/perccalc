@@ -16,7 +16,8 @@ In this vignette I show you how to use the function and match the results to the
 We'll be using a real world data set, the General Social Survey, that surveys American citizens on attitudes, behaviors and attributes. For this example we'll need the packages below.
 
 ```{r, message = FALSE, warning = FALSE}
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
 library(haven)
 ```
 

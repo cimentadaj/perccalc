@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jorge Cimentada" />
 
-<meta name="date" content="2017-09-14" />
+<meta name="date" content="2018-03-30" />
 
 <title>Warning message with perccalc package</title>
 
@@ -70,19 +70,20 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Warning message with perccalc package</h1>
 <h4 class="author"><em>Jorge Cimentada</em></h4>
-<h4 class="date"><em>2017-09-14</em></h4>
+<h4 class="date"><em>2018-03-30</em></h4>
 
 
 
 <p>While the other vignette shows you how to use <code>perccalc</code> appropriately, there are instances where there’s just too few categories to estimate percentiles properly. Imagine estimating a distribution of <code>1:100</code> percentiles with only three ordered categories, it just sounds too far fetched.</p>
 <p>Let’s load our packages.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(perccalc)
-<span class="kw">library</span>(tidyverse)</code></pre></div>
+<span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(ggplot2)</code></pre></div>
 <p>For example, take the <code>survey</code> data on smoking habits.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">smoking_data &lt;-
-<span class="st">  </span>MASS::survey %&gt;%<span class="st"> </span><span class="co"># you will need to install the MASS package</span>
-<span class="st">  </span><span class="kw">as_tibble</span>() %&gt;%
-<span class="st">  </span><span class="kw">select</span>(Sex, Smoke, Pulse) %&gt;%
+<span class="st">  </span>MASS<span class="op">::</span>survey <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># you will need to install the MASS package</span>
+<span class="st">  </span><span class="kw">as_tibble</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(Sex, Smoke, Pulse) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">rename</span>(
     <span class="dt">gender =</span> Sex,
     <span class="dt">smoke =</span> Smoke,
@@ -90,22 +91,22 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
   )</code></pre></div>
 <p>The final results is this dataset:</p>
 <pre><code>## # A tibble: 237 x 3
-##    gender  smoke pulse_rate
-##    &lt;fctr&gt; &lt;fctr&gt;      &lt;int&gt;
-##  1   Male  Never         35
-##  2 Female  Never         40
-##  3 Female  Never         48
-##  4   Male  Never         48
-##  5 Female  Never         50
-##  6 Female  Regul         50
-##  7   Male  Regul         54
-##  8   Male  Never         55
-##  9   Male  Never         56
-## 10   Male  Never         59
+##    gender smoke pulse_rate
+##    &lt;fct&gt;  &lt;fct&gt;      &lt;int&gt;
+##  1 Male   Never         35
+##  2 Female Never         40
+##  3 Female Never         48
+##  4 Male   Never         48
+##  5 Female Never         50
+##  6 Female Regul         50
+##  7 Male   Regul         54
+##  8 Male   Never         55
+##  9 Male   Never         56
+## 10 Male   Never         59
 ## # ... with 227 more rows</code></pre>
 <p>Note that there’s only four categories in the <code>smoke</code> variable. Let’s try to estimate the percentile difference.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">smoking_data &lt;-
-<span class="st">  </span>smoking_data %&gt;%
+<span class="st">  </span>smoking_data <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">mutate</span>(<span class="dt">smoke =</span> <span class="kw">factor</span>(smoke,
                         <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;Never&quot;</span>, <span class="st">&quot;Occas&quot;</span>, <span class="st">&quot;Regul&quot;</span>, <span class="st">&quot;Heavy&quot;</span>),
                         <span class="dt">ordered =</span> <span class="ot">TRUE</span>))
@@ -118,7 +119,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>## difference 
 ##   385.1357</code></pre>
 <p><code>perc_diff</code> returns the estimated coefficient but also warns you that it’s difficult for the function to estimate the standard error. This happens similarly for <code>perc_dist</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">perc_dist</span>(smoking_data, smoke, pulse_rate) %&gt;%
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">perc_dist</span>(smoking_data, smoke, pulse_rate) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">head</span>()</code></pre></div>
 <pre><code>## Warning in perc_dist(smoking_data, smoke, pulse_rate): Too few categories in categorical variable to estimate the
 ##       variance-covariance matrix and standard errors. Proceeding without
