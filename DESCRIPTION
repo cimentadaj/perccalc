@@ -15,14 +15,13 @@ Imports: magrittr,
     tibble,
     broom,
     tidyr,
-    multcomp,
-    haven,
-    ggplot2,
-    devtools,
-    MASS
+    multcomp
 Suggests:
     spelling,
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    ggplot2,
+    haven,
+    MASS
 VignetteBuilder: knitr
