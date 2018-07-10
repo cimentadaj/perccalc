@@ -36,10 +36,7 @@
 #'
 #'
 #' perc_dist(toy_data, type, score)
-perc_dist <- function(data_model,
-                            categorical_var,
-                            continuous_var,
-                            weights = NULL) {
+perc_dist <- function(data_model, categorical_var, continuous_var, weights = NULL) {
   variable_name <- as.character(substitute(categorical_var))
   continuous_name <- as.character(substitute(continuous_var))
 
@@ -117,10 +114,7 @@ perc_dist <- function(data_model,
 
   if (enough_categories) {
     warning(
-      "Too few categories in categorical variable to estimate the
-      variance-covariance matrix and standard errors. Proceeding without
-      estimated standard errors but perhaps you should increase the number
-      of categories"
+      "Too few categories in categorical variable to estimate the variance-covariance matrix and standard errors. Proceeding without estimated standard errors but perhaps you should increase the number of categories"
     )
     only_estimates <- purrr::map(all_perc, ~ .x[3])
     final_column_selection <- 2:1

@@ -58,7 +58,7 @@ test_that("When too few categories in df, correct output", {
   expect_is(perc_diff(smoking_data, Smoke, Pulse), "numeric")
 
   # is length 1
-  expect_length(perc_diff(smoking_data, Smoke, Pulse), 1)
+  expect_length(perc_diff(smoking_data, Smoke, Pulse), 2)
 
   # and returns a named vector
   expect_named(perc_diff(smoking_data, Smoke, Pulse))

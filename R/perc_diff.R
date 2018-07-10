@@ -42,6 +42,7 @@
 #' perc_diff(toy_data, type, score, percentiles = c(50, 10))
 #'
 #' perc_diff(toy_data, type, score, weights = wt, percentiles = c(30, 10))
+#'
 perc_diff <- function(data_model,
                       categorical_var,
                       continuous_var,
@@ -97,13 +98,11 @@ perc_diff <- function(data_model,
 
   if (is.nan(stats::vcov(linear_combination))) {
     warning(
-      "Too few categories in categorical variable to estimate the
-      variance-covariance matrix and standard errors. Proceeding without
-      estimated standard errors but perhaps you should increase the number
-      of categories"
+      "Too few categories in categorical variable to estimate the variance-covariance matrix and standard errors. Proceeding without estimated standard errors but perhaps you should increase the numberof categories"
     )
 
     lcmb <- broom::tidy(linear_combination)
+    se_hip_lop <- NA
   } else {
     lcmb <-
       broom::tidy(
@@ -111,11 +110,11 @@ perc_diff <- function(data_model,
           linear_combination
         )
       )
+    se_hip_lop <- lcmb[1, 4, drop = TRUE]
   }
 
 
   diff_hip_lop <- lcmb[1, 3, drop = TRUE]
-  se_hip_lop <- lcmb[1, 4, drop = TRUE]
 
   c(difference = diff_hip_lop, se = se_hip_lop)
 }
