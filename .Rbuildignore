@@ -1,6 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
-^cran_comments\.md$
+^cran-comments\.md$
 ^README\.md$
 ^\.travis\.yml$
