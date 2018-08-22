@@ -25,17 +25,17 @@ Let's prepare the data.
 
 ```{r, message = FALSE, warning = FALSE}
 temp_file <- tempfile(fileext = ".zip")
-download.file("http://gss.norc.org/Documents/stata/2016_stata.zip", temp_file)
+download.file("http://gss.norc.org/documents/stata/2016_stata.zip", temp_file)
 unzip(temp_file, exdir = tempdir())
 
-data_link <- list.files(tempdir(), full.names = TRUE, pattern = "*.DTA")
+data_link <- list.files(tempdir(), full.names = TRUE, pattern = "GSS2016.DTA")
 
 gss <-
   read_dta(data_link) %>%
-  select(rincome, prestg10, wtss) %>%
+  select(rincome, PRESTG10, wtss) %>%
   rename(
     income = rincome,
-    prestige = prestg10,
+    prestige = PRESTG10,
     wt = wtss
   )
 
@@ -99,7 +99,7 @@ Now, how are we sure that these estimates are as accurate as the Reardon (2011) 
 ```{r, eval = FALSE}
 # Saving the dataset to a path
 gss %>%
-  write_dta(path = "/Users/cimentadaj/Downloads/gss_income.dta", version = 13)
+  write_dta(path = "C:\\Users\\cimentadaj\\Downloads\\gss_income.dta", version = 13)
 ```
 
 Running the code below using the `gss_income.dta`..
