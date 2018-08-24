@@ -14,4 +14,4 @@ R CMD check results
 
 - 
 
-Update the breaking dependency `broom` after new release.
+Slight changes in vignette
