@@ -63,3 +63,23 @@ test_that("When too few categories in df, correct output", {
   # and returns a named vector
   expect_named(perc_diff(smoking_data, Smoke, Pulse))
 })
+
+
+test_that("perc_diff calculates value according to Reardon", {
+  library(carData)
+  library(dplyr)
+
+  set.seed(213141)
+  data("GSSvocab")
+
+  gss <-
+    GSSvocab %>%
+    filter(year == '1978') %>%
+    mutate(ageGroup = factor(ageGroup, ordered = TRUE),
+           weight = sample(1:3, size = nrow(.), replace = TRUE, prob = c(0.1, 0.5, 0.4))) %>%
+    select(ageGroup, vocab, weight)
+
+  result <- unname(round(perc_diff(gss, ageGroup, vocab, weight), 4))
+
+  expect_true(all.equal(c(0.1761, 0.3775), result))
+})

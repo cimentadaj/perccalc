@@ -17,7 +17,6 @@ Let's load our packages.
 library(perccalc)
 library(dplyr)
 library(ggplot2)
-
 ```
 
 For example, take the `survey` data on smoking habits.

@@ -17,12 +17,12 @@ Imports: magrittr,
     broom,
     tidyr,
     multcomp
-Suggests:
+Suggests: 
     spelling,
     knitr,
     rmarkdown,
     testthat,
     ggplot2,
-    haven,
-    MASS
+    MASS,
+    carData
 VignetteBuilder: knitr
