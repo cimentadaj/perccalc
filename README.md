@@ -4,7 +4,6 @@
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/perccalc)](http://cran.r-project.org/package=perccalc)
 [![Travis-CI Build
 Status](https://travis-ci.org/cimentadaj/perccalc.svg?branch=master)](https://travis-ci.org/cimentadaj/perccalc)
-
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/cimentadaj/perccalc?branch=master&svg=true)](https://ci.appveyor.com/project/cimentadaj/perccalc)
 
@@ -58,7 +57,7 @@ percentile differences using both variables.
 ``` r
 perc_diff(df, categorical, continuous, percentiles = c(90, 10))
 #> difference         se 
-#> 80.5181925  0.1575223
+#> 79.5140766  0.3035694
 ```
 
 You can optionally add weights with the `weights`
@@ -67,7 +66,7 @@ argument.
 ``` r
 perc_diff(df, categorical, continuous, weights = wt, percentiles = c(90, 10))
 #> difference         se 
-#> 81.2796079  0.2224062
+#> 79.9275609  0.3498872
 ```
 
 On the other hand, the `perc_dist` (short for percentile distribution)
@@ -79,11 +78,11 @@ perc_dist(df, categorical, continuous) %>%
 #> # A tibble: 6 x 3
 #>   percentile estimate std.error
 #>        <int>    <dbl>     <dbl>
-#> 1          1     1.09    0.0232
-#> 2          2     2.18    0.0454
-#> 3          3     3.27    0.0665
-#> 4          4     4.35    0.0866
-#> 5          5     5.43    0.106 
+#> 1          1    0.952    0.0475
+#> 2          2    1.91     0.0927
+#> 3          3    2.86     0.136 
+#> 4          4    3.82     0.177 
+#> 5          5    4.78     0.216 
 #> # ... with 1 more row
 ```
 
