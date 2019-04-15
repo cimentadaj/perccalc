@@ -18,6 +18,8 @@ options(tibble.print_min = 5, tibble.print_max = 5)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/perccalc)](http://cran.r-project.org/package=perccalc)
 [![Travis-CI Build Status](https://travis-ci.org/cimentadaj/perccalc.svg?branch=master)](https://travis-ci.org/cimentadaj/perccalc)
 
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/cimentadaj/perccalc?branch=master&svg=true)](https://ci.appveyor.com/project/cimentadaj/perccalc)
+
 
 ## Overview
 
