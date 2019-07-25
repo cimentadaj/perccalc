@@ -121,22 +121,22 @@
 <p>Note that the categorical variable has to be an ordered factor (this is a requirement of both functions). For example, <code>perc_diff</code> calculates percentile differences using both variables.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="reference/perc_diff.html">perc_diff</a></span>(df, categorical, continuous, <span class="dt">percentiles =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; difference         se </span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt; 79.9749285  0.3781155</span></span></code></pre></div>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt;  79.932606   0.366152</span></span></code></pre></div>
 <p>You can optionally add weights with the <code>weights</code> argument.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="reference/perc_diff.html">perc_diff</a></span>(df, categorical, continuous, <span class="dt">weights =</span> wt, <span class="dt">percentiles =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt;  difference          se </span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; 80.58692769  0.09661352</span></span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; difference         se </span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; 80.0299356  0.4393123</span></span></code></pre></div>
 <p>On the other hand, the <code>perc_dist</code> (short for percentile distribution) allows you to estimate the score for every percentile.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="reference/perc_dist.html">perc_dist</a></span>(df, categorical, continuous) <span class="op">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>()</span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt; # A tibble: 6 x 3</span></span>
 <span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt;   percentile estimate std.error</span></span>
 <span id="cb5-5"><a href="#cb5-5"></a><span class="co">#&gt;        &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; 1          1     1.03    0.0564</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; 2          2     2.06    0.110 </span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt; 3          3     3.09    0.161 </span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; 4          4     4.11    0.210 </span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; 5          5     5.14    0.256 </span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; 1          1     1.01    0.0531</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; 2          2     2.02    0.104 </span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt; 3          3     3.03    0.152 </span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt; 4          4     4.04    0.198 </span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; 5          5     5.04    0.242 </span></span>
 <span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt; # … with 1 more row</span></span></code></pre></div>
 <p>This function also allows the use of weights. For an example with a a real-world dataset, please see the vignette example.</p>
 <p>All the intelectual ideas come from Sean Reardon. The R implemention is my own work.</p>
