@@ -14,7 +14,7 @@ calculates percentile differences from ordered categorical variables. He
 explains his procedure very much in detail in the appendix of the book
 chapter but no formal implementation has been yet available on the web.
 
-With this package I introduce two functions that apply the procedure:
+This package introduces two functions that apply the procedure:
 
   - `perc_diff`, for calculating percentile differences
   - `perc_dist`, for calculating scores for all percentiles
