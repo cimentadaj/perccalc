@@ -36,6 +36,7 @@ Calculate percentile differences from an ordered categorical variable
 
 library(dplyr)
 
+
 set.seed(23131)
 N <- 1000
 K <- 20
