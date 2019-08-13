@@ -121,22 +121,22 @@
 <p>Note that the categorical variable has to be an ordered factor (this is a requirement of both functions). For example, <code>perc_diff</code> calculates percentile differences using both variables.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/perc_diff.html">perc_diff</a></span>(df, categorical, continuous, <span class="dt">percentiles =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; difference         se </span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; 79.2331323  0.2644872</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; 79.8764299  0.1908632</span></a></code></pre></div>
 <p>You can optionally add weights with the <code>weights</code> argument.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/perc_diff.html">perc_diff</a></span>(df, categorical, continuous, <span class="dt">weights =</span> wt, <span class="dt">percentiles =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; difference         se </span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; 79.2538383  0.5802351</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt;  difference          se </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; 80.10068786  0.05570738</span></a></code></pre></div>
 <p>On the other hand, the <code>perc_dist</code> (short for percentile distribution) allows you to estimate the score for every percentile.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/perc_dist.html">perc_dist</a></span>(df, categorical, continuous) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>()</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; # A tibble: 6 x 3</span></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt;   percentile estimate std.error</span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt;        &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; 1          1    0.942    0.0394</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; 2          2    1.89     0.0770</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; 3          3    2.83     0.113 </span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; 4          4    3.78     0.147 </span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; 5          5    4.73     0.179 </span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; 1          1     1.03    0.0277</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; 2          2     2.06    0.0542</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; 3          3     3.09    0.0794</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; 4          4     4.12    0.103 </span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; 5          5     5.15    0.126 </span></a>
 <a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; # … with 1 more row</span></a></code></pre></div>
 <p>This function also allows the use of weights. For an example with a a real-world dataset, please see the vignette example.</p>
 <p>All the intelectual ideas come from Sean Reardon. The R implemention is my own work.</p>
