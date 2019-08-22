@@ -1,3 +1,8 @@
+# perccalc 1.0.4.9999
+
+### Minor changes
+* Both exported functions now accept a data frame with any number of variables and only the categorial, continuos and weights variables are used.
+
 ### Internals
 
 * Depencies `purrr`, `broom` and  `tidyr` were removed from the package. `dplyr` moves to `Suggests`

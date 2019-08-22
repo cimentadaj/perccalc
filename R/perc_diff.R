@@ -12,7 +12,6 @@
 #' @param percentiles A numeric vector of two numbers specifying which
 #'  percentiles to subtract
 #'
-#'
 #' @details \code{perc_diff} drops missing observations silently for calculating
 #' the linear combination of coefficients.
 #' 
@@ -77,10 +76,12 @@ perc_diff <- function(data_model,
       linfct = paste0(d1, "*x1 + ", d2, "*x2 + ", d3, "*x3", " = 0")
     )
 
-  if (is.nan(stats::vcov(linear_combination))) {
+  not_enough_categories <- is.nan(stats::vcov(linear_combination))
+
+  if (not_enough_categories) {
 
     warning(
-      "Too few categories in categorical variable to estimate the variance-covariance matrix and standard errors. Proceeding without estimated standard errors but perhaps you should increase the numberof categories" #nolintr
+      "Too few categories in categorical variable to estimate the variance-covariance matrix and standard errors. Proceeding without estimated standard errors but perhaps you should increase the number of categories" #nolintr
     )
 
     se_hip_lop <- NA
@@ -108,6 +109,12 @@ category_summary <- function(data_model,
   )
 
   stopifnot(is_ordered_fct)
+
+  data_model$use_weights <-
+    if (is.null(weights)) rep(1, nrow(data_model)) else data_model[[weights]]
+
+  data_model <- data_model[, c(categorical_var, continuous_var, "use_weights")]
+
   data_model <- data_model[stats::complete.cases(data_model), ]
 
   category_columns <- levels(data_model[[categorical_var]])
@@ -117,14 +124,11 @@ category_summary <- function(data_model,
     ifelse(data_model[[categorical_var]] == .x, 1, 0)
   })
 
-  use_weights <-
-    if (is.null(weights)) rep(1, nrow(data_model)) else data_model[[weights]]
-
   perc <-
     vapply(
       data_model[, new_cat_cols, drop = FALSE],
       stats::weighted.mean,
-      w = use_weights,
+      w = data_model$use_weights,
       FUN.VALUE = numeric(1)
     )
     
@@ -135,7 +139,7 @@ category_summary <- function(data_model,
 
     model <- stats::lm(
       formula = stats::as.formula(paste(continuous_var, "~ 1")),
-      weights = use_weights[category_selection],
+      weights = data_model$use_weights[category_selection],
       data = data_model[category_selection, ]
     )
 
