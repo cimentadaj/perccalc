@@ -52,16 +52,18 @@ smoking_data$Smoke <-
 test_that("When too few categories in df, correct output", {
 
   # Throws a warnings
-  expect_warning(perc_diff(smoking_data, Smoke, Pulse))
+  warn_result <- expect_warning(perc_diff(smoking_data, Smoke, Pulse),
+                                regexp = "Too few categories in categorical variable to estimate the variance-covariance matrix and standard errors. Proceeding without estimated standard errors but perhaps you should increase the number of categories", #nolintr
+                                fixed = TRUE)
 
   # Output is numeric
-  expect_is(perc_diff(smoking_data, Smoke, Pulse), "numeric")
+  expect_is(warn_result, "numeric")
 
   # is length 1
-  expect_length(perc_diff(smoking_data, Smoke, Pulse), 2)
+  expect_length(warn_result, 2)
 
   # and returns a named vector
-  expect_named(perc_diff(smoking_data, Smoke, Pulse))
+  expect_named(warn_result)
 })
 
 
