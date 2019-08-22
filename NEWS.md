@@ -1,3 +1,7 @@
+### Internals
+
+* Depencies `purrr`, `broom` and  `tidyr` were removed from the package. `dplyr` moves to `Suggests`
+
 # perccalc 1.0.3
 
 ### Bug fixes
