@@ -4,11 +4,16 @@
 #' @param data_model A data frame with at least the categorical and continuous
 #'  variables from which to estimate the percentiles
 #' @param categorical_var The bare unquoted name of the categorical variable.
-#'  This variable SHOULD be an ordered factor. If not, the function will stop.
+#'  This variable \strong{should} be an ordered factor. If not, the function
+#'  will raise an error.
 #' @param continuous_var The bare unquoted name of the continuous variable from
 #'  which to estimate the percentiles
+#' 
 #' @param weights The bare unquoted name of the optional weight variable.
-#'  If not specified, then estimation is done without weights
+#'  If not specified, then equal weights are assumed.
+#'
+#' @details \code{perc_dist} drops missing observations silently for calculating
+#' the linear combination of coefficients.
 #'
 #' @return A data frame with the scores and standard errors for each percentile
 #' 
@@ -32,9 +37,12 @@
 #' toy_data$type <- factor(toy_data$type, levels = unique(toy_data$type), ordered = TRUE)
 #'
 #' perc_dist(toy_data, type, score)
-perc_dist <- function(data_model, categorical_var, continuous_var, weights = NULL) {
-  variable_name <- as.character(substitute(categorical_var))
-  continuous_name <- as.character(substitute(continuous_var))
+perc_dist <- function(data_model,
+                      categorical_var,
+                      continuous_var,
+                      weights = NULL) {
+  categorical_var <- as.character(substitute(categorical_var))
+  continuous_var <- as.character(substitute(continuous_var))
 
   weights <- as.character(substitute(weights))
   weights <- if (length(weights) == 0) NULL else weights
@@ -42,8 +50,8 @@ perc_dist <- function(data_model, categorical_var, continuous_var, weights = NUL
   data_model <-
     category_summary(
       data_model,
-      variable_name,
-      continuous_name,
+      categorical_var,
+      continuous_var,
       weights
     )
 
