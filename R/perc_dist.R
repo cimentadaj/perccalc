@@ -11,29 +11,25 @@
 #'  If not specified, then estimation is done without weights
 #'
 #' @return A data frame with the scores and standard errors for each percentile
-#' @importFrom magrittr "%>%"
+#' 
 #' @export
 #'
 #' @examples
-#'
-#' library(dplyr)
 #'
 #' set.seed(23131)
 #' N <- 1000
 #' K <- 20
 #'
-#' toy_data <- tibble::tibble(id = 1:N,
-#' score = rnorm(N, sd = 2),
-#' type = rep(paste0("inc", 1:20), each = N/K),
-#' wt = 1)
+#' toy_data <- data.frame(id = 1:N,
+#'                        score = rnorm(N, sd = 2),
+#'                        type = rep(paste0("inc", 1:20), each = N/K),
+#'                        wt = 1)
 #'
-#' # perc_dist(toy_data, type, score)
+#'
+#' # perc_diff(toy_data, type, score)
 #' # type is not an ordered factor!
 #'
-#' toy_data <-
-#'  toy_data %>%
-#'  mutate(type = factor(type, levels = unique(type), ordered = TRUE))
-#'
+#' toy_data$type <- factor(toy_data$type, levels = unique(toy_data$type), ordered = TRUE)
 #'
 #' perc_dist(toy_data, type, score)
 perc_dist <- function(data_model, categorical_var, continuous_var, weights = NULL) {
@@ -41,7 +37,7 @@ perc_dist <- function(data_model, categorical_var, continuous_var, weights = NUL
   continuous_name <- as.character(substitute(continuous_var))
 
   weights <- as.character(substitute(weights))
-  weights <- if (purrr::is_empty(weights)) NULL else weights
+  weights <- if (length(weights) == 0) NULL else weights
 
   data_model <-
     category_summary(
@@ -53,7 +49,7 @@ perc_dist <- function(data_model, categorical_var, continuous_var, weights = NUL
 
   model <- linear_calculation(data_model)
   
-  all_lcmb <- purrr::map(1:100, ~ {
+  all_lcmb <- lapply(1:100, function(.x) {
 
     d1 <- (.x) / 100
     d2 <- (.x ^ 2) / (100 ^ 2)
@@ -70,50 +66,38 @@ perc_dist <- function(data_model, categorical_var, continuous_var, weights = NUL
 
 
   all_perc <-
-    purrr::map(all_lcmb, ~ {
-      enough_categories <- is.nan(stats::vcov(.x))
+    lapply(all_lcmb, function(.x) {
 
-      if (enough_categories) {
-
-        lcmb <- broom::tidy(.x)
-        lcmb
-
-      } else {
-        lcmb <-
-          broom::tidy(
-            summary(
-              .x
-            )
-          )
-        lcmb
-      }
+      not_enough_categories <- is.nan(stats::vcov(.x))
+      se <- if (not_enough_categories) NA else multcomp::adjusted()(.x)$sigma
+      linear_diff <- stats::coef(.x)
+      c("estimate" = unname(linear_diff), "std.error" = unname(se))
     })
 
-  enough_categories <-
-    is.nan(
-      stats::vcov(
-        all_lcmb[[100]]
-      )
-    )
+  # If not enough categories, this should be true for all percentiles
+  not_enough_categories <- is.nan(stats::vcov(all_lcmb[[100]]))
 
-  if (enough_categories) {
+  if (not_enough_categories) {
+
     warning(
-      "Too few categories in categorical variable to estimate the variance-covariance matrix and standard errors. Proceeding without estimated standard errors but perhaps you should increase the number of categories"
+      "Too few categories in categorical variable to estimate the variance-covariance matrix and standard errors. Proceeding without estimated standard errors but perhaps you should increase the number of categories" #nolintr
     )
-    only_estimates <- purrr::map(all_perc, ~ .x[3])
-    final_column_selection <- 2:1
+    # Only estimates (pos 1)
+    estimates <- lapply(all_perc, `[`, 1)
+    exclude_se <- TRUE
   } else {
-    only_estimates <- purrr::map(all_perc, ~ .x[c(3, 4)])
-    final_column_selection <- c(3, 1, 2)
+    # Estimates + std.error (column 1 and 2)
+    estimates <- lapply(all_perc, `[`, c(1, 2))
+    exclude_se <- FALSE
   }
 
   percentile_data <-
-    purrr::reduce(
-    stats::setNames(only_estimates, 1:100),
-    dplyr::bind_rows
+    data.frame(
+      percentile = 1:100,
+      do.call(rbind, estimates)
     )
 
-  percentile_data$percentile <- 1:100
+  if (exclude_se) percentile_data <- percentile_data[, c(1, 2)]
 
-  percentile_data[, final_column_selection]
+  tibble::as_tibble(percentile_data)
 }

@@ -29,24 +29,20 @@ Calculate a distribution of percentiles from an ordered categorical variable
 }
 \examples{
 
-library(dplyr)
-
 set.seed(23131)
 N <- 1000
 K <- 20
 
-toy_data <- tibble::tibble(id = 1:N,
-score = rnorm(N, sd = 2),
-type = rep(paste0("inc", 1:20), each = N/K),
-wt = 1)
+toy_data <- data.frame(id = 1:N,
+                       score = rnorm(N, sd = 2),
+                       type = rep(paste0("inc", 1:20), each = N/K),
+                       wt = 1)
 
-# perc_dist(toy_data, type, score)
+
+# perc_diff(toy_data, type, score)
 # type is not an ordered factor!
 
-toy_data <-
- toy_data \%>\%
- mutate(type = factor(type, levels = unique(type), ordered = TRUE))
-
+toy_data$type <- factor(toy_data$type, levels = unique(toy_data$type), ordered = TRUE)
 
 perc_dist(toy_data, type, score)
 }
