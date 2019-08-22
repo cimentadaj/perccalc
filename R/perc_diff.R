@@ -63,26 +63,7 @@ perc_diff <- function(data_model,
       weights
     )
 
-  data_model$cathi <- cumsum(data_model$per)
-  data_model$catlo <- my_lag(data_model$cathi, default = 0)
-
-  intermediate_calculation <- (data_model$cathi - data_model$catlo) ^ 2
-
-  data_model$catmid <- (data_model$catlo + data_model$cathi) / 2
-  data_model$x1 <- data_model$catmid
-  data_model$x2 <- data_model$catmid ^ 2 +  intermediate_calculation / 12
-  data_model$x3 <- data_model$catmid ^ 3 +  intermediate_calculation / 4
-  data_model$cimnhi <- data_model$mean + 1.96 * data_model$se_mean
-  data_model$cimnlo <- data_model$mean - 1.96 * data_model$se_mean
-
-  data_ready <- data_model
-
-  model_data <-
-    stats::lm(
-      mean ~ x1 + x2 + x3,
-      weights = 1 / data_ready$se_mean ^ 2, data = data_ready
-    )
-
+  model <- linear_calculation(data_model)
   hi_p <- percentiles[1]
   lo_p <- percentiles[2]
 
@@ -92,7 +73,7 @@ perc_diff <- function(data_model,
 
   linear_combination <-
     multcomp::glht(
-      model = model_data,
+      model = model,
       linfct = paste0(d1, "*x1 + ", d2, "*x2 + ", d3, "*x3", " = 0")
     )
 
@@ -181,4 +162,28 @@ my_lag <- function(x, n = 1L, default = 0) {
   out <- c(rep(default, n), x[seq_len(xlen - n)])
   attributes(out) <- attributes(x)
   out
+}
+
+
+linear_calculation <- function(data_model) {
+
+  data_model$cathi <- cumsum(data_model$per)
+  data_model$catlo <- my_lag(data_model$cathi, default = 0)
+
+  intermediate_calculation <- (data_model$cathi - data_model$catlo) ^ 2
+
+  data_model$catmid <- (data_model$catlo + data_model$cathi) / 2
+  data_model$x1 <- data_model$catmid
+  data_model$x2 <- data_model$catmid ^ 2 +  intermediate_calculation / 12
+  data_model$x3 <- data_model$catmid ^ 3 +  intermediate_calculation / 4
+  data_model$cimnhi <- data_model$mean + 1.96 * data_model$se_mean
+  data_model$cimnlo <- data_model$mean - 1.96 * data_model$se_mean
+
+  model_data <-
+    stats::lm(
+      mean ~ x1 + x2 + x3,
+      weights = 1 / data_model$se_mean ^ 2, data = data_model
+    )
+
+  model_data
 }
