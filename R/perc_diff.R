@@ -94,7 +94,7 @@ perc_diff <- function(data_model,
 
   diff_hip_lop <- stats::coef(linear_combination)
 
-  c(difference = diff_hip_lop, se = se_hip_lop)
+  c(difference = unname(diff_hip_lop), se = unname(se_hip_lop))
 }
 
 
