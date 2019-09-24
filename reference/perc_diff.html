@@ -192,17 +192,11 @@ the linear combination of coefficients.</p>
 
 <span class='no'>toy_data</span>$<span class='no'>type</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>toy_data</span>$<span class='no'>type</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span>(<span class='no'>toy_data</span>$<span class='no'>type</span>), <span class='kw'>ordered</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>perc_diff</span>(<span class='no'>toy_data</span>, <span class='no'>type</span>, <span class='no'>score</span>, <span class='kw'>percentiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>90</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; difference.0.8 * x1 + 0.8 * x2 + 0.728 * x3 
-#&gt;                                  -0.3205555 
-#&gt;         se.0.8 * x1 + 0.8 * x2 + 0.728 * x3 
-#&gt;                                   0.1465449 </div><div class='input'><span class='fu'>perc_diff</span>(<span class='no'>toy_data</span>, <span class='no'>type</span>, <span class='no'>score</span>, <span class='kw'>percentiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>50</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; difference.0.4 * x1 + 0.24 * x2 + 0.124 * x3 
-#&gt;                                   -0.2316786 
-#&gt;         se.0.4 * x1 + 0.24 * x2 + 0.124 * x3 
-#&gt;                                    0.1357972 </div><div class='input'>
-<span class='fu'>perc_diff</span>(<span class='no'>toy_data</span>, <span class='no'>type</span>, <span class='no'>score</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>wt</span>, <span class='kw'>percentiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>30</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; difference.0.2 * x1 + 0.08 * x2 + 0.026 * x3 
-#&gt;                                  -0.05017358 
-#&gt;         se.0.2 * x1 + 0.08 * x2 + 0.026 * x3 
-#&gt;                                   0.11820274 </div><div class='input'>
+<span class='fu'>perc_diff</span>(<span class='no'>toy_data</span>, <span class='no'>type</span>, <span class='no'>score</span>, <span class='kw'>percentiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>90</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; difference         se 
+#&gt; -0.3205555  0.1465449 </div><div class='input'><span class='fu'>perc_diff</span>(<span class='no'>toy_data</span>, <span class='no'>type</span>, <span class='no'>score</span>, <span class='kw'>percentiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>50</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt; difference         se 
+#&gt; -0.2316786  0.1357972 </div><div class='input'>
+<span class='fu'>perc_diff</span>(<span class='no'>toy_data</span>, <span class='no'>type</span>, <span class='no'>score</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>wt</span>, <span class='kw'>percentiles</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>30</span>, <span class='fl'>10</span>))</div><div class='output co'>#&gt;  difference          se 
+#&gt; -0.05017358  0.11820274 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

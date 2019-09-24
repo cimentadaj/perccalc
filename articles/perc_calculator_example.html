@@ -81,7 +81,7 @@
       <h1>Calculating percentile differences from ordered categorical and continuous variables</h1>
                         <h4 class="author">Jorge Cimentada</h4>
             
-            <h4 class="date">2019-09-23</h4>
+            <h4 class="date">2019-09-24</h4>
       
       
       <div class="hidden name"><code>perc_calculator_example.Rmd</code></div>
@@ -137,22 +137,16 @@
 <a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">ageGroup =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(ageGroup, <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <p>Now it’ll work.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/perc_diff.html">perc_diff</a></span>(gss, ageGroup, vocab, <span class="dt">percentiles =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</a></code></pre></div>
-<pre><code>## difference.0.8 * x1 + 0.8 * x2 + 0.728 * x3 
-##                                   0.2185802 
-##         se.0.8 * x1 + 0.8 * x2 + 0.728 * x3 
-##                                   0.3905549</code></pre>
+<pre><code>## difference         se 
+##  0.2185802  0.3905549</code></pre>
 <p>We can play around with other percentiles</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/perc_diff.html">perc_diff</a></span>(gss, ageGroup, vocab, <span class="dt">percentiles =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">50</span>, <span class="dv">10</span>))</a></code></pre></div>
-<pre><code>## difference.0.4 * x1 + 0.24 * x2 + 0.124 * x3 
-##                                    0.8618113 
-##         se.0.4 * x1 + 0.24 * x2 + 0.124 * x3 
-##                                    0.3403813</code></pre>
+<pre><code>## difference         se 
+##  0.8618113  0.3403813</code></pre>
 <p>And we can add a vector of weights</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../reference/perc_diff.html">perc_diff</a></span>(gss, ageGroup, vocab, weight)</a></code></pre></div>
-<pre><code>## difference.0.8 * x1 + 0.8 * x2 + 0.728 * x3 
-##                                   0.1760728 
-##         se.0.8 * x1 + 0.8 * x2 + 0.728 * x3 
-##                                   0.3775078</code></pre>
+<pre><code>## difference         se 
+##  0.1760728  0.3775078</code></pre>
 <p>Now, how are we sure that these estimates are as accurate as the Reardon (2011) implementation? We can compare the Stata output using this data set.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># Saving the dataset to a path</span></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2">gss <span class="op">%&gt;%</span></a>
@@ -240,10 +234,8 @@
 <a class="sourceLine" id="cb15-80" data-line-number="80">    di <span class="st">"se(`hi_p'-`lo_p' gap): `se`hi_p'`lo_p''"</span></a></code></pre></div>
 <p>I get that the 90/10 difference is <code>0.1760</code> with a standard error of <code>0.377</code>. Does it sound familiar?</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="../reference/perc_diff.html">perc_diff</a></span>(gss, ageGroup, vocab, weight)</a></code></pre></div>
-<pre><code>## difference.0.8 * x1 + 0.8 * x2 + 0.728 * x3 
-##                                   0.1760728 
-##         se.0.8 * x1 + 0.8 * x2 + 0.728 * x3 
-##                                   0.3775078</code></pre>
+<pre><code>## difference         se 
+##  0.1760728  0.3775078</code></pre>
 <p>Finally, there’s <code>perc_dist</code> that shares a lot of similarity with <code>perc_diff</code>. It calculates the estimate for every percentile. You can use this to perform your own analysis. For example,</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="../reference/perc_dist.html">perc_dist</a></span>(gss, ageGroup, vocab) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a></code></pre></div>
@@ -277,10 +269,8 @@
 ## 1 0.176   0.312</code></pre>
 <p>compared to</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="../reference/perc_diff.html">perc_diff</a></span>(gss, ageGroup, vocab, weight, <span class="dt">percentiles =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</a></code></pre></div>
-<pre><code>## difference.0.8 * x1 + 0.8 * x2 + 0.728 * x3 
-##                                   0.1760728 
-##         se.0.8 * x1 + 0.8 * x2 + 0.728 * x3 
-##                                   0.3775078</code></pre>
+<pre><code>## difference         se 
+##  0.1760728  0.3775078</code></pre>
 <p>Note how the coefficients are the same but the standard error is different.</p>
 <p>I hope this was a convincing example, I know this will be useful for me. All the intellectual ideas come from Sean Reardon, as well as the Stata code. The R implementation is my own work.</p>
 <ul>
