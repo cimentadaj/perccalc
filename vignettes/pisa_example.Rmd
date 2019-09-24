@@ -1,0 +1,199 @@
+---
+title: "Case study: percentile distributions in test scores using PISA"
+author: "Jorge Cimentada"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Case study: percentile distributions in test scores using PISA}
+  %\VignetteEngine{knitr::rmarkdown}
+  usepackage[UTF-8]{inputenc}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = 'center',
+  fig.width = 6,
+  fig.height = 5
+)
+```
+
+`perccalc` is very flexible and can be used for any ordered categorical variable which has a theoretical order, such as education or occupation. In this case study we will calculate the percentile difference in mathematics test scores based on the education of the parents for several countries using the PISA 2006 and PISA 2012 datasets. Let's load our packages:
+
+```{r, message = FALSE}
+library(perccalc)
+library(tidyr)
+library(ggplot2)
+library(dplyr)
+```
+
+`percalc` automatically loads `pisa_2012` and `pisa_2006` which are two datasets with all the information that we need. These two datasets have data for Estonia, Germany and Spain and contain the five test scores in Mathematics and the father's education in the international ISCED classification. The first thing we have to do is make sure the categories are ordered and calculate the average test score for each student.
+
+```{r setup}
+order_edu <- c("None",
+               "ISCED 1",
+               "ISCED 2",
+               "ISCED 3A, ISCED 4",
+               "ISCED 3B, C",
+               "ISCED 5A, 6",
+               "ISCED 5B")
+
+# Make ordered categories of our categorical variables and calculate avgerage
+# math test scores for each year
+pisa_2012 <-
+  pisa_2012 %>%
+  mutate(father_edu = factor(father_edu, levels = order_edu, ordered = TRUE),
+         avg_math = rowMeans(pisa_2012[c("PV1MATH", "PV2MATH", "PV3MATH", "PV4MATH", "PV5MATH")]))
+
+pisa_2006 <-
+  pisa_2006 %>%
+  mutate(father_edu = factor(father_edu, levels = order_edu, ordered = TRUE),
+         avg_math = rowMeans(pisa_2006[c("PV1MATH", "PV2MATH", "PV3MATH", "PV4MATH", "PV5MATH")]))
+
+# Merge them together
+pisa <- rbind(pisa_2006, pisa_2012)
+```
+
+Once the categories are ordered, `perc_diff` can calculate the percentile difference between the 90th and 10th percentile for the complete sample. For example:
+
+```{r }
+perc_diff(data_model = pisa,
+          categorical_var = father_edu,
+          continuous_var = avg_math,
+          percentiles = c(90, 10))
+```
+
+This means that the difference in Mathematics test scores between the 90th and 10th percentile of father education is 45 points with a standard error of 14 points. We can extrapolate this example for each country separately using `dplyr::group_by`. Since the result of `perc_diff` is a vector, to be able to work seamlessly with `dplyr::group_by` we need to create a small wrapper that turns into a dataframe:
+
+```{r }
+df_wrap <- function(res) {
+  as.data.frame(lapply(res, identity))
+}
+
+df_wrap(
+  perc_diff(data_model = pisa,
+            categorical_var = father_edu,
+            continuous_var = avg_math,
+            percentiles = c(90, 10))
+)
+```
+
+With `df_wrap` we can just pass that to `tidyr::nest` and `dplyr::mutate` and calculate it separetely by year and country:
+
+```{r }
+
+cnt_diff <-
+  pisa %>%
+  nest(data = c(-year, -CNT)) %>%
+  mutate(edu_diff = lapply(data, function(x) df_wrap(perc_diff(x, father_edu, avg_math, percentiles = c(90, 10))))) %>%
+  select(-data) %>% 
+  unnest(edu_diff)
+
+cnt_diff
+```
+
+We can see some big differences between, for example, Estonia and Spain. But even more interesting is plotting this:
+
+```{r }
+cnt_diff %>% 
+  ggplot(aes(year, difference, group = CNT, color = CNT)) +
+  geom_point() +
+  geom_line() +
+  theme_minimal() +
+  scale_y_continuous(name = "Achievement gap in Math between the 90th and \n 10th percentile of father's education") +
+  scale_x_continuous(name = "Year")
+```
+
+It looks like Estonia has a much smaller achievement gap relative to Spain and Germany but also note that both Germany and Spain have been decreasing their inequality. We can also try different achievement gaps to to explore the distribution:
+
+```{r }
+
+# Calculate the gap for the 90/50 gap
+cnt_half <-
+  pisa %>%
+  nest(data = c(-year, -CNT)) %>%
+  mutate(edu_diff = lapply(data,
+                           function(x) df_wrap(perc_diff(x, father_edu, avg_math, percentiles = c(90, 50))))) %>%
+  select(-data) %>% 
+  unnest(edu_diff)
+
+# Calculate the gap for the 50/10 gap
+cnt_bottom <-
+  pisa %>%
+  nest(data = c(-year, -CNT)) %>%
+  mutate(edu_diff = lapply(data,
+                           function(x) df_wrap(perc_diff(x, father_edu, avg_math, percentiles = c(50, 10))))) %>%
+  select(-data) %>% 
+  unnest(edu_diff)
+
+
+cnt_diff$type <- "90/10"
+cnt_half$type <- "90/50"
+cnt_bottom$type <- "50/10"
+
+final_cnt <- rbind(cnt_diff, cnt_half, cnt_bottom)
+final_cnt$type <- factor(final_cnt$type, levels = c("90/10", "90/50", "50/10"))
+final_cnt
+
+```
+
+Having this dataframe we can visualize all the three gaps in a very intuitive fashion:
+
+```{r }
+final_cnt %>% 
+  ggplot(aes(year, difference, group = CNT, color = CNT)) +
+  geom_point() +
+  geom_line() +
+  theme_minimal() +
+  scale_y_continuous(name = "Achievement gap in Math between the 90th and \n 10th percentile of father's education") +
+  scale_x_continuous(name = "Year") +
+  facet_wrap(~ type)
+```
+
+It seems that the `90/50` and `50/10` differences are not symmetrical.
+
+`percalc` also has a `perc_dist` function which calculates the distribution of the percentiles, so we can compare more finegrained percentiles rather than differences:
+
+```{r }
+perc_dist(pisa, father_edu, avg_math)
+```
+
+Here we get the complete percentile distribution with the test score in mathematics for each percentile. This can be easily scaled to all country/year combinations with our previous code:
+
+```{r }
+cnt_dist <-
+  pisa %>%
+  nest(data = c(-year, -CNT)) %>%
+  mutate(edu_diff = lapply(data, function(x) df_wrap(perc_dist(x, father_edu, avg_math)))) %>%
+  select(-data) %>% 
+  unnest(edu_diff)
+
+cnt_dist
+```
+
+Let's limit the distribution only to the 10th, 20th, 30th... 100th percentile an compare for country/years:
+
+```{r }
+
+cnt_dist %>%
+  mutate(year = as.character(year)) %>% 
+  filter(percentile %in% seq(0, 100, by = 10)) %>%
+  ggplot(aes(percentile, estimate, color = year, group = percentile)) +
+  geom_point() +
+  geom_line(color = "black") +
+  scale_y_continuous(name = "Math test score") +
+  scale_x_continuous(name = "Percentiles from father's education") +
+  scale_color_discrete(name = "Year") +
+  facet_wrap(~ CNT) +
+  theme_minimal()
+```
+
+Here the red dots indicate the year 2006 and the bluish dots year 2012, the black line between them indicates the change over time. Here we can see that although Germany and Spain are decreasing (as we saw in the plot before), the composition of the change is very different: Spain's decrease is big all around the distribution whereas Germany's concentrate on the top percentiles.
+
+This type of analysis serves well to disentangle and decompose distributions of ordered categorical. This vignette looked to show the power of this techniqe and how it can be used in practically any setting with an ordered categorical variable and a continuous variable.
+
+If you use this in a publication, remember to cite the software as:
+```{r echo = FALSE}
+citation("perccalc")
+```

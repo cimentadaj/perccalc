@@ -1,10 +1,10 @@
 ---
-title: "Calculating percentile differences from ordered categorical and continuous variables"
+title: "Case study: percentile distributions using the General Social Survey"
 author: "Jorge Cimentada"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Calculating percentile differences from ordered categorical and continuous variables}
+  %\VignetteIndexEntry{Case study: percentile differences using the General Social Survey}
   %\VignetteEngine{knitr::rmarkdown}
   usepackage[UTF-8]{inputenc}
 ---

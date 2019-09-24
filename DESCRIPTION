@@ -23,5 +23,6 @@ Suggests:
     testthat,
     ggplot2,
     MASS,
-    carData
+    carData,
+    tidyr
 VignetteBuilder: knitr
