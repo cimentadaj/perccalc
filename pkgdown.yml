@@ -4,4 +4,5 @@ pkgdown_sha: ~
 articles:
   perc_calculator_example: perc_calculator_example.html
   perc_warning_example: perc_warning_example.html
+  pisa_example: pisa_example.html
 
