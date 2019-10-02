@@ -15,8 +15,8 @@
 #' @details \code{perc_diff} drops missing observations silently for calculating
 #' the linear combination of coefficients.
 #' 
-#' @return A vector with the percentile difference and it's associated
-#'  standard error
+#' @return \code{perc_diff} returns a vector with the percentile difference and it's associated
+#'  standard error. \code{perc_diff_df} returns the same but as a data frame.
 #' @export
 #'
 #' @examples
@@ -41,6 +41,8 @@
 #' perc_diff(toy_data, type, score, percentiles = c(50, 10))
 #'
 #' perc_diff(toy_data, type, score, weights = wt, percentiles = c(30, 10))
+#' # Results as data frame
+#' perc_diff_df(toy_data, type, score, weights = wt, percentiles = c(30, 10))
 #'
 perc_diff <- function(data_model,
                       categorical_var,
@@ -50,8 +52,43 @@ perc_diff <- function(data_model,
 
   categorical_var <- as.character(substitute(categorical_var))
   continuous_var <- as.character(substitute(continuous_var))
-
   weights <- as.character(substitute(weights))
+
+  perc_diff_(data_model = data_model,
+             categorical_var = categorical_var,
+             continuous_var = continuous_var,
+             weights = weights,
+             percentiles = percentiles)
+
+}
+
+#' @rdname perc_diff
+#' @export
+perc_diff_df <- function(data_model,
+                         categorical_var,
+                         continuous_var,
+                         weights = NULL,
+                         percentiles = c(90, 10)) {
+
+  categorical_var <- as.character(substitute(categorical_var))
+  continuous_var <- as.character(substitute(continuous_var))
+  weights <- as.character(substitute(weights))
+  
+  res <- perc_diff_(data_model = data_model,
+                   categorical_var = categorical_var,
+                   continuous_var = continuous_var,
+                   weights = weights,
+                   percentiles = percentiles)
+  
+  as.data.frame(lapply(res, identity))
+}
+
+perc_diff_ <- function(data_model,
+                      categorical_var,
+                      continuous_var,
+                      weights = NULL,
+                      percentiles = c(90, 10)) {
+
   weights <- if (length(weights) == 0) NULL else weights
 
   data_model <-
@@ -96,7 +133,6 @@ perc_diff <- function(data_model,
 
   c(difference = unname(diff_hip_lop), se = unname(se_hip_lop))
 }
-
 
 category_summary <- function(data_model,
                              categorical_var,

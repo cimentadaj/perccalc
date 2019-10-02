@@ -64,20 +64,8 @@ perc_diff(data_model = pisa,
           percentiles = c(90, 10))
 ```
 
-This means that the difference in Mathematics test scores between the 90th and 10th percentile of father education is 45 points with a standard error of 14 points. We can extrapolate this example for each country separately using `dplyr::group_by`. Since the result of `perc_diff` is a vector, to be able to work seamlessly with `dplyr::group_by` we need to create a small wrapper that turns into a dataframe:
+This means that the difference in Mathematics test scores between the 90th and 10th percentile of father education is 45 points with a standard error of 14 points. We can extrapolate this example for each country separately using `dplyr::group_by`. Since the result of `perc_diff` is a vector, to be able to work seamlessly with `dplyr::group_by` we will use `perc_diff_df`, which returns the same results but as a data frame:
 
-```{r }
-df_wrap <- function(res) {
-  as.data.frame(lapply(res, identity))
-}
-
-df_wrap(
-  perc_diff(data_model = pisa,
-            categorical_var = father_edu,
-            continuous_var = avg_math,
-            percentiles = c(90, 10))
-)
-```
 
 With `df_wrap` we can just pass that to `tidyr::nest` and `dplyr::mutate` and calculate it separetely by year and country:
 
@@ -86,7 +74,7 @@ With `df_wrap` we can just pass that to `tidyr::nest` and `dplyr::mutate` and ca
 cnt_diff <-
   pisa %>%
   nest(data = c(-year, -CNT)) %>%
-  mutate(edu_diff = lapply(data, function(x) df_wrap(perc_diff(x, father_edu, avg_math, percentiles = c(90, 10))))) %>%
+  mutate(edu_diff = lapply(data, function(x) perc_diff_df(x, father_edu, avg_math, percentiles = c(90, 10)))) %>%
   select(-data) %>% 
   unnest(edu_diff)
 
@@ -114,7 +102,7 @@ cnt_half <-
   pisa %>%
   nest(data = c(-year, -CNT)) %>%
   mutate(edu_diff = lapply(data,
-                           function(x) df_wrap(perc_diff(x, father_edu, avg_math, percentiles = c(90, 50))))) %>%
+                           function(x) perc_diff_df(x, father_edu, avg_math, percentiles = c(90, 50)))) %>%
   select(-data) %>% 
   unnest(edu_diff)
 
@@ -123,10 +111,9 @@ cnt_bottom <-
   pisa %>%
   nest(data = c(-year, -CNT)) %>%
   mutate(edu_diff = lapply(data,
-                           function(x) df_wrap(perc_diff(x, father_edu, avg_math, percentiles = c(50, 10))))) %>%
+                           function(x) perc_diff_df(x, father_edu, avg_math, percentiles = c(50, 10)))) %>%
   select(-data) %>% 
   unnest(edu_diff)
-
 
 cnt_diff$type <- "90/10"
 cnt_half$type <- "90/50"
@@ -165,7 +152,7 @@ Here we get the complete percentile distribution with the test score in mathemat
 cnt_dist <-
   pisa %>%
   nest(data = c(-year, -CNT)) %>%
-  mutate(edu_diff = lapply(data, function(x) df_wrap(perc_dist(x, father_edu, avg_math)))) %>%
+  mutate(edu_diff = lapply(data, function(x) perc_dist(x, father_edu, avg_math))) %>%
   select(-data) %>% 
   unnest(edu_diff)
 
