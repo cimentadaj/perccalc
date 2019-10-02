@@ -131,10 +131,11 @@
 <a class="sourceLine" id="cb4-5" data-line-number="5">                        <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw"><a href="../reference/perc_diff.html">perc_diff</a></span>(smoking_data, smoke, pulse_rate)</a></code></pre></div>
-<pre><code>## Warning in perc_diff(smoking_data, smoke, pulse_rate): Too few categories
-## in categorical variable to estimate the variance-covariance matrix and
-## standard errors. Proceeding without estimated standard errors but perhaps
-## you should increase the number of categories</code></pre>
+<pre><code>## Warning in perc_diff_(data_model = data_model, categorical_var =
+## categorical_var, : Too few categories in categorical variable to estimate
+## the variance-covariance matrix and standard errors. Proceeding without
+## estimated standard errors but perhaps you should increase the number of
+## categories</code></pre>
 <pre><code>## difference         se 
 ##   390.6092         NA</code></pre>
 <p><code>perc_diff</code> returns the estimated coefficient but also warns you that it’s difficult for the function to estimate the standard error. This happens similarly for <code>perc_dist</code>.</p>
