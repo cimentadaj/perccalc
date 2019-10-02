@@ -84,7 +84,7 @@
       <h1>Case study: percentile distributions in test scores using PISA</h1>
                         <h4 class="author">Jorge Cimentada</h4>
             
-            <h4 class="date">2019-10-01</h4>
+            <h4 class="date">2019-10-02</h4>
       
       
       <div class="hidden name"><code>pisa_example.Rmd</code></div>
@@ -111,13 +111,13 @@
 <a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co"># math test scores for each year</span></a>
 <a class="sourceLine" id="cb2-11" data-line-number="11">pisa_<span class="dv">2012</span> &lt;-</a>
 <a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span>pisa_<span class="dv">2012</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">father_edu =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(father_edu, <span class="dt">levels =</span> order_edu, <span class="dt">ordered =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">         <span class="dt">avg_math =</span> <span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowMeans</a></span>(pisa_<span class="dv">2012</span>[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"PV1MATH"</span>, <span class="st">"PV2MATH"</span>, <span class="st">"PV3MATH"</span>, <span class="st">"PV4MATH"</span>, <span class="st">"PV5MATH"</span>)]))</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">father_edu =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(father_edu, <span class="dt">levels =</span> order_edu, <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">         </a>
 <a class="sourceLine" id="cb2-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb2-16" data-line-number="16">pisa_<span class="dv">2006</span> &lt;-</a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"><span class="st">  </span>pisa_<span class="dv">2006</span> <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">father_edu =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(father_edu, <span class="dt">levels =</span> order_edu, <span class="dt">ordered =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">         <span class="dt">avg_math =</span> <span class="kw"><a href="https://rdrr.io/r/base/colSums.html">rowMeans</a></span>(pisa_<span class="dv">2006</span>[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"PV1MATH"</span>, <span class="st">"PV2MATH"</span>, <span class="st">"PV3MATH"</span>, <span class="st">"PV4MATH"</span>, <span class="st">"PV5MATH"</span>)]))</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">father_edu =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(father_edu, <span class="dt">levels =</span> order_edu, <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"></a>
 <a class="sourceLine" id="cb2-20" data-line-number="20"></a>
 <a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co"># Merge them together</span></a>
 <a class="sourceLine" id="cb2-22" data-line-number="22">pisa &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(pisa_<span class="dv">2006</span>, pisa_<span class="dv">2012</span>)</a></code></pre></div>
