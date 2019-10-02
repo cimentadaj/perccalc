@@ -3,7 +3,7 @@
 \name{perc_diff}
 \alias{perc_diff}
 \title{Calculate percentile differences from an ordered categorical variable
- and a continuous variable.}
+and a continuous variable.}
 \usage{
 perc_diff(data_model, categorical_var, continuous_var, weights = NULL,
   percentiles = c(90, 10))
@@ -30,7 +30,7 @@ A vector with the percentile difference and it's associated
 }
 \description{
 Calculate percentile differences from an ordered categorical variable
- and a continuous variable.
+and a continuous variable.
 }
 \details{
 \code{perc_diff} drops missing observations silently for calculating

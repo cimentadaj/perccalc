@@ -1,5 +1,5 @@
 #' Calculate percentile differences from an ordered categorical variable
-#'  and a continuous variable.
+#' and a continuous variable.
 #'
 #' @param data_model A data frame with at least the categorical and continuous
 #'  variables from which to estimate the percentile differences

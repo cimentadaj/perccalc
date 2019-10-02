@@ -9,13 +9,9 @@
   \item{year}{Year of the survey}
   \item{CNT}{Long country names}
   \item{STIDSTD}{Unique student id}
-  \item{PV1MATH}{The first mathematics test scores for each student}
-  \item{PV2MATH}{The second mathematics test scores for each student}
-  \item{PV3MATH}{The third mathematics test scores for each student} 
-  \item{PV4MATH}{The fourth mathematics test scores for each student} 
-  \item{PV5MATH}{The fifth mathematics test scores for each student} 
   \item{father_edu}{The father's highest achieved degree in the ISCED scale}
   \item{household_income}{The household's total income in categories}
+  \item{avg_math}{The average math test score out of the 5 plausible values in Mathematics}
 }}
 \source{
 A subset extracted from the \code{PISA2006lite} R package, https://github.com/pbiecek/PISA2012lite

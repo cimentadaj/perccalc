@@ -43,13 +43,13 @@ order_edu <- c("None",
 # math test scores for each year
 pisa_2012 <-
   pisa_2012 %>%
-  mutate(father_edu = factor(father_edu, levels = order_edu, ordered = TRUE),
-         avg_math = rowMeans(pisa_2012[c("PV1MATH", "PV2MATH", "PV3MATH", "PV4MATH", "PV5MATH")]))
+  mutate(father_edu = factor(father_edu, levels = order_edu, ordered = TRUE))
+         
 
 pisa_2006 <-
   pisa_2006 %>%
-  mutate(father_edu = factor(father_edu, levels = order_edu, ordered = TRUE),
-         avg_math = rowMeans(pisa_2006[c("PV1MATH", "PV2MATH", "PV3MATH", "PV4MATH", "PV5MATH")]))
+  mutate(father_edu = factor(father_edu, levels = order_edu, ordered = TRUE))
+
 
 # Merge them together
 pisa <- rbind(pisa_2006, pisa_2012)
