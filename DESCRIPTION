@@ -8,6 +8,7 @@ License: MIT + file LICENSE
 URL: https://cimentadaj.github.io/perccalc/, https://github.com/cimentadaj/perccalc
 Language: en-US
 Encoding: UTF-8
+Language: en-GB
 LazyData: true
 RoxygenNote: 6.1.1
 Imports: 
