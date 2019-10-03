@@ -23,13 +23,13 @@ p <-
          ci_hi = estimate + 1.96 * std.error,
          alpha = cumsum(estimate)) %>%
   ggplot(aes(percentile, estimate)) +
-  geom_point(aes(color = alpha), size = 0.5) +
-  geom_errorbar(aes(ymin = ci_low, ymax = ci_hi, color = alpha), size = 0.5) +
+  geom_point(aes(color = alpha), size = 1, alpha = 1/3) +
+  geom_errorbar(aes(ymin = ci_low, ymax = ci_hi, color = alpha), size = 1.5, alpha = 1/3) +
   scale_color_viridis_c() +
   geom_text(aes_(x=45, y=-0.7, angle=0), label="perc",
-            color="#404788FF", size=16) +
+            color="#404788FF", size=20) +
   geom_text(aes_(x=68, y=-1.4, angle=-45), label="calc",
-            color="#404788FF", size=16)
+            color="#404788FF", size=20)
 
 p <- p + theme_void() + theme_transparent() +  theme(legend.position = "none")
 
