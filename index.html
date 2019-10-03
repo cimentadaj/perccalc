@@ -108,50 +108,52 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install and load the package with these commands:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"cimentadaj/perccalc"</span>) <span class="co"># for development version</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># or</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"perccalc"</span>) <span class="co"># for stable version</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(perccalc)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("perccalc") # for stable version</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(perccalc)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># or</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"cimentadaj/perccalc"</span>) <span class="co"># for development version</span></a></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <p>Suppose we have a dataset with one continuous variable and one categorical variable:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; Please cite as:</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; Cimentada, Jorge (2019). Estimate Percentiles from an Ordered Categorical Variable R package version 1.0.3.</span></a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">df &lt;-</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="dt">continuous =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">100</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">    <span class="dt">categorical =</span> <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">each =</span> <span class="dv">20</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="dt">ordered =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">    <span class="dt">wt =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">  )</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">df &lt;-</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="dt">continuous =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">100</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">    <span class="dt">categorical =</span> <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">each =</span> <span class="dv">20</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="dt">ordered =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    <span class="dt">wt =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">  )</a></code></pre></div>
 <p>Note that the categorical variable has to be an ordered factor (this is a requirement of both functions). For example, <code>perc_diff</code> calculates percentile differences using both variables.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/perc_diff.html">perc_diff</a></span>(df, categorical, continuous, <span class="dt">percentiles =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; difference         se </span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; 79.7460924  0.1591158</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/perc_diff.html">perc_diff</a></span>(df, categorical, continuous, <span class="dt">percentiles =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt;  difference          se </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; 80.25118078  0.05981111</span></a></code></pre></div>
 <p>You can optionally add weights with the <code>weights</code> argument.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/perc_diff.html">perc_diff</a></span>(df, categorical, continuous, <span class="dt">weights =</span> wt, <span class="dt">percentiles =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; difference         se </span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; 79.1124609  0.1141116</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/perc_diff.html">perc_diff</a></span>(df, categorical, continuous, <span class="dt">weights =</span> wt, <span class="dt">percentiles =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; difference         se </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; 79.8819542  0.4013552</span></a></code></pre></div>
 <p>On the other hand, the <code>perc_dist</code> (short for percentile distribution) allows you to estimate the score for every percentile.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="reference/perc_dist.html">perc_dist</a></span>(df, categorical, continuous) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; # A tibble: 6 x 3</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt;   percentile estimate std.error</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;        &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; 1          1     1.01    0.0234</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; 2          2     2.03    0.0458</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; 3          3     3.04    0.0671</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; 4          4     4.05    0.0874</span></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; 5          5     5.06    0.107 </span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; # … with 1 more row</span></a></code></pre></div>
-<p>This function also allows the use of weights. For an example with a a real-world dataset, please see the vignette example.</p>
-<p>All the intelectual ideas come from Sean Reardon. The R implemention is my own work.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/perc_dist.html">perc_dist</a></span>(df, categorical, continuous) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; # A tibble: 6 x 3</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt;   percentile estimate std.error</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt;        &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; 1          1     1.03   0.00839</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; 2          2     2.06   0.0164 </span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; 3          3     3.08   0.0240 </span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; 4          4     4.11   0.0313 </span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; 5          5     5.13   0.0382 </span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; # … with 1 more row</span></a></code></pre></div>
+<p>This function also allows the use of weights.</p>
+</div>
+<div id="documentation-and-support" class="section level2">
+<h2 class="hasAnchor">
+<a href="#documentation-and-support" class="anchor"></a>Documentation and Support</h2>
+<p>Please visit <a href="https://cimentadaj.github.io/perccalc/" class="uri">https://cimentadaj.github.io/perccalc/</a> for documentation and vignettes with real-world examples. In case you want to file an issue or contribute in another way to the package, please follow this <a href="https://github.com/cimentadaj/perccalc/blob/master/.github/CONTRIBUTING.md">guide</a>. For questions about the functionality, feel free to file an issue on Github.</p>
 <ul>
 <li>Reardon, Sean F. “The widening academic achievement gap between the rich and the poor: New evidence and possible explanations.” Whither opportunity (2011): 91-116.</li>
 </ul>
@@ -175,6 +177,12 @@
 <li>
 <a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
 </li>
+</ul>
+</div>
+<div class="community">
+<h2>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 </ul>
 </div>
 <div class="citation">
