@@ -28,7 +28,7 @@ p <-
   scale_color_viridis_c() +
   geom_text(aes_(x=45, y=-0.5, angle=0), label="perc",
             color="#404788FF", size=16) +
-  geom_text(aes_(x=72, y=-1.2, angle=-45), label="calc",
+  geom_text(aes_(x=71, y=-1.1, angle=-45), label="calc",
             color="#404788FF", size=16)
 
 p <- p + theme_void() + theme_transparent() +  theme(legend.position = "none")
