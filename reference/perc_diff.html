@@ -157,7 +157,7 @@ variables from which to estimate the percentile differences</p></td>
     <tr>
       <th>categorical_var</th>
       <td><p>The bare unquoted name of the categorical variable.
-This variable SHOULD be an ordered factor. If not, the function will stop.</p></td>
+This variable SHOULD be an ordered factor. If not, will raise an error.</p></td>
     </tr>
     <tr>
       <th>continuous_var</th>
@@ -178,8 +178,9 @@ percentiles to subtract</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>perc_diff</code> returns a vector with the percentile difference and it's associated
- standard error. <code>perc_diff_df</code> returns the same but as a data frame.</p>
+    <p><code>perc_diff</code> returns a vector with the percentile difference and
+it's associated standard error. <code>perc_diff_df</code> returns the same but as
+a data frame.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>perc_diff</code> drops missing observations silently for calculating
