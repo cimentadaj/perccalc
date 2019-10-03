@@ -27,20 +27,17 @@ The package has two main functions:
 You can install and load the package with these commands:
 
 ``` r
-devtools::install_github("cimentadaj/perccalc") # for development version
-# or
-install.packages("perccalc") # for stable version
+# install.packages("perccalc") # for stable version
 library(perccalc)
+
+# or
+devtools::install_github("cimentadaj/perccalc") # for development version
 ```
 
 ## Usage
 
 Suppose we have a dataset with one continuous variable and one
 categorical variable:
-
-    #> 
-    #> Please cite as:
-    #> Cimentada, Jorge (2019). Estimate Percentiles from an Ordered Categorical Variable R package version 1.0.3.
 
 ``` r
 library(dplyr)
@@ -61,8 +58,8 @@ percentile differences using both variables.
 
 ``` r
 perc_diff(df, categorical, continuous, percentiles = c(90, 10))
-#> difference         se 
-#> 79.7460924  0.1591158
+#>  difference          se 
+#> 80.25118078  0.05981111
 ```
 
 You can optionally add weights with the `weights` argument.
@@ -70,7 +67,7 @@ You can optionally add weights with the `weights` argument.
 ``` r
 perc_diff(df, categorical, continuous, weights = wt, percentiles = c(90, 10))
 #> difference         se 
-#> 79.1124609  0.1141116
+#> 79.8819542  0.4013552
 ```
 
 On the other hand, the `perc_dist` (short for percentile distribution)
@@ -82,19 +79,24 @@ perc_dist(df, categorical, continuous) %>%
 #> # A tibble: 6 x 3
 #>   percentile estimate std.error
 #>        <int>    <dbl>     <dbl>
-#> 1          1     1.01    0.0234
-#> 2          2     2.03    0.0458
-#> 3          3     3.04    0.0671
-#> 4          4     4.05    0.0874
-#> 5          5     5.06    0.107 
+#> 1          1     1.03   0.00839
+#> 2          2     2.06   0.0164 
+#> 3          3     3.08   0.0240 
+#> 4          4     4.11   0.0313 
+#> 5          5     5.13   0.0382 
 #> # … with 1 more row
 ```
 
-This function also allows the use of weights. For an example with a a
-real-world dataset, please see the vignette example.
+This function also allows the use of weights.
 
-All the intelectual ideas come from Sean Reardon. The R implemention is
-my own work.
+## Documentation and Support
+
+Please visit <https://cimentadaj.github.io/perccalc/> for documentation
+and vignettes with real-world examples. In case you want to file an
+issue or contribute in another way to the package, please follow this
+[guide](https://github.com/cimentadaj/perccalc/blob/master/.github/CONTRIBUTING.md).
+For questions about the functionality, feel free to file an issue on
+Github.
 
   - Reardon, Sean F. “The widening academic achievement gap between the
     rich and the poor: New evidence and possible explanations.” Whither

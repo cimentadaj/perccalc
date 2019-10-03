@@ -34,17 +34,18 @@ The package has two main functions:
 
 You can install and load the package with these commands:
 
-```{r, eval = F}
-devtools::install_github("cimentadaj/perccalc") # for development version
-# or
-install.packages("perccalc") # for stable version
+```{r, eval = FALSE}
+# install.packages("perccalc") # for stable version
 library(perccalc)
+
+# or
+devtools::install_github("cimentadaj/perccalc") # for development version
 ```
 
 ## Usage
 
 Suppose we have a dataset with one continuous variable and one categorical variable:
-```{r, echo = F}
+```{r, echo = FALSE, message = FALSE}
 library(perccalc)
 ```
 
@@ -80,8 +81,14 @@ perc_dist(df, categorical, continuous) %>%
   head()
 ```
 
-This function also allows the use of weights. For an example with a a real-world dataset, please see the vignette example.
+This function also allows the use of weights. 
 
-All the intelectual ideas come from Sean Reardon. The R implemention is my own work.
+## Documentation and Support
+
+Please visit https://cimentadaj.github.io/perccalc/ for documentation and
+vignettes with real-world examples. In case you want to file an issue or
+contribute in another way to the package, please follow this
+[guide](https://github.com/cimentadaj/perccalc/blob/master/.github/CONTRIBUTING.md). For
+questions about the functionality, feel free to file an issue on Github.
 
 - Reardon, Sean F. "The widening academic achievement gap between the rich and the poor: New evidence and possible explanations." Whither opportunity (2011): 91-116.
