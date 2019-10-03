@@ -60,7 +60,7 @@ percentile differences using both variables.
 ``` r
 perc_diff(df, categorical, continuous, percentiles = c(90, 10))
 #> difference         se 
-#> 79.6602228  0.3546698
+#> 80.2078402  0.2040098
 ```
 
 You can optionally add weights with the `weights` argument.
@@ -68,7 +68,7 @@ You can optionally add weights with the `weights` argument.
 ``` r
 perc_diff(df, categorical, continuous, weights = wt, percentiles = c(90, 10))
 #> difference         se 
-#> 79.6976927  0.1069602
+#> 79.7824872  0.3588196
 ```
 
 On the other hand, the `perc_dist` (short for percentile distribution)
@@ -80,11 +80,11 @@ perc_dist(df, categorical, continuous) %>%
 #> # A tibble: 6 x 3
 #>   percentile estimate std.error
 #>        <int>    <dbl>     <dbl>
-#> 1          1    0.952    0.0530
-#> 2          2    1.90     0.104 
-#> 3          3    2.86     0.152 
-#> 4          4    3.82     0.198 
-#> 5          5    4.77     0.241 
+#> 1          1     1.05    0.0312
+#> 2          2     2.10    0.0609
+#> 3          3     3.15    0.0892
+#> 4          4     4.20    0.116 
+#> 5          5     5.24    0.142 
 #> # … with 1 more row
 ```
 
