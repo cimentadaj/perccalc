@@ -292,7 +292,7 @@ package particularly reliable.
 
 The major features of `perccalc` are shown in a series of vignettes in the
 package's website (https://cimentadaj.github.io/perccalc/), where there is a
-direct implementation which matches @reardon2011's intial
+direct implementation which matches @reardon2011's initial
 implementation. Additionally, the package is hoted on it's own open source
 repository on Github (https://github.com/cimentadaj/perccalc/) and on the
 official CRAN repository
