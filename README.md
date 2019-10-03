@@ -1,5 +1,5 @@
 
-# perccalc
+# perccalc <a href='https://cimentadaj.github.io/perccalc/'><img src='man/figures/logo/logo_hex.png' align="right" height="139" /></a>
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/perccalc)](http://cran.r-project.org/package=perccalc)
 [![Travis-CI Build
@@ -13,16 +13,16 @@ Reardon (2011) introduced a very interesting concept in which he
 calculates percentile differences from ordered categorical variables. He
 explains his procedure very much in detail in the appendix of the book
 chapter but no formal implementation has been yet available on the web.
+With this package I introduce two functions that apply the procedure.
 
-This package introduces two functions that apply the procedure:
+The package has two main functions:
 
   - `perc_diff`, for calculating percentile differences
   - `perc_dist`, for calculating scores for all percentiles
 
 ## Installation
 
-You can install and load the package with these
-commands:
+You can install and load the package with these commands:
 
 ``` r
 devtools::install_github("cimentadaj/perccalc") # for development version
@@ -35,6 +35,10 @@ library(perccalc)
 
 Suppose we have a dataset with one continuous variable and one
 categorical variable:
+
+    #> 
+    #> Please cite as:
+    #> Cimentada, Jorge (2019). Estimate Percentiles from an Ordered Categorical Variable R package version 1.0.3.
 
 ``` r
 library(dplyr)
@@ -56,16 +60,15 @@ percentile differences using both variables.
 ``` r
 perc_diff(df, categorical, continuous, percentiles = c(90, 10))
 #> difference         se 
-#> 79.5140766  0.3035694
+#> 79.6602228  0.3546698
 ```
 
-You can optionally add weights with the `weights`
-argument.
+You can optionally add weights with the `weights` argument.
 
 ``` r
 perc_diff(df, categorical, continuous, weights = wt, percentiles = c(90, 10))
 #> difference         se 
-#> 79.9275609  0.3498872
+#> 79.6976927  0.1069602
 ```
 
 On the other hand, the `perc_dist` (short for percentile distribution)
@@ -77,12 +80,12 @@ perc_dist(df, categorical, continuous) %>%
 #> # A tibble: 6 x 3
 #>   percentile estimate std.error
 #>        <int>    <dbl>     <dbl>
-#> 1          1    0.952    0.0475
-#> 2          2    1.91     0.0927
-#> 3          3    2.86     0.136 
-#> 4          4    3.82     0.177 
-#> 5          5    4.78     0.216 
-#> # ... with 1 more row
+#> 1          1    0.952    0.0530
+#> 2          2    1.90     0.104 
+#> 3          3    2.86     0.152 
+#> 4          4    3.82     0.198 
+#> 5          5    4.77     0.241 
+#> # … with 1 more row
 ```
 
 This function also allows the use of weights. For an example with a a

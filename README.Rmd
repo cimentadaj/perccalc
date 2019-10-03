@@ -4,8 +4,8 @@ output:
     html_preview: false
 
 ---
+# perccalc <a href='https://cimentadaj.github.io/perccalc/'><img src='man/figures/logo/logo_hex.png' align="right" height="139" /></a>
 
-# perccalc
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
