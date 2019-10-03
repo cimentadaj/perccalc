@@ -1,16 +1,16 @@
 #' Calculate a distribution of percentiles from an ordered categorical variable
-#'  and a continuous variable.
+#' and a continuous variable.
 #'
 #' @param data_model A data frame with at least the categorical and continuous
 #'  variables from which to estimate the percentiles
 #' @param categorical_var The bare unquoted name of the categorical variable.
-#'  This variable \strong{should} be an ordered factor. If not, the function
-#'  will raise an error.
+#'  This variable \strong{should} be an ordered factor. If not, will raise
+#' an error.
 #' @param continuous_var The bare unquoted name of the continuous variable from
-#'  which to estimate the percentiles
+#' which to estimate the percentiles
 #' 
 #' @param weights The bare unquoted name of the optional weight variable.
-#'  If not specified, then equal weights are assumed.
+#' If not specified, then equal weights are assumed.
 #'
 #' @details \code{perc_dist} drops missing observations silently for calculating
 #' the linear combination of coefficients.

@@ -3,7 +3,7 @@
 \name{perc_dist}
 \alias{perc_dist}
 \title{Calculate a distribution of percentiles from an ordered categorical variable
- and a continuous variable.}
+and a continuous variable.}
 \usage{
 perc_dist(data_model, categorical_var, continuous_var, weights = NULL)
 }
@@ -12,8 +12,8 @@ perc_dist(data_model, categorical_var, continuous_var, weights = NULL)
 variables from which to estimate the percentiles}
 
 \item{categorical_var}{The bare unquoted name of the categorical variable.
-This variable \strong{should} be an ordered factor. If not, the function
-will raise an error.}
+ This variable \strong{should} be an ordered factor. If not, will raise
+an error.}
 
 \item{continuous_var}{The bare unquoted name of the continuous variable from
 which to estimate the percentiles}
@@ -26,7 +26,7 @@ A data frame with the scores and standard errors for each percentile
 }
 \description{
 Calculate a distribution of percentiles from an ordered categorical variable
- and a continuous variable.
+and a continuous variable.
 }
 \details{
 \code{perc_dist} drops missing observations silently for calculating

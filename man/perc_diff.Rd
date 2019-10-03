@@ -17,7 +17,7 @@ perc_diff_df(data_model, categorical_var, continuous_var, weights = NULL,
 variables from which to estimate the percentile differences}
 
 \item{categorical_var}{The bare unquoted name of the categorical variable.
-This variable SHOULD be an ordered factor. If not, the function will stop.}
+This variable SHOULD be an ordered factor. If not, will raise an error.}
 
 \item{continuous_var}{The bare unquoted name of the continuous variable from
 which to estimate the percentiles}
@@ -29,8 +29,9 @@ If not specified, then estimation is done without weights}
 percentiles to subtract}
 }
 \value{
-\code{perc_diff} returns a vector with the percentile difference and it's associated
- standard error. \code{perc_diff_df} returns the same but as a data frame.
+\code{perc_diff} returns a vector with the percentile difference and
+it's associated standard error. \code{perc_diff_df} returns the same but as
+a data frame.
 }
 \description{
 Calculate percentile differences from an ordered categorical variable

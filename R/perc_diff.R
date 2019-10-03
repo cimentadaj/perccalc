@@ -4,7 +4,7 @@
 #' @param data_model A data frame with at least the categorical and continuous
 #'  variables from which to estimate the percentile differences
 #' @param categorical_var The bare unquoted name of the categorical variable.
-#'  This variable SHOULD be an ordered factor. If not, the function will stop.
+#'  This variable SHOULD be an ordered factor. If not, will raise an error.
 #' @param continuous_var The bare unquoted name of the continuous variable from
 #'  which to estimate the percentiles
 #' @param weights The bare unquoted name of the optional weight variable.
@@ -15,8 +15,9 @@
 #' @details \code{perc_diff} drops missing observations silently for calculating
 #' the linear combination of coefficients.
 #' 
-#' @return \code{perc_diff} returns a vector with the percentile difference and it's associated
-#'  standard error. \code{perc_diff_df} returns the same but as a data frame.
+#' @return \code{perc_diff} returns a vector with the percentile difference and
+#' it's associated standard error. \code{perc_diff_df} returns the same but as
+#' a data frame.
 #' @export
 #'
 #' @examples
