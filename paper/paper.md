@@ -176,7 +176,7 @@ cnt_diff %>%
   scale_x_continuous(name = "Year")
 ```
 
-![](perccalc_paper_files/figure-latex/unnamed-chunk-3-1.pdf)<!-- --> 
+![](paper_files/figure-latex/unnamed-chunk-3-1.pdf)<!-- --> 
 
 It looks like Estonia has a much smaller achievement gap relative to Spain and
 Germany but also note that both Germany and Spain have been decreasing their
@@ -269,7 +269,7 @@ cnt_dist %>%
   theme_minimal()
 ```
 
-![](perccalc_paper_files/figure-latex/unnamed-chunk-6-1.pdf)<!-- --> 
+![](paper_files/figure-latex/unnamed-chunk-6-1.pdf)<!-- --> 
 
 Here the dots indicate the year 2006 and the triangles year 2012, the grey line
 between them indicates the change over time. Here we can see that although
