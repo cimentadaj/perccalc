@@ -32,7 +32,7 @@ specifically for this type of analysis in social science research [@agresti2010;
 In particular, educational research, where there's a maturing literature on
 calculating inequality gaps, categorical data are essential for estimating
 inequality. For example, the income of a person is often asked in income
-brackets rather than the exact amout of money; researchers would prefer the
+brackets rather than the exact amount of money; researchers would prefer the
 exact amount but to avoid non-response accumulation and privacy concerns, income
 brackets are a partial solution. This solution gives the income information of
 respondents but at the same time in a limited fashion given that we cannot
@@ -172,7 +172,7 @@ Germany but also note that both Germany and Spain have been decreasing their
 inequality.
 
 `percalc` also has the `perc_dist` function which calculates the distribution of
-the percentiles: this is useful for comparing more finegrained percentiles
+the percentiles: this is useful for comparing more fine-grained percentiles
 rather than differences:
 
 ```{r }
@@ -243,7 +243,7 @@ package particularly reliable.
 The major features of `perccalc` are shown in a series of vignettes in the
 package's website (https://cimentadaj.github.io/perccalc/), where there is a
 direct implementation which matches @reardon2011's initial
-implementation. Additionally, the package is hoted on it's own open source
+implementation. Additionally, the package is hosted on its own open source
 repository on Github (https://github.com/cimentadaj/perccalc/) and on the
 official CRAN repository
 (https://cran.r-project.org/web/packages/perccalc/index.html)
