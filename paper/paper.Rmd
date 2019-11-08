@@ -60,10 +60,18 @@ technique is not limited to this field alone and can be used essentially in any
 context where percentiles of ordered categorical variables are of interest. One
 example where this would provide useful would be in medicine based research,
 where demographic characteristics such as education categories are common
-factors for looking at differences between groups. Despite it's growing
-popularity, there is still not an official software package that reliably
-implements and tests the method in the **R** programming language [@rsoftware];
-nor in any other programming language, that I'm aware of.
+factors for looking at differences between groups. 
+
+The field of computational categorical data analysis has a long history in R
+with packages addressing small-area estimation for categorical variables
+[@boonstr], missing data imputation [@vanbuuren] and standard generalized models
+for ordinal data [@ordinal]. The `qualvar` package [@gombin] is one attempt to
+focus not on the modelling of categorical variable but rather on the properties
+of such variables to calculate variation in categorical variables.  Yet despite
+the popularity of categorical-based methods, there is still not an official
+software package that reliably implements and tests Reardon's method in the
+**R** programming language [@rsoftware]; nor in any other programming language,
+that I'm aware of.
 
 Currently, `perccalc` implements:
 
