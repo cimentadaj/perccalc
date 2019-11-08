@@ -145,7 +145,7 @@ category_summary <- function(data_model,
     c("ordered", "factor") %in% class(data_model[[categorical_var]])
   )
 
-  stopifnot(is_ordered_fct)
+  if (!is_ordered_fct) stop("`categorical_var` should be an ordered factor")
 
   data_model$use_weights <-
     if (is.null(weights)) rep(1, nrow(data_model)) else data_model[[weights]]
