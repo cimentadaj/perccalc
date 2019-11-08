@@ -117,7 +117,7 @@ pisa_2012 <-
   mutate(father_edu = factor(father_edu, levels = order_edu, ordered = TRUE))
 
 # Merge them together
-pisa <- rbind(pisa_2006, pisa_2012)
+pisa <- bind_rows(pisa_2006, pisa_2012)
 ```
 
 Once the categories are ordered, `perc_diff` can calculate the percentile
