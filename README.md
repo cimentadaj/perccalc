@@ -11,11 +11,19 @@ coverage](https://codecov.io/gh/cimentadaj/perccalc/branch/master/graph/badge.sv
 
 ## Overview
 
-Reardon (2011) introduced a very interesting concept in which he
-calculates percentile differences from ordered categorical variables. He
-explains his procedure very much in detail in the appendix of the book
-chapter but no formal implementation has been yet available on the web.
-With this package I introduce two functions that apply the procedure.
+`perccalc` is a direct implementation of the theoretical work of Reardon
+(2011) where it is possible to estimate the difference between two
+percentiles from an ordered categorical variable. More concretely, by
+specifying an ordered categorical variable and a continuous variable,
+this method can estimate differences in the continuous variable between
+percentiles of the ordered categorical variable. This brings forth a
+relevant strategy to contrast ordered categorical variables which
+usually have alternative continuous measures to the percentiles of the
+continuous measures. Moreover, this opens an avenue for calculating
+percentile distributions and percentile differences for ordered
+categorical variables which don’t necessarily have an alternative
+continuous measure such as job occupation classifications. With this
+package I introduce two functions that apply the procedure.
 
 The package has two main functions:
 
@@ -27,9 +35,7 @@ The package has two main functions:
 You can install and load the package with these commands:
 
 ``` r
-# install.packages("perccalc") # for stable version
-library(perccalc)
-
+install.packages("perccalc") # for stable version
 # or
 devtools::install_github("cimentadaj/perccalc") # for development version
 ```
@@ -40,6 +46,7 @@ Suppose we have a dataset with one continuous variable and one
 categorical variable:
 
 ``` r
+library(perccalc)
 library(dplyr)
 library(ggplot2)
 
@@ -58,8 +65,8 @@ percentile differences using both variables.
 
 ``` r
 perc_diff(df, categorical, continuous, percentiles = c(90, 10))
-#>  difference          se 
-#> 80.25118078  0.05981111
+#> difference         se 
+#> 79.9991129  0.1945426
 ```
 
 You can optionally add weights with the `weights` argument.
@@ -67,7 +74,7 @@ You can optionally add weights with the `weights` argument.
 ``` r
 perc_diff(df, categorical, continuous, weights = wt, percentiles = c(90, 10))
 #> difference         se 
-#> 79.8819542  0.4013552
+#> 80.1534474  0.3172118
 ```
 
 On the other hand, the `perc_dist` (short for percentile distribution)
@@ -79,11 +86,11 @@ perc_dist(df, categorical, continuous) %>%
 #> # A tibble: 6 x 3
 #>   percentile estimate std.error
 #>        <int>    <dbl>     <dbl>
-#> 1          1     1.03   0.00839
-#> 2          2     2.06   0.0164 
-#> 3          3     3.08   0.0240 
-#> 4          4     4.11   0.0313 
-#> 5          5     5.13   0.0382 
+#> 1          1    0.961    0.0291
+#> 2          2    1.92     0.0569
+#> 3          3    2.89     0.0834
+#> 4          4    3.85     0.109 
+#> 5          5    4.82     0.133 
 #> # … with 1 more row
 ```
 
