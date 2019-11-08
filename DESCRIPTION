@@ -1,7 +1,7 @@
 Package: perccalc
 Title: Estimate Percentiles from an Ordered Categorical Variable
 Version: 1.0.4
-Authors@R: person("Jorge", "Cimentada", email = "cimentadaj@gmail.com", role = c("aut", "cre"))
+Authors@R: person("Jorge", "Cimentada", email = "cimentadaj@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-5594-1156"))
 Description: An implementation of two functions that estimate values for percentiles from an ordered categorical variable as described by Reardon (2011, isbn:978-0-87154-372-1). One function estimates percentile differences from two percentiles while the other returns the values for every percentile from 1 to 100.
 Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
