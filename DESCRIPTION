@@ -24,6 +24,6 @@ Suggests:
     ggplot2,
     MASS,
     carData,
-    tidyr,
+    tidyr (>= 1.0.0),
     covr
 VignetteBuilder: knitr
