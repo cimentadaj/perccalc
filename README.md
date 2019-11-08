@@ -42,57 +42,98 @@ devtools::install_github("cimentadaj/perccalc") # for development version
 
 ## Usage
 
-Suppose we have a dataset with one continuous variable and one
-categorical variable:
+To look at a real world example, let’s use the data from the General
+Social Survey (GSS). This dataset contains information on the responses
+given by subjects on a vocabulary test together with their age expressed
+in age groups (such as `30-39`, `40-49`, etc…). We’re interested in
+calculating the difference in vocabulary test scores between the old and
+young respondents.
+
+In many scenarios, we could calculate the difference between these
+groups in their vocabulary tests by estimating the mean difference
+between two age groups (for example, ages `20-29` versus ages `60-69`).
+However, in many other settings we’re specifically interested in the
+difference of vocabulary tests by the percentiles of the age variable.
+In particular, this could be of interest for studies looking to contrast
+their results to other studies which have age as a continuous variable.
+In our example, age is a categorical variable so we cannot calculate
+percentiles. The method implemented in this package introduces a
+strategy for calculating percentiles from ordered categories.
+
+Let’s load our packages of interest and limit the GSS data to the year
+1978.
 
 ``` r
 library(perccalc)
 library(dplyr)
 library(ggplot2)
+library(carData)
 
+set.seed(213141)
+data("GSSvocab")
 
-df <-
-  tibble(
-    continuous = rnorm(100) + 1:100,
-    categorical = rep(letters[1:5], each = 20) %>% factor(ordered = TRUE),
-    wt = rnorm(100, mean = 5)
-  )
+gss <- 
+  as_tibble(GSSvocab) %>% 
+  filter(year == "1978") %>% 
+  mutate(weight = sample(1:3, size = nrow(.), replace = TRUE, prob = c(0.1, 0.5, 0.4)),
+         ageGroup = factor(ageGroup, ordered = TRUE)) %>%
+  select(ageGroup, vocab, weight)
 ```
 
-Note that the categorical variable has to be an ordered factor (this is
-a requirement of both functions). For example, `perc_diff` calculates
-percentile differences using both variables.
+Note that the categorical variable (`ageGroup`) has to be an ordered
+factor (this is a requirement of both functions). Moving to the example,
+`perc_diff` calculates the difference in the continuous variable by the
+percentiles of the ordered categorical variable. In our example, this
+would the question of what’s the difference in vocabulary test scores
+between the 90th and 10th percentile of age groups?
 
 ``` r
-perc_diff(df, categorical, continuous, percentiles = c(90, 10))
+perc_diff(gss, ageGroup, vocab, percentiles = c(90, 10))
 #> difference         se 
-#> 79.9991129  0.1945426
+#>  0.2185802  0.3905549
 ```
 
-You can optionally add weights with the `weights` argument.
+It’s about .21 points with a standard error of .39 points. In addittion,
+you can optionally add weights with the `weights` argument.
 
 ``` r
-perc_diff(df, categorical, continuous, weights = wt, percentiles = c(90, 10))
+perc_diff(gss, ageGroup, vocab, percentiles = c(90, 10), weights = weight)
 #> difference         se 
-#> 80.1534474  0.3172118
+#>  0.1760728  0.3775078
 ```
 
 On the other hand, the `perc_dist` (short for percentile distribution)
-allows you to estimate the score for every percentile.
+allows you to estimate the score for every percentile and not limit the
+analysis to only the difference between two percentiles.
 
 ``` r
-perc_dist(df, categorical, continuous) %>%
-  head()
-#> # A tibble: 6 x 3
+
+perc_dist <- perc_dist(gss, ageGroup, vocab)
+perc_dist
+#> # A tibble: 100 x 3
 #>   percentile estimate std.error
 #>        <int>    <dbl>     <dbl>
-#> 1          1    0.961    0.0291
-#> 2          2    1.92     0.0569
-#> 3          3    2.89     0.0834
-#> 4          4    3.85     0.109 
-#> 5          5    4.82     0.133 
-#> # … with 1 more row
+#> 1          1   0.0590    0.0588
+#> 2          2   0.117     0.115 
+#> 3          3   0.173     0.169 
+#> 4          4   0.227     0.220 
+#> 5          5   0.281     0.268 
+#> # … with 95 more rows
 ```
+
+We could visualize this in a more intuitive representation:
+
+``` r
+perc_dist %>%
+  ggplot(aes(percentile, estimate)) +
+  geom_point() +
+  geom_line() +
+  theme_minimal() +
+  labs(x = "Age group percentiles",
+       y = "Vocabulary test scores")
+```
+
+![](README-unnamed-chunk-7-1.png)<!-- -->
 
 This function also allows the use of weights.
 
