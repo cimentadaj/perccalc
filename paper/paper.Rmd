@@ -21,7 +21,7 @@ journal: JOSS
 
 # Summary
 
-Social science research is hampered by the use of categorical variables. This
+Social science research makes extensive use of categorical variables. This
 means that most variables in model definitions are a combination of categorical
 and ordered categorical variables, which sometimes are proxies of continuous
 variables such as income or years of education. The seriousness of this
