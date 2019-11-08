@@ -70,7 +70,7 @@ Currently, `perccalc` implements:
 * Calculating differences in a continuous variable relative to the percentiles
   of an ordered categorical variable
 * Calculating values for a continuous variable relative to the percentiles of an
-  ordered categorical variable (values of a continuous variable for the 0, 10th,
+  ordered categorical variable (values of a continuous variable for the 1th, 10th,
   20th, ..., 100th percentile of the ordered categorical variable)
 * Weight-adjusted estimations for all percentile calculations
 * Provides uncertainty estimates for all calculations which allows the user to
@@ -82,7 +82,7 @@ capabilities in a real world scenario.
 
 # Example
 
-For this example, we will calculate the percentile difference in mathematics
+For this example, we will calculate the percentile difference in Mathematics
 test scores based on the education of the parents for several countries using
 the PISA 2006 and PISA 2012 datasets. Let's load `perccalc` with the packages
 `dplyr` [@dplyr], `tidyr` [@tidyr] and `ggplot2` [@ggplot2] for wrangling and
@@ -180,7 +180,7 @@ perc_dist(data_model = pisa,
 ```
 
 Here we get the complete father's education percentile distribution with the
-test score values in mathematics for each percentile. This can be easily scaled
+test score values in Mathematics for each percentile. This can be easily scaled
 to all country/year combinations with our previous code:
 
 ```{r }
