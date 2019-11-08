@@ -16,7 +16,7 @@
 #' the linear combination of coefficients.
 #' 
 #' @return \code{perc_diff} returns a vector with the percentile difference and
-#' it's associated standard error. \code{perc_diff_df} returns the same but as
+#' its associated standard error. \code{perc_diff_df} returns the same but as
 #' a data frame.
 #' @export
 #'

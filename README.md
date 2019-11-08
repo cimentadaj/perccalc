@@ -11,19 +11,21 @@ coverage](https://codecov.io/gh/cimentadaj/perccalc/branch/master/graph/badge.sv
 
 ## Overview
 
-`perccalc` is a direct implementation of the theoretical work of Reardon
-(2011) where it is possible to estimate the difference between two
-percentiles from an ordered categorical variable. More concretely, by
-specifying an ordered categorical variable and a continuous variable,
-this method can estimate differences in the continuous variable between
-percentiles of the ordered categorical variable. This brings forth a
-relevant strategy to contrast ordered categorical variables which
-usually have alternative continuous measures to the percentiles of the
-continuous measures. Moreover, this opens an avenue for calculating
-percentile distributions and percentile differences for ordered
-categorical variables which don’t necessarily have an alternative
-continuous measure such as job occupation classifications. With this
-package I introduce two functions that apply the procedure.
+`perccalc` is a direct implementation of the theoretical work of
+[Reardon
+(2011)](https://www.russellsage.org/publications/whither-opportunity)
+where it is possible to estimate the difference between two percentiles
+from an ordered categorical variable. More concretely, by specifying an
+ordered categorical variable and a continuous variable, this method can
+estimate differences in the continuous variable between percentiles of
+the ordered categorical variable. This brings forth a relevant strategy
+to contrast ordered categorical variables which usually have alternative
+continuous measures to the percentiles of the continuous measures.
+Moreover, this opens an avenue for calculating percentile distributions
+and percentile differences for ordered categorical variables which don’t
+necessarily have an alternative continuous measure such as job
+occupation classifications. With this package I introduce two functions
+that apply the procedure.
 
 The package has two main functions:
 
@@ -133,7 +135,7 @@ perc_dist %>%
        y = "Vocabulary test scores")
 ```
 
-![](README-unnamed-chunk-7-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-7-1.png)<!-- -->
 
 This function also allows the use of weights.
 
