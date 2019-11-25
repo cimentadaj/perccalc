@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019) (preloaded format=xelatex 2019.10.24)  8 NOV 2019 11:50
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019) (preloaded format=xelatex 2019.10.24)  25 NOV 2019 08:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1132,23 +1132,7 @@ File: se-ascii-print.def 2016/05/16 v1.11 stringenc: Printable ASCII characters
 
 )
 Package hyperref Info: Option `breaklinks' set `true' on input line 150.
-(/home/jorge/.TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
-Package: fancyvrb 2019/01/15
-Style option: `fancyvrb' v3.2a <2019/01/15> (tvz)
-\FV@CodeLineNo=\count445
-\FV@InFile=\read5
-\FV@TabBox=\box69
-\c@FancyVerbLine=\count446
-\FV@StepNumber=\count447
-\FV@OutFile=\write7
-) (/home/jorge/.TinyTeX/texmf-dist/tex/latex/framed/framed.sty
-Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip91
-\fb@frw=\dimen281
-\fb@frh=\dimen282
-\FrameRule=\dimen283
-\FrameSep=\dimen284
-) (/home/jorge/.TinyTeX/texmf-dist/tex/latex/oberdiek/grffile.sty
+(/home/jorge/.TinyTeX/texmf-dist/tex/latex/oberdiek/grffile.sty
 Package: grffile 2017/06/30 v1.18 Extended file name support for graphics (HO)
 Package grffile Info: Option `multidot' is set to `true'.
 Package grffile Info: Option `extendedchars' is set to `false'.
@@ -1160,52 +1144,52 @@ Package biblatex Info: ... file 'english.lbx' found.
 (/home/jorge/.TinyTeX/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 File: english.lbx 2019/08/31 v3.13a biblatex localization (PK/MW)
 )
-\@quotelevel=\count448
-\@quotereset=\count449
+\@quotelevel=\count445
+\@quotereset=\count446
 (./paper.aux)
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 230.
-LaTeX Font Info:    ... okay on input line 230.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 230.
-LaTeX Font Info:    ... okay on input line 230.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 230.
-LaTeX Font Info:    ... okay on input line 230.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 230.
-LaTeX Font Info:    ... okay on input line 230.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 230.
-LaTeX Font Info:    ... okay on input line 230.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 230.
-LaTeX Font Info:    ... okay on input line 230.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 230.
-LaTeX Font Info:    ... okay on input line 230.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 230.
-LaTeX Font Info:    ... okay on input line 230.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 230.
-LaTeX Font Info:    ... okay on input line 230.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 230.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 230.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 190.
+LaTeX Font Info:    ... okay on input line 190.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 190.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 190.
 
 (/home/jorge/.TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 230.
+LaTeX Font Info:    ... okay on input line 190.
 ABD: EveryShipout initializing macros
-\AtBeginShipoutBox=\box70
-Package hyperref Info: Link coloring ON on input line 230.
+\AtBeginShipoutBox=\box69
+Package hyperref Info: Link coloring ON on input line 190.
 (/home/jorge/.TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/home/jorge/.TinyTeX/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count450
+\c@section@level=\count447
 )
-LaTeX Info: Redefining \ref on input line 230.
-LaTeX Info: Redefining \pageref on input line 230.
-LaTeX Info: Redefining \nameref on input line 230.
+LaTeX Info: Redefining \ref on input line 190.
+LaTeX Info: Redefining \pageref on input line 190.
+LaTeX Info: Redefining \nameref on input line 190.
 (./paper.out) (./paper.out)
-\@outlinefile=\write8
-\openout8 = `paper.out'.
+\@outlinefile=\write7
+\openout7 = `paper.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
@@ -1218,8 +1202,8 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'paper.bbl' not found.
 No file paper.bbl.
-Package biblatex Info: Reference section=0 on input line 230.
-Package biblatex Info: Reference segment=0 on input line 230.
+Package biblatex Info: Reference section=0 on input line 190.
+Package biblatex Info: Reference segment=0 on input line 190.
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -1254,24 +1238,24 @@ Package biblatex Info: Reference segment=0 on input line 230.
 * \@reversemargintrue
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 231.
+LaTeX Font Info:    Try loading font information for U+msa on input line 191.
 (/home/jorge/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 231.
+LaTeX Font Info:    Try loading font information for U+msb on input line 191.
 (/home/jorge/.TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
-Package hyperref Warning: Suppressing link with empty target on input line 257.
+Package hyperref Warning: Suppressing link with empty target on input line 217.
 
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 257.
+Package hyperref Warning: Suppressing link with empty target on input line 217.
 
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 257.
+Package hyperref Warning: Suppressing link with empty target on input line 217.
 
 
 File: /usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/re
@@ -1285,64 +1269,38 @@ We now make it that large for the rest of the document.
 This may cause the page layout to be inconsistent, however.
 
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <8> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 320.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 280.
 [1
 
 ]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 356.
 File: /usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/re
 sources/JOSS-logo.png Graphic file (type bmp)
 </usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/resourc
 es/JOSS-logo.png>
 [2]
-File: paper_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-3-1.pdf>
 File: /usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/re
 sources/JOSS-logo.png Graphic file (type bmp)
 </usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/resourc
 es/JOSS-logo.png>
 [3]
-File: /usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/re
-sources/JOSS-logo.png Graphic file (type bmp)
-</usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/resourc
-es/JOSS-logo.png>
-[4]
-File: paper_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-6-1.pdf>
-File: /usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/re
-sources/JOSS-logo.png Graphic file (type bmp)
-</usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/resourc
-es/JOSS-logo.png>
-[5]
-File: /usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/re
-sources/JOSS-logo.png Graphic file (type bmp)
-</usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/resourc
-es/JOSS-logo.png>
-[6]
-File: /usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/re
-sources/JOSS-logo.png Graphic file (type bmp)
-</usr/local/lib/R/site-library/rticles/rmarkdown/templates/joss_article/resourc
-es/JOSS-logo.png>
-[7]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 663.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 663.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 400.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 400.
 (./paper.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 663.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 663.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 400.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 400.
 Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 6B304D0C86DA10E61F81E1FE2E6E062F.
+(rerunfilecheck)             Checksum: 7084D205B2083F390A261E050E16222B.
 Package logreq Info: Writing requests to 'paper.run.xml'.
 \openout1 = `paper.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 42486 strings out of 494894
- 836803 string characters out of 6176922
- 1299096 words of memory out of 5000000
- 45936 multiletter control sequences out of 15000+600000
- 539202 words of font info for 71 fonts, out of 8000000 for 9000
+ 42009 strings out of 494894
+ 829358 string characters out of 6176922
+ 1289142 words of memory out of 5000000
+ 45474 multiletter control sequences out of 15000+600000
+ 539186 words of font info for 69 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 55i,13n,73p,791b,791s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,12n,73p,791b,791s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on paper.pdf (7 pages).
+Output written on paper.pdf (3 pages).
