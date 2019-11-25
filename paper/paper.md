@@ -85,9 +85,7 @@ Currently, `perccalc` implements:
   produce uncertainty intervals or propagate further calculations with these
   uncertainty coefficients
 
----
-
-In summary, `perccalc` offers flexibility and reliability for estimating any
+`perccalc` offers flexibility and reliability for estimating any
 number of percentile differences for ordered categorical variables as well as
 the distribution of percentiles values for an ordered categorical
 variable. Moreover, it provides the standard errors for the estimation which can
