@@ -91,7 +91,7 @@
       <h1>Case study: percentile distributions using the General Social Survey</h1>
                         <h4 class="author">Jorge Cimentada</h4>
             
-            <h4 class="date">2019-11-26</h4>
+            <h4 class="date">2019-11-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/cimentadaj/perccalc/blob/master/vignettes/perc_calculator_example.Rmd"><code>vignettes/perc_calculator_example.Rmd</code></a></small>
       <div class="hidden name"><code>perc_calculator_example.Rmd</code></div>
@@ -139,7 +139,7 @@
 <p>The package only has two functions called <code>perc_diff</code> and <code>perc_dist</code>. They’re very easy to use, we just specify the data, the name of the categorical and continuous variable and the percentile difference we want.</p>
 <p>Let’s put it to use!</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/perc_diff.html">perc_diff</a></span>(gss, ageGroup, vocab, <span class="dt">percentiles =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</a></code></pre></div>
-<pre><code>## Error in category_summary(data_model, categorical_var, continuous_var, : is_ordered_fct is not TRUE</code></pre>
+<pre><code>## Error in category_summary(data_model, categorical_var, continuous_var, : `categorical_var` should be an ordered factor</code></pre>
 <p>I generated that error on purpose to raise a very important requirement of the function: the categorical variable needs to be an ordered factor. This is very important because otherwise we could be calculating percentile differences from categorical variables which have no apparent order such as married, single and widowed.</p>
 <p>We can turn the previous into an ordered factor with the code below.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">gss &lt;-</a>

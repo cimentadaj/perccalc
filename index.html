@@ -95,7 +95,7 @@
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
-<p>Reardon (2011) introduced a very interesting concept in which he calculates percentile differences from ordered categorical variables. He explains his procedure very much in detail in the appendix of the book chapter but no formal implementation has been yet available on the web. With this package I introduce two functions that apply the procedure.</p>
+<p><code>perccalc</code> is a direct implementation of the theoretical work of <a href="https://www.russellsage.org/publications/whither-opportunity">Reardon (2011)</a> where it is possible to estimate the difference between two percentiles from an ordered categorical variable. More concretely, by specifying an ordered categorical variable and a continuous variable, this method can estimate differences in the continuous variable between percentiles of the ordered categorical variable. This brings forth a relevant strategy to contrast ordered categorical variables which usually have alternative continuous measures to the percentiles of the continuous measures. Moreover, this opens an avenue for calculating percentile distributions and percentile differences for ordered categorical variables which don’t necessarily have an alternative continuous measure such as job occupation classifications. With this package I introduce two functions that apply the procedure.</p>
 <p>The package has two main functions:</p>
 <ul>
 <li>
@@ -108,46 +108,62 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install and load the package with these commands:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("perccalc") # for stable version</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(perccalc)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># or</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"cimentadaj/perccalc"</span>) <span class="co"># for development version</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"perccalc"</span>) <span class="co"># for stable version</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># or</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"cimentadaj/perccalc"</span>) <span class="co"># for development version</span></a></code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p>Suppose we have a dataset with one continuous variable and one categorical variable:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">df &lt;-</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="dt">continuous =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">100</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">100</span>,</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">    <span class="dt">categorical =</span> <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>], <span class="dt">each =</span> <span class="dv">20</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="dt">ordered =</span> <span class="ot">TRUE</span>),</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">    <span class="dt">wt =</span> <span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">  )</a></code></pre></div>
-<p>Note that the categorical variable has to be an ordered factor (this is a requirement of both functions). For example, <code>perc_diff</code> calculates percentile differences using both variables.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/perc_diff.html">perc_diff</a></span>(df, categorical, continuous, <span class="dt">percentiles =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt;  difference          se </span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; 80.25118078  0.05981111</span></a></code></pre></div>
-<p>You can optionally add weights with the <code>weights</code> argument.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/perc_diff.html">perc_diff</a></span>(df, categorical, continuous, <span class="dt">weights =</span> wt, <span class="dt">percentiles =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</a>
+<p>To look at a real world example, let’s use the data from the General Social Survey (GSS). This dataset contains information on the responses given by subjects on a vocabulary test together with their age expressed in age groups (such as <code>30-39</code>, <code>40-49</code>, etc…). We’re interested in calculating the difference in vocabulary test scores between the old and young respondents.</p>
+<p>In many scenarios, we could calculate the difference between these groups in their vocabulary tests by estimating the mean difference between two age groups (for example, ages <code>20-29</code> versus ages <code>60-69</code>). However, in many other settings we’re specifically interested in the difference of vocabulary tests by the percentiles of the age variable. In particular, this could be of interest for studies looking to contrast their results to other studies which have age as a continuous variable. In our example, age is a categorical variable so we cannot calculate percentiles. The method implemented in this package introduces a strategy for calculating percentiles from ordered categories.</p>
+<p>Let’s load our packages of interest and limit the GSS data to the year</p>
+<ol><li>
+</li></ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(perccalc)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(carData)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">213141</span>)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"GSSvocab"</span>)</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">gss &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>(GSSvocab) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(year <span class="op">==</span><span class="st"> "1978"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">weight =</span> <span class="kw"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">size =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(.), <span class="dt">replace =</span> <span class="ot">TRUE</span>, <span class="dt">prob =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.4</span>)),</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">         <span class="dt">ageGroup =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(ageGroup, <span class="dt">ordered =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(ageGroup, vocab, weight)</a></code></pre></div>
+<p>Note that the categorical variable (<code>ageGroup</code>) has to be an ordered factor (this is a requirement of both functions). Moving to the example, <code>perc_diff</code> calculates the difference in the continuous variable by the percentiles of the ordered categorical variable. In our example, this would the question of what’s the difference in vocabulary test scores between the 90th and 10th percentile of age groups?</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="reference/perc_diff.html">perc_diff</a></span>(gss, ageGroup, vocab, <span class="dt">percentiles =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; difference         se </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt;  0.2185802  0.3905549</span></a></code></pre></div>
+<p>It’s about .21 points with a standard error of .39 points. In addittion, you can optionally add weights with the <code>weights</code> argument.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="reference/perc_diff.html">perc_diff</a></span>(gss, ageGroup, vocab, <span class="dt">percentiles =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">90</span>, <span class="dv">10</span>), <span class="dt">weights =</span> weight)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; difference         se </span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; 79.8819542  0.4013552</span></a></code></pre></div>
-<p>On the other hand, the <code>perc_dist</code> (short for percentile distribution) allows you to estimate the score for every percentile.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="reference/perc_dist.html">perc_dist</a></span>(df, categorical, continuous) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; # A tibble: 6 x 3</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt;   percentile estimate std.error</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt;        &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; 1          1     1.03   0.00839</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; 2          2     2.06   0.0164 </span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; 3          3     3.08   0.0240 </span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; 4          4     4.11   0.0313 </span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; 5          5     5.13   0.0382 </span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; # … with 1 more row</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;  0.1760728  0.3775078</span></a></code></pre></div>
+<p>On the other hand, the <code>perc_dist</code> (short for percentile distribution) allows you to estimate the score for every percentile and not limit the analysis to only the difference between two percentiles.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">perc_dist &lt;-<span class="st"> </span><span class="kw"><a href="reference/perc_dist.html">perc_dist</a></span>(gss, ageGroup, vocab)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">perc_dist</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; # A tibble: 100 x 3</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt;   percentile estimate std.error</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt;        &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; 1          1   0.0590    0.0588</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; 2          2   0.117     0.115 </span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; 3          3   0.173     0.169 </span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; 4          4   0.227     0.220 </span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; 5          5   0.281     0.268 </span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; # … with 95 more rows</span></a></code></pre></div>
+<p>We could visualize this in a more intuitive representation:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">perc_dist <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(percentile, estimate)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">x =</span> <span class="st">"Age group percentiles"</span>,</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">       <span class="dt">y =</span> <span class="st">"Vocabulary test scores"</span>)</a></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-7-1.png"><!-- --></p>
 <p>This function also allows the use of weights.</p>
 </div>
 <div id="documentation-and-support" class="section level2">
@@ -174,9 +190,8 @@
 <div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 <div class="community">
@@ -194,7 +209,7 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Jorge Cimentada <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Jorge Cimentada <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0001-5594-1156" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
 </ul>
 </div>
 
