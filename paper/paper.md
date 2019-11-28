@@ -57,9 +57,9 @@ classification found in @erikson1979.
 Recently, this method has been growing in usage in education research
 [@reardon2011; @reardon_portilla2016; @bassok2016; @chmielewski2016]. However, the
 technique is not limited to this field alone and can be used essentially in any
-context where percentiles of ordered categorical variables are of interest. One
-example where this would provide useful would be in biomedical research,
-where demographic characteristics such as education categories are common
+context where percentiles of ordered categorical variables are of
+interest. For example, biomedical research frequently involves
+demographic characteristics such as education categories as
 factors for looking at differences between groups.
 
 The field of computational categorical data analysis has a long history in R,
