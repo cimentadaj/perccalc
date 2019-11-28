@@ -21,7 +21,7 @@ journal: JOSS
 
 # Summary
 
-Social science research is hampered by the use of categorical variables. This
+Social science research makes extensive use of categorical variables. This
 means that most variables in model definitions are a combination of categorical
 and ordered categorical variables, which sometimes are proxies of continuous
 variables such as income or years of education. The seriousness of this
@@ -32,7 +32,7 @@ specifically for this type of analysis in social science research [@agresti2010;
 In particular, educational research, where there's a maturing literature on
 calculating inequality gaps, categorical data are essential for estimating
 inequality. For example, the income of a person is often asked in income
-brackets rather than the exact amout of money; researchers would prefer the
+brackets rather than the exact amount of money; researchers would prefer the
 exact amount but to avoid non-response accumulation and privacy concerns, income
 brackets are a partial solution. This solution gives the income information of
 respondents but at the same time in a limited fashion given that we cannot
@@ -85,9 +85,9 @@ Currently, `perccalc` implements:
   produce uncertainty intervals or propagate further calculations with these
   uncertainty coefficients
 
-`perccalc` offers flexibility and reliability for estimating any
-number of percentile differences for ordered categorical variables as well as
-the distribution of percentiles values for an ordered categorical
+`perccalc` offers flexibility and reliability for estimating any number of
+percentile differences for ordered categorical variables as well as the
+distribution of percentiles values for an ordered categorical
 variable. Moreover, it provides the standard errors for the estimation which can
 be used to construct uncertainty intervals. This full-featured implementation
 offers a reliable software to use in serious peer-review research. Researchers
@@ -99,11 +99,10 @@ package particularly reliable.
 The major features (including examples addressing real world problems) of
 `perccalc` are shown in a series of vignettes in the package's website
 (https://cimentadaj.github.io/perccalc/), where there is a direct implementation
-which matches @reardon2011's initial implementation. Additionally, the package
-is hoted on it's own open source repository on Github
+that matches @reardon2011's initial implementation. Additionally, the package
+is hosted on it's own open source repository on Github
 (https://github.com/cimentadaj/perccalc/) and on the official CRAN repository
 (https://cran.r-project.org/web/packages/perccalc/index.html)
-
 
 # Acknowledgements
 

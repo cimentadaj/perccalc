@@ -85,165 +85,9 @@ Currently, `perccalc` implements:
   produce uncertainty intervals or propagate further calculations with these
   uncertainty coefficients
 
-<<<<<<< HEAD
-`perccalc` offers flexibility and reliability for estimating any
-=======
-Below I introduce the reader to one simplified example of `perccalc`'s
-capabilities in a real world scenario.
-
-# Example
-
-For this example, we will calculate the percentile difference in mathematics
-test scores based on the education of the parents for several countries using
-the PISA 2006 and PISA 2012 datasets. Let's load `perccalc` with the packages
-`dplyr` [@dplyr], `tidyr` [@tidyr] and `ggplot2` [@ggplot2] for wrangling and
-visualizing the data:
-
-```{r, message = FALSE}
-library(perccalc)
-library(tidyr)
-library(ggplot2)
-library(dplyr)
-```
-
-`percalc` automatically loads `pisa_2012` and `pisa_2006` which are two datasets
-with all the information that we need. These two datasets have data for Estonia,
-Germany and Spain and contain the average test score in Mathematics for each
-student and their father's education as measured by the international ISCED
-classification. The first thing we have to do is make sure the categories are
-ordered.
-
-```{r setup}
-order_edu <- c("None", "ISCED 1", "ISCED 2",
-               "ISCED 3A, ISCED 4", "ISCED 3B, C",
-               "ISCED 5A, 6", "ISCED 5B")
-
-# Make ordered categories of our categorical variables
-pisa_2006 <-
-  pisa_2006 %>%
-  mutate(father_edu = factor(father_edu, levels = order_edu, ordered = TRUE))
-
-pisa_2012 <-
-  pisa_2012 %>%
-  mutate(father_edu = factor(father_edu, levels = order_edu, ordered = TRUE))
-
-# Merge them together
-pisa <- bind_rows(pisa_2006, pisa_2012)
-```
-
-Once the categories are ordered, `perc_diff` can calculate the percentile
-difference between the 90th and 10th percentile for the complete sample. For
-example:
-
-```{r }
-perc_diff(data_model = pisa,
-          categorical_var = father_edu,
-          continuous_var = avg_math,
-          percentiles = c(90, 10)
-          )
-```
-
-This means that the difference in Mathematics test scores between the 90th and
-10th percentile of father's education is 45 points with a standard error of 14
-points. We can extrapolate this example for each country separately using
-`dplyr::group_by`. Since the result of `perc_diff` is a vector, to be able to
-work seamlessly with `dplyr::group_by` we will use `perc_diff_df` which returns
-a data frame:
-
-```{r }
-cnt_diff <-
-  pisa %>%
-  nest(data = c(-year, -CNT)) %>%
-  mutate(
-    # Look through each year/cnt combination and apply perc_diff_df
-    edu_diff = lapply(data, function(x) {
-      perc_diff_df(data_model = x,
-                   categorical_var = father_edu,
-                   continuous_var = avg_math,
-                   percentiles = c(90, 10))
-    })
-  ) %>%
-  select(-data) %>% 
-  unnest(edu_diff)
-
-title_y_axis <- "90th/10th percentiles gap in Mathematics"
-
-# Plot results
-cnt_diff %>% 
-  ggplot(aes(year, difference, color = CNT, shape = CNT)) +
-  geom_point() +
-  geom_line() +
-  theme_minimal() +
-  scale_y_continuous(name = title_y_axis) +
-  scale_x_continuous(name = "Year")
-```
-
-It looks like Estonia has a much smaller achievement gap relative to Spain and
-Germany but also note that both Germany and Spain have been decreasing their
-inequality.
-
-`percalc` also has the `perc_dist` function which calculates the distribution of
-the percentiles: this is useful for comparing more fine-grained percentiles
-rather than differences:
-
-```{r }
-perc_dist(data_model = pisa,
-          categorical_var = father_edu,
-          continuous_var =  avg_math
-          )
-```
-
-Here we get the complete father's education percentile distribution with the
-test score values in mathematics for each percentile. This can be easily scaled
-to all country/year combinations with our previous code:
-
-```{r }
-cnt_dist <-
-  pisa %>%
-  nest(data = c(-year, -CNT)) %>%
-  mutate(
-    edu_diff = lapply(data, function(x) perc_dist(x, father_edu, avg_math))
-  ) %>%
-  select(-data) %>% 
-  unnest(edu_diff)
-
-cnt_dist
-```
-
-Let's limit the distribution only to the 10th, 20th, 30th... 100th percentile
-and compare for country/years:
-
-```{r }
-cnt_dist %>%
-  mutate(year = as.character(year)) %>% 
-  filter(percentile %in% seq(0, 100, by = 10)) %>%
-  ggplot(aes(x = percentile,
-             y = estimate,
-             color = year,
-             shape = year,
-             group = percentile)) +
-  geom_point() +
-  geom_line(color = "black", alpha = 1/3) +
-  scale_y_continuous(name = "Math test score") +
-  scale_x_continuous(name = "Percentiles from father's education") +
-  scale_color_discrete(name = "Year") +
-  scale_shape_discrete(name = "Year") +
-  facet_wrap(~ CNT) +
-  theme_minimal()
-```
-
-Here the dots indicate the year 2006 and the triangles year 2012, the grey line
-between them indicates the change over time. Here we can see that although
-Germany and Spain are decreasing (as we saw in the plot before), the composition
-of the change is very different: Spain's decrease is big all around the
-distribution whereas Germany's concentrates on the top percentiles.
-
----
-
-In summary, `perccalc` offers flexibility and reliability for estimating any
->>>>>>> 148e1da4fcb03e3298fd99f12abc4bd1ea445090
-number of percentile differences for ordered categorical variables as well as
-the distribution of percentiles values for an ordered categorical
+`perccalc` offers flexibility and reliability for estimating any number of
+percentile differences for ordered categorical variables as well as the
+distribution of percentiles values for an ordered categorical
 variable. Moreover, it provides the standard errors for the estimation which can
 be used to construct uncertainty intervals. This full-featured implementation
 offers a reliable software to use in serious peer-review research. Researchers
@@ -252,23 +96,13 @@ been built by testing it to decimal accuracy to the theoretical model of
 @reardon2011; these tests are continually checked on a weekly basis making the
 package particularly reliable.
 
-<<<<<<< HEAD
 The major features (including examples addressing real world problems) of
 `perccalc` are shown in a series of vignettes in the package's website
 (https://cimentadaj.github.io/perccalc/), where there is a direct implementation
-which matches @reardon2011's initial implementation. Additionally, the package
-is hoted on it's own open source repository on Github
+that matches @reardon2011's initial implementation. Additionally, the package
+is hosted on it's own open source repository on Github
 (https://github.com/cimentadaj/perccalc/) and on the official CRAN repository
-=======
-The major features of `perccalc` are shown in a series of vignettes in the
-package's website (https://cimentadaj.github.io/perccalc/), where there is a
-direct implementation which matches @reardon2011's initial
-implementation. Additionally, the package is hosted on its own open source
-repository on Github (https://github.com/cimentadaj/perccalc/) and on the
-official CRAN repository
->>>>>>> 148e1da4fcb03e3298fd99f12abc4bd1ea445090
 (https://cran.r-project.org/web/packages/perccalc/index.html)
-
 
 # Acknowledgements
 
