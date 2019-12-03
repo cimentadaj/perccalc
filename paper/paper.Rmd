@@ -26,8 +26,8 @@ means that most variables in model definitions are a combination of categorical
 and ordered categorical variables, which sometimes are proxies of continuous
 variables such as income or years of education. The seriousness of this
 phenomena can be best exemplified by the surge and usage of techniques tailored
-specifically for this type of analysis in social science research [@agresti2010;
-@agresti2011].
+specifically for this type of analysis in social science research [@agresti2007;
+@agresti2010].
 
 In particular, educational research, where there's a maturing literature on
 calculating inequality gaps, categorical data are essential for estimating

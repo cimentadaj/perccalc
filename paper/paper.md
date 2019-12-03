@@ -26,16 +26,16 @@ means that most variables in model definitions are a combination of categorical
 and ordered categorical variables, which sometimes are proxies of continuous
 variables such as income or years of education. The seriousness of this
 phenomena can be best exemplified by the surge and usage of techniques tailored
-specifically for this type of analysis in social science research [@agresti2010;
-@agresti2011].
+specifically for this type of analysis in social science research [@agresti2007;
+@agresti2010].
 
-In particular, in educational research, where there is a maturing literature on
+In particular, educational research, where there's a maturing literature on
 calculating inequality gaps, categorical data are essential for estimating
 inequality. For example, the income of a person is often asked in income
 brackets rather than the exact amount of money; researchers would prefer the
 exact amount but to avoid non-response accumulation and privacy concerns, income
 brackets are a partial solution. This solution gives the income information of
-respondents but at the same time in a limited fashion, since we cannot
+respondents but at the same time in a limited fashion given that we cannot
 estimate traditional statistics such as the differences of percentiles from the
 income brackets. One example of this is calculating the gap in cognitive
 abilities between the top (e.g 90th percentiles) and bottom (e.g 10th
@@ -46,23 +46,23 @@ where it is possible to estimate the difference between two percentiles from an
 ordered categorical variable. More concretely, by specifying an ordered
 categorical variable and a continuous variable, this method can estimate
 differences in the continuous variable between percentiles of the ordered
-categorical variable. This provides a meaningful strategy for contrasting ordered
-categorical variables that usually have alternative continuous measures to the
-percentiles of the continuous measures. Moreover, it opens an avenue for
+categorical variable. This bring forth a relevant strategy to contrast ordered
+categorical variables which usually have alternative continuous measures to the
+percentiles of the continuous measures. Moreover, this opens an avenue for
 calculating percentile distributions and percentile differences for ordered
-categorical variables which do not necessarily have an alternative continuous
-measure, such as job occupation classifications. A relevant example is the
-classification found in @erikson1979.
+categorical variables which don't necessarily have an alternative continuous
+measure such as job occupation classifications; one relevant example being the
+classification from @erikson1979.
 
 Recently, this method has been growing in usage in education research
-[@reardon2011; @reardon_portilla2016; @bassok2016; @chmielewski2016]. However, the
+[@reardon2011; @reardon_portilla2016; @bassok2016; @chmielewski2016], yet this
 technique is not limited to this field alone and can be used essentially in any
-context where percentiles of ordered categorical variables are of
-interest. For example, biomedical research frequently involves
-demographic characteristics such as education categories as
+context where percentiles of ordered categorical variables are of interest. One
+example where this would provide useful would be in medicine based research,
+where demographic characteristics such as education categories are common
 factors for looking at differences between groups.
 
-The field of computational categorical data analysis has a long history in R,
+The field of computational categorical data analysis has a long history in R
 with packages addressing small-area estimation for categorical variables
 [@boonstr], missing data imputation [@vanbuuren] and standard generalized models
 for ordinal data [@ordinal]. The `qualvar` package [@gombin] is one attempt to
@@ -71,7 +71,7 @@ of such variables to calculate variation in categorical variables.  Yet despite
 the popularity of categorical-based methods, there is still not an official
 software package that reliably implements and tests Reardon's method in the
 **R** programming language [@rsoftware]; nor in any other programming language,
-that I am aware of.
+that I'm aware of.
 
 Currently, `perccalc` implements:
 
@@ -100,7 +100,7 @@ The major features (including examples addressing real world problems) of
 `perccalc` are shown in a series of vignettes in the package's website
 (https://cimentadaj.github.io/perccalc/), where there is a direct implementation
 that matches @reardon2011's initial implementation. Additionally, the package
-is hosted on its own open source repository on Github
+is hosted on it's own open source repository on Github
 (https://github.com/cimentadaj/perccalc/) and on the official CRAN repository
 (https://cran.r-project.org/web/packages/perccalc/index.html)
 
