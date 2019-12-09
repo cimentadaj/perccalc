@@ -8,6 +8,7 @@ Status](https://travis-ci.org/cimentadaj/perccalc.svg?branch=master)](https://tr
 status](https://ci.appveyor.com/api/projects/status/github/cimentadaj/perccalc?branch=master&svg=true)](https://ci.appveyor.com/project/cimentadaj/perccalc)
 [![Codecov test
 coverage](https://codecov.io/gh/cimentadaj/perccalc/branch/master/graph/badge.svg)](https://codecov.io/gh/cimentadaj/perccalc?branch=master)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.01796/status.svg)](https://doi.org/10.21105/joss.01796)
 
 ## Overview
 
