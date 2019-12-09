@@ -6,11 +6,21 @@
 \title{Calculate percentile differences from an ordered categorical variable
 and a continuous variable.}
 \usage{
-perc_diff(data_model, categorical_var, continuous_var, weights = NULL,
-  percentiles = c(90, 10))
+perc_diff(
+  data_model,
+  categorical_var,
+  continuous_var,
+  weights = NULL,
+  percentiles = c(90, 10)
+)
 
-perc_diff_df(data_model, categorical_var, continuous_var, weights = NULL,
-  percentiles = c(90, 10))
+perc_diff_df(
+  data_model,
+  categorical_var,
+  continuous_var,
+  weights = NULL,
+  percentiles = c(90, 10)
+)
 }
 \arguments{
 \item{data_model}{A data frame with at least the categorical and continuous

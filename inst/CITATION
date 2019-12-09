@@ -1,11 +1,16 @@
 citHeader('To cite perccalc in publications use:')
 
 citEntry(
-  entry    = 'Manual',
-  title    = 'Estimate Percentiles from an Ordered Categorical Variable',
-  author   = 'Jorge Cimentada ',
-  year     = '2019',
-  note     = 'R package version 1.0.3',
-  url      = 'https://cimentadaj.github.io/perccalc/',
-  textVersion = 'Cimentada, Jorge (2019). Estimate Percentiles from an Ordered Categorical Variable R package version 1.0.3.'
+  entry = "Article",
+  doi = {"10.21105/joss.01796"},
+  url = {"https://doi.org/10.21105/joss.01796"},
+  year = {"2019"},
+  publisher = {"The Open Journal"},
+  volume = {"4"},
+  number = {"44"},
+  pages = {"1796"},
+  author = {"Jorge Cimentada"},
+  title = {"perccalc: An R package for estimating percentiles from categorical variables"},
+  journal = {"Journal of Open Source Software"},
+  textVersion = 'Cimentada, (2019). perccalc: An R package for estimating percentiles from categorical variables. Journal of Open Source Software, 4(44), 1796, https://doi.org/10.21105/joss.01796'
 )
