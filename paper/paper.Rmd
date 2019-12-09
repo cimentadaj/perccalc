@@ -29,16 +29,16 @@ phenomena can be best exemplified by the surge and usage of techniques tailored
 specifically for this type of analysis in social science research [@agresti2007;
 @agresti2010].
 
-In particular, educational research, where there's a maturing literature on
+In particular in educational research, where there's a maturing literature on
 calculating inequality gaps, categorical data are essential for estimating
 inequality. For example, the income of a person is often asked in income
 brackets rather than the exact amount of money; researchers would prefer the
 exact amount but to avoid non-response accumulation and privacy concerns, income
 brackets are a partial solution. This solution gives the income information of
-respondents but at the same time in a limited fashion given that we cannot
+respondents but at the same time in a limited fashion, given that we cannot
 estimate traditional statistics such as the differences of percentiles from the
 income brackets. One example of this is calculating the gap in cognitive
-abilities between the top (e.g 90th percentiles) and bottom (e.g 10th
+abilities between the top (e.g., 90th percentiles) and bottom (e.g., 10th
 percentiles) groups in the income distribution.
 
 `perccalc` is a direct implementation of the theoretical work of @reardon2011
@@ -58,7 +58,7 @@ Recently, this method has been growing in usage in education research
 [@reardon2011; @reardon_portilla2016; @bassok2016; @chmielewski2016], yet this
 technique is not limited to this field alone and can be used essentially in any
 context where percentiles of ordered categorical variables are of interest. One
-example where this would provide useful would be in medicine based research,
+example where this would provide useful would be in medicine-based research,
 where demographic characteristics such as education categories are common
 factors for looking at differences between groups.
 
@@ -100,7 +100,7 @@ The major features (including examples addressing real world problems) of
 `perccalc` are shown in a series of vignettes in the package's website
 (https://cimentadaj.github.io/perccalc/), where there is a direct implementation
 that matches @reardon2011's initial implementation. Additionally, the package
-is hosted on it's own open source repository on Github
+is hosted on its own open source repository on Github
 (https://github.com/cimentadaj/perccalc/) and on the official CRAN repository
 (https://cran.r-project.org/web/packages/perccalc/index.html)
 
