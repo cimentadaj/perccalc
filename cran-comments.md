@@ -14,4 +14,4 @@ R CMD check results
 
 - 
 
-Slight changes in vignette
+Minor release for small tweaks

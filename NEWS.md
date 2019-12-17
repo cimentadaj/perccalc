@@ -1,4 +1,8 @@
-# perccalc 1.0.5.9999
+# perccalc 1.0.6.9999
+
+# perccalc 1.0.5
+
+* Correct citation on startup
 
 # perccalc 1.0.4
 
