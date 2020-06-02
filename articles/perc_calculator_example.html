@@ -91,7 +91,7 @@
       <h1 data-toc-skip>Case study: percentile distributions using the General Social Survey</h1>
                         <h4 class="author">Jorge Cimentada</h4>
             
-            <h4 class="date">2020-05-26</h4>
+            <h4 class="date">2020-06-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/cimentadaj/perccalc/blob/master/vignettes/perc_calculator_example.Rmd"><code>vignettes/perc_calculator_example.Rmd</code></a></small>
       <div class="hidden name"><code>perc_calculator_example.Rmd</code></div>
@@ -113,7 +113,7 @@
 <span class="no">gss</span> <span class="kw">&lt;-</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>(<span class="no">GSSvocab</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">year</span> <span class="kw">==</span> <span class="st">'1978'</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">weight</span> <span class="kw">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample.html">sample</a></span>(<span class="fl">1</span>:<span class="fl">3</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">.</span>), <span class="kw">replace</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">prob</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.4</span>))) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">weight</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">1</span>:<span class="fl">3</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">.</span>), <span class="kw">replace</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">prob</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.4</span>))) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">ageGroup</span>, <span class="no">vocab</span>, <span class="no">weight</span>)
 
 
