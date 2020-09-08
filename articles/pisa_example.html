@@ -91,7 +91,7 @@
       <h1 data-toc-skip>Case study: percentile distributions in test scores using PISA</h1>
                         <h4 class="author">Jorge Cimentada</h4>
             
-            <h4 class="date">2020-09-01</h4>
+            <h4 class="date">2020-09-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/cimentadaj/perccalc/blob/master/vignettes/pisa_example.Rmd"><code>vignettes/pisa_example.Rmd</code></a></small>
       <div class="hidden name"><code>pisa_example.Rmd</code></div>
@@ -101,12 +101,15 @@
     
     
 <p><code>perccalc</code> is very flexible and can be used for any ordered categorical variable which has a theoretical order, such as education or occupation. In this case study we will calculate the percentile difference in mathematics test scores based on the education of the parents for several countries using the PISA 2006 and PISA 2012 datasets. Let’s load our packages:</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">perccalc</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyr</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://cimentadaj.github.io/perccalc">perccalc</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://tidyr.tidyverse.org">tidyr</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
+</pre></div>
 <p><code>percalc</code> automatically loads <code>pisa_2012</code> and <code>pisa_2006</code> which are two datasets with all the information that we need. These two datasets have data for Estonia, Germany and Spain and contain the five test scores in Mathematics and the father’s education in the international ISCED classification. The first thing we have to do is make sure the categories are ordered and calculate the average test score for each student.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">order_edu</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"None"</span>,
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">order_edu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"None"</span>,
                <span class="st">"ISCED 1"</span>,
                <span class="st">"ISCED 2"</span>,
                <span class="st">"ISCED 3A, ISCED 4"</span>,
@@ -116,36 +119,40 @@
 
 <span class="co"># Make ordered categories of our categorical variables and calculate avgerage</span>
 <span class="co"># math test scores for each year</span>
-<span class="no">pisa_2012</span> <span class="kw">&lt;-</span>
-  <span class="no">pisa_2012</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">father_edu</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">father_edu</span>, <span class="kw">levels</span> <span class="kw">=</span> <span class="no">order_edu</span>, <span class="kw">ordered</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
+<span class="kw">pisa_2012</span> <span class="op">&lt;-</span>
+  <span class="kw">pisa_2012</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(father_edu = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">father_edu</span>, levels = <span class="kw">order_edu</span>, ordered = <span class="fl">TRUE</span>))
+         
 
-
-<span class="no">pisa_2006</span> <span class="kw">&lt;-</span>
-  <span class="no">pisa_2006</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">father_edu</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">father_edu</span>, <span class="kw">levels</span> <span class="kw">=</span> <span class="no">order_edu</span>, <span class="kw">ordered</span> <span class="kw">=</span> <span class="fl">TRUE</span>))
+<span class="kw">pisa_2006</span> <span class="op">&lt;-</span>
+  <span class="kw">pisa_2006</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(father_edu = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">father_edu</span>, levels = <span class="kw">order_edu</span>, ordered = <span class="fl">TRUE</span>))
 
 
 <span class="co"># Merge them together</span>
-<span class="no">pisa</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="no">pisa_2006</span>, <span class="no">pisa_2012</span>)</pre></body></html></div>
+<span class="kw">pisa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">pisa_2006</span>, <span class="kw">pisa_2012</span>)
+</pre></div>
 <p>Once the categories are ordered, <code>perc_diff</code> can calculate the percentile difference between the 90th and 10th percentile for the complete sample. For example:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span>(<span class="kw">data_model</span> <span class="kw">=</span> <span class="no">pisa</span>,
-          <span class="kw">categorical_var</span> <span class="kw">=</span> <span class="no">father_edu</span>,
-          <span class="kw">continuous_var</span> <span class="kw">=</span> <span class="no">avg_math</span>,
-          <span class="kw">percentiles</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">90</span>, <span class="fl">10</span>))
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span>(data_model = <span class="kw">pisa</span>,
+          categorical_var = <span class="kw">father_edu</span>,
+          continuous_var = <span class="kw">avg_math</span>,
+          percentiles = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">90</span>, <span class="fl">10</span>))
 <span class="co">#&gt; difference         se </span>
-<span class="co">#&gt;   45.07312   14.18308</span></pre></body></html></div>
+<span class="co">#&gt;   45.07312   14.18308</span>
+</pre></div>
 <p>This means that the difference in Mathematics test scores between the 90th and 10th percentile of father education is 45 points with a standard error of 14 points. We can extrapolate this example for each country separately using <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by</a></code>. Since the result of <code>perc_diff</code> is a vector, to be able to work seamlessly with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">dplyr::group_by</a></code> we will use <code>perc_diff_df</code>, which returns the same results but as a data frame:</p>
 <p>With <code>df_wrap</code> we can just pass that to <code><a href="https://tidyr.tidyverse.org/reference/nest.html">tidyr::nest</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate</a></code> and calculate it separetely by year and country:</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r">
-<span class="no">cnt_diff</span> <span class="kw">&lt;-</span>
-  <span class="no">pisa</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="no">year</span>, -<span class="no">CNT</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">edu_diff</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">data</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="../reference/perc_diff.html">perc_diff_df</a></span>(<span class="no">x</span>, <span class="no">father_edu</span>, <span class="no">avg_math</span>, <span class="kw">percentiles</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">90</span>, <span class="fl">10</span>)))) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">data</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">edu_diff</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
 
-<span class="no">cnt_diff</span>
+<span class="kw">cnt_diff</span> <span class="op">&lt;-</span>
+  <span class="kw">pisa</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>(data = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="kw">year</span>, <span class="op">-</span><span class="kw">CNT</span>)) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(edu_diff = <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw">data</span>, <span class="fu">function</span>(<span class="kw">x</span>) <span class="fu"><a href="../reference/perc_diff.html">perc_diff_df</a></span>(<span class="kw">x</span>, <span class="kw">father_edu</span>, <span class="kw">avg_math</span>, percentiles = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">90</span>, <span class="fl">10</span>)))) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span><span class="kw">data</span>) <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="kw">edu_diff</span>)
+
+<span class="kw">cnt_diff</span>
 <span class="co">#&gt; # A tibble: 6 x 4</span>
 <span class="co">#&gt;    year CNT     difference    se</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -154,43 +161,47 @@
 <span class="co">#&gt; 3  2006 Spain         52.6 15.1 </span>
 <span class="co">#&gt; 4  2012 Germany       45.0 27.4 </span>
 <span class="co">#&gt; 5  2012 Spain         40.2 18.2 </span>
-<span class="co">#&gt; 6  2012 Estonia       17.0  9.88</span></pre></body></html></div>
+<span class="co">#&gt; 6  2012 Estonia       17.0  9.88</span>
+</pre></div>
 <p>We can see some big differences between, for example, Estonia and Spain. But even more interesting is plotting this:</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">cnt_diff</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">year</span>, <span class="no">difference</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">CNT</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="no">CNT</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">"Achievement gap in Math between the 90th and \n 10th percentile of father's education"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">"Year"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="kw">cnt_diff</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">year</span>, <span class="kw">difference</span>, group = <span class="kw">CNT</span>, color = <span class="kw">CNT</span>)) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(name = <span class="st">"Achievement gap in Math between the 90th and \n 10th percentile of father's education"</span>) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(name = <span class="st">"Year"</span>)
+</pre></div>
 <p><img src="pisa_example_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>It looks like Estonia has a much smaller achievement gap relative to Spain and Germany but also note that both Germany and Spain have been decreasing their inequality. We can also try different achievement gaps to to explore the distribution:</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r">
+<div class="sourceCode" id="cb6"><pre class="downlit">
+
 <span class="co"># Calculate the gap for the 90/50 gap</span>
-<span class="no">cnt_half</span> <span class="kw">&lt;-</span>
-  <span class="no">pisa</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="no">year</span>, -<span class="no">CNT</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">edu_diff</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">data</span>,
-                           <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="../reference/perc_diff.html">perc_diff_df</a></span>(<span class="no">x</span>, <span class="no">father_edu</span>, <span class="no">avg_math</span>, <span class="kw">percentiles</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">90</span>, <span class="fl">50</span>)))) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">data</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">edu_diff</span>)
+<span class="kw">cnt_half</span> <span class="op">&lt;-</span>
+  <span class="kw">pisa</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>(data = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="kw">year</span>, <span class="op">-</span><span class="kw">CNT</span>)) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(edu_diff = <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw">data</span>,
+                           <span class="fu">function</span>(<span class="kw">x</span>) <span class="fu"><a href="../reference/perc_diff.html">perc_diff_df</a></span>(<span class="kw">x</span>, <span class="kw">father_edu</span>, <span class="kw">avg_math</span>, percentiles = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">90</span>, <span class="fl">50</span>)))) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span><span class="kw">data</span>) <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="kw">edu_diff</span>)
 
 <span class="co"># Calculate the gap for the 50/10 gap</span>
-<span class="no">cnt_bottom</span> <span class="kw">&lt;-</span>
-  <span class="no">pisa</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="no">year</span>, -<span class="no">CNT</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">edu_diff</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">data</span>,
-                           <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="../reference/perc_diff.html">perc_diff_df</a></span>(<span class="no">x</span>, <span class="no">father_edu</span>, <span class="no">avg_math</span>, <span class="kw">percentiles</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">50</span>, <span class="fl">10</span>)))) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">data</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">edu_diff</span>)
+<span class="kw">cnt_bottom</span> <span class="op">&lt;-</span>
+  <span class="kw">pisa</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>(data = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="kw">year</span>, <span class="op">-</span><span class="kw">CNT</span>)) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(edu_diff = <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw">data</span>,
+                           <span class="fu">function</span>(<span class="kw">x</span>) <span class="fu"><a href="../reference/perc_diff.html">perc_diff_df</a></span>(<span class="kw">x</span>, <span class="kw">father_edu</span>, <span class="kw">avg_math</span>, percentiles = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">50</span>, <span class="fl">10</span>)))) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span><span class="kw">data</span>) <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="kw">edu_diff</span>)
 
-<span class="no">cnt_diff</span>$<span class="no">type</span> <span class="kw">&lt;-</span> <span class="st">"90/10"</span>
-<span class="no">cnt_half</span>$<span class="no">type</span> <span class="kw">&lt;-</span> <span class="st">"90/50"</span>
-<span class="no">cnt_bottom</span>$<span class="no">type</span> <span class="kw">&lt;-</span> <span class="st">"50/10"</span>
+<span class="kw">cnt_diff</span><span class="op">$</span><span class="kw">type</span> <span class="op">&lt;-</span> <span class="st">"90/10"</span>
+<span class="kw">cnt_half</span><span class="op">$</span><span class="kw">type</span> <span class="op">&lt;-</span> <span class="st">"90/50"</span>
+<span class="kw">cnt_bottom</span><span class="op">$</span><span class="kw">type</span> <span class="op">&lt;-</span> <span class="st">"50/10"</span>
 
-<span class="no">final_cnt</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="no">cnt_diff</span>, <span class="no">cnt_half</span>, <span class="no">cnt_bottom</span>)
-<span class="no">final_cnt</span>$<span class="no">type</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">final_cnt</span>$<span class="no">type</span>, <span class="kw">levels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"90/10"</span>, <span class="st">"90/50"</span>, <span class="st">"50/10"</span>))
-<span class="no">final_cnt</span>
+<span class="kw">final_cnt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="kw">cnt_diff</span>, <span class="kw">cnt_half</span>, <span class="kw">cnt_bottom</span>)
+<span class="kw">final_cnt</span><span class="op">$</span><span class="kw">type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">final_cnt</span><span class="op">$</span><span class="kw">type</span>, levels = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"90/10"</span>, <span class="st">"90/50"</span>, <span class="st">"50/10"</span>))
+<span class="kw">final_cnt</span>
 <span class="co">#&gt; # A tibble: 18 x 5</span>
 <span class="co">#&gt;     year CNT     difference    se type </span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;</span>
@@ -211,20 +222,24 @@
 <span class="co">#&gt; 15  2006 Spain        42.4  13.9  50/10</span>
 <span class="co">#&gt; 16  2012 Germany      62.4  26.1  50/10</span>
 <span class="co">#&gt; 17  2012 Spain        43.6  17.1  50/10</span>
-<span class="co">#&gt; 18  2012 Estonia      34.0   9.91 50/10</span></pre></body></html></div>
+<span class="co">#&gt; 18  2012 Estonia      34.0   9.91 50/10</span>
+</pre></div>
 <p>Having this dataframe we can visualize all the three gaps in a very intuitive fashion:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">final_cnt</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">year</span>, <span class="no">difference</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">CNT</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="no">CNT</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">"Achievement gap in Math between the 90th and \n 10th percentile of father's education"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">"Year"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(~ <span class="no">type</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="kw">final_cnt</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">year</span>, <span class="kw">difference</span>, group = <span class="kw">CNT</span>, color = <span class="kw">CNT</span>)) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(name = <span class="st">"Achievement gap in Math between the 90th and \n 10th percentile of father's education"</span>) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(name = <span class="st">"Year"</span>) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span> <span class="kw">type</span>)
+</pre></div>
 <p><img src="pisa_example_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>It seems that the <code>90/50</code> and <code>50/10</code> differences are not symmetrical.</p>
 <p><code>percalc</code> also has a <code>perc_dist</code> function which calculates the distribution of the percentiles, so we can compare more finegrained percentiles rather than differences:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/perc_dist.html">perc_dist</a></span>(<span class="no">pisa</span>, <span class="no">father_edu</span>, <span class="no">avg_math</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="fu"><a href="../reference/perc_dist.html">perc_dist</a></span>(<span class="kw">pisa</span>, <span class="kw">father_edu</span>, <span class="kw">avg_math</span>)
 <span class="co">#&gt; # A tibble: 100 x 3</span>
 <span class="co">#&gt;    percentile estimate std.error</span>
 <span class="co">#&gt;         &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span>
@@ -238,16 +253,18 @@
 <span class="co">#&gt;  8          8    7.64      11.1 </span>
 <span class="co">#&gt;  9          9    8.71      12.2 </span>
 <span class="co">#&gt; 10         10    9.80      13.2 </span>
-<span class="co">#&gt; # … with 90 more rows</span></pre></body></html></div>
+<span class="co">#&gt; # … with 90 more rows</span>
+</pre></div>
 <p>Here we get the complete percentile distribution with the test score in mathematics for each percentile. This can be easily scaled to all country/year combinations with our previous code:</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">cnt_dist</span> <span class="kw">&lt;-</span>
-  <span class="no">pisa</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(-<span class="no">year</span>, -<span class="no">CNT</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">edu_diff</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">data</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="../reference/perc_dist.html">perc_dist</a></span>(<span class="no">x</span>, <span class="no">father_edu</span>, <span class="no">avg_math</span>))) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(-<span class="no">data</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">edu_diff</span>)
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="kw">cnt_dist</span> <span class="op">&lt;-</span>
+  <span class="kw">pisa</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>(data = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="kw">year</span>, <span class="op">-</span><span class="kw">CNT</span>)) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(edu_diff = <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="kw">data</span>, <span class="fu">function</span>(<span class="kw">x</span>) <span class="fu"><a href="../reference/perc_dist.html">perc_dist</a></span>(<span class="kw">x</span>, <span class="kw">father_edu</span>, <span class="kw">avg_math</span>))) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="op">-</span><span class="kw">data</span>) <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="kw">edu_diff</span>)
 
-<span class="no">cnt_dist</span>
+<span class="kw">cnt_dist</span>
 <span class="co">#&gt; # A tibble: 600 x 5</span>
 <span class="co">#&gt;     year CNT     percentile estimate std.error</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;        &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span>
@@ -261,20 +278,23 @@
 <span class="co">#&gt;  8  2006 Estonia          8    5.70      2.74 </span>
 <span class="co">#&gt;  9  2006 Estonia          9    6.48      3.02 </span>
 <span class="co">#&gt; 10  2006 Estonia         10    7.28      3.30 </span>
-<span class="co">#&gt; # … with 590 more rows</span></pre></body></html></div>
+<span class="co">#&gt; # … with 590 more rows</span>
+</pre></div>
 <p>Let’s limit the distribution only to the 10th, 20th, 30th… 100th percentile an compare for country/years:</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r">
-<span class="no">cnt_dist</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">year</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="no">year</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">percentile</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>, <span class="fl">100</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">10</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">percentile</span>, <span class="no">estimate</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="no">year</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">percentile</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="kw">color</span> <span class="kw">=</span> <span class="st">"black"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">"Math test score"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">"Percentiles from father's education"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_color_discrete</a></span>(<span class="kw">name</span> <span class="kw">=</span> <span class="st">"Year"</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(~ <span class="no">CNT</span>) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>()</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+
+<span class="kw">cnt_dist</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(year = <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(<span class="kw">year</span>)) <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">percentile</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>, <span class="fl">100</span>, by = <span class="fl">10</span>)) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">percentile</span>, <span class="kw">estimate</span>, color = <span class="kw">year</span>, group = <span class="kw">percentile</span>)) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(color = <span class="st">"black"</span>) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(name = <span class="st">"Math test score"</span>) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(name = <span class="st">"Percentiles from father's education"</span>) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html">scale_color_discrete</a></span>(name = <span class="st">"Year"</span>) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span> <span class="kw">CNT</span>) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>()
+</pre></div>
 <p><img src="pisa_example_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Here the red dots indicate the year 2006 and the bluish dots year 2012, the black line between them indicates the change over time. Here we can see that although Germany and Spain are decreasing (as we saw in the plot before), the composition of the change is very different: Spain’s decrease is big all around the distribution whereas Germany’s concentrate on the top percentiles.</p>
 <p>This type of analysis serves well to disentangle and decompose distributions of ordered categorical. This vignette looked to show the power of this techniqe and how it can be used in practically any setting with an ordered categorical variable and a continuous variable.</p>
@@ -315,7 +335,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

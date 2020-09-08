@@ -108,9 +108,11 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install and load the package with these commands:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"perccalc"</span>) <span class="co"># for stable version</span>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"perccalc"</span>) <span class="co"># for stable version</span>
 <span class="co"># or</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"cimentadaj/perccalc"</span>) <span class="co"># for development version</span></pre></div>
+<span class="kw">devtools</span>::<span class="fu">install_github</span>(<span class="st">"cimentadaj/perccalc"</span>) <span class="co"># for development version</span>
+</pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -120,32 +122,39 @@
 <p>Let’s load our packages of interest and limit the GSS data to the year</p>
 <ol><li>
 </li></ol>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">perccalc</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">carData</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://cimentadaj.github.io/perccalc">perccalc</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://r-forge.r-project.org/projects/car">carData</a></span>)
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">213141</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"GSSvocab"</span>)
 
-<span class="no">gss</span> <span class="kw">&lt;-</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>(<span class="no">GSSvocab</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">year</span> <span class="kw">==</span> <span class="st">"1978"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">weight</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">1</span>:<span class="fl">3</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">.</span>), <span class="kw">replace</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">prob</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.4</span>)),
-         <span class="kw">ageGroup</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="no">ageGroup</span>, <span class="kw">ordered</span> <span class="kw">=</span> <span class="fl">TRUE</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">ageGroup</span>, <span class="no">vocab</span>, <span class="no">weight</span>)</pre></div>
+<span class="kw">gss</span> <span class="op">&lt;-</span> 
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span>(<span class="kw">GSSvocab</span>) <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw">year</span> <span class="op">==</span> <span class="st">"1978"</span>) <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(weight = <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, size = <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">.</span>), replace = <span class="fl">TRUE</span>, prob = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.4</span>)),
+         ageGroup = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">ageGroup</span>, ordered = <span class="fl">TRUE</span>)) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="kw">ageGroup</span>, <span class="kw">vocab</span>, <span class="kw">weight</span>)
+</pre></div>
 <p>Note that the categorical variable (<code>ageGroup</code>) has to be an ordered factor (this is a requirement of both functions). Moving to the example, <code>perc_diff</code> calculates the difference in the continuous variable by the percentiles of the ordered categorical variable. In our example, this would the question of what’s the difference in vocabulary test scores between the 90th and 10th percentile of age groups?</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="reference/perc_diff.html">perc_diff</a></span>(<span class="no">gss</span>, <span class="no">ageGroup</span>, <span class="no">vocab</span>, <span class="kw">percentiles</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">90</span>, <span class="fl">10</span>))
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="reference/perc_diff.html">perc_diff</a></span>(<span class="kw">gss</span>, <span class="kw">ageGroup</span>, <span class="kw">vocab</span>, percentiles = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">90</span>, <span class="fl">10</span>))
 <span class="co">#&gt; difference         se </span>
-<span class="co">#&gt;  0.2185802  0.3905549</span></pre></div>
+<span class="co">#&gt;  0.2185802  0.3905549</span>
+</pre></div>
 <p>It’s about .21 points with a standard error of .39 points. In addittion, you can optionally add weights with the <code>weights</code> argument.</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="reference/perc_diff.html">perc_diff</a></span>(<span class="no">gss</span>, <span class="no">ageGroup</span>, <span class="no">vocab</span>, <span class="kw">percentiles</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">90</span>, <span class="fl">10</span>), <span class="kw">weights</span> <span class="kw">=</span> <span class="no">weight</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="reference/perc_diff.html">perc_diff</a></span>(<span class="kw">gss</span>, <span class="kw">ageGroup</span>, <span class="kw">vocab</span>, percentiles = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">90</span>, <span class="fl">10</span>), weights = <span class="kw">weight</span>)
 <span class="co">#&gt; difference         se </span>
-<span class="co">#&gt;  0.1760728  0.3775078</span></pre></div>
+<span class="co">#&gt;  0.1760728  0.3775078</span>
+</pre></div>
 <p>On the other hand, the <code>perc_dist</code> (short for percentile distribution) allows you to estimate the score for every percentile and not limit the analysis to only the difference between two percentiles.</p>
-<div class="sourceCode" id="cb5"><pre class="r">
-<span class="no">perc_dist</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/perc_dist.html">perc_dist</a></span>(<span class="no">gss</span>, <span class="no">ageGroup</span>, <span class="no">vocab</span>)
-<span class="no">perc_dist</span>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+
+<span class="kw">perc_dist</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/perc_dist.html">perc_dist</a></span>(<span class="kw">gss</span>, <span class="kw">ageGroup</span>, <span class="kw">vocab</span>)
+<span class="kw">perc_dist</span>
 <span class="co">#&gt; # A tibble: 100 x 3</span>
 <span class="co">#&gt;   percentile estimate std.error</span>
 <span class="co">#&gt;        &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;</span>
@@ -154,15 +163,18 @@
 <span class="co">#&gt; 3          3   0.173     0.169 </span>
 <span class="co">#&gt; 4          4   0.227     0.220 </span>
 <span class="co">#&gt; 5          5   0.281     0.268 </span>
-<span class="co">#&gt; # … with 95 more rows</span></pre></div>
+<span class="co">#&gt; # … with 95 more rows</span>
+</pre></div>
 <p>We could visualize this in a more intuitive representation:</p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="no">perc_dist</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">percentile</span>, <span class="no">estimate</span>)) +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"Age group percentiles"</span>,
-       <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Vocabulary test scores"</span>)</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">perc_dist</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">percentile</span>, <span class="kw">estimate</span>)) <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>() <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(x = <span class="st">"Age group percentiles"</span>,
+       y = <span class="st">"Vocabulary test scores"</span>)
+</pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-7-1.png"><!-- --></p>
 <p>This function also allows the use of weights.</p>
 </div>
@@ -232,7 +244,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>

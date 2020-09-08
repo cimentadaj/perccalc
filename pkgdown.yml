@@ -1,9 +1,6 @@
 pandoc: '2.2'
-pkgdown: 1.5.1
+pkgdown: 1.6.0
 pkgdown_sha: ~
-articles:
-  perc_calculator_example: perc_calculator_example.html
-  perc_warning_example: perc_warning_example.html
-  pisa_example: pisa_example.html
-last_built: 2020-09-01T18:19Z
+articles: []
+last_built: 2020-09-08T18:14Z
 
