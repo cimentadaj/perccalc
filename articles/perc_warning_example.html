@@ -91,7 +91,7 @@
       <h1 data-toc-skip>Warning message with perccalc package</h1>
                         <h4 class="author">Jorge Cimentada</h4>
             
-            <h4 class="date">2020-09-22</h4>
+            <h4 class="date">2020-09-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/cimentadaj/perccalc/blob/master/vignettes/perc_warning_example.Rmd"><code>vignettes/perc_warning_example.Rmd</code></a></small>
       <div class="hidden name"><code>perc_warning_example.Rmd</code></div>
@@ -103,22 +103,20 @@
 <p>While the other vignette shows you how to use <code>perccalc</code> appropriately, there are instances where there’s just too few categories to estimate percentiles properly. Imagine estimating a distribution of <code>1:100</code> percentiles with only three ordered categories, it just sounds too far fetched.</p>
 <p>Let’s load our packages.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://cimentadaj.github.io/perccalc">perccalc</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://dplyr.tidyverse.org">dplyr</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
-</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cimentadaj.github.io/perccalc/">perccalc</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></pre></div>
 <p>For example, take the <code>survey</code> data on smoking habits.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">smoking_data</span> <span class="op">&lt;-</span>
-  <span class="kw">MASS</span>::<span class="kw"><a href="https://rdrr.io/pkg/MASS/man/survey.html">survey</a></span> <span class="op">%&gt;%</span> <span class="co"># you will need to install the MASS package</span>
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span>() <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="kw">Sex</span>, <span class="kw">Smoke</span>, <span class="kw">Pulse</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span>(
-    gender = <span class="kw">Sex</span>,
-    smoke = <span class="kw">Smoke</span>,
-    pulse_rate = <span class="kw">Pulse</span>
-  )
-</pre></div>
+<span class="va">smoking_data</span> <span class="op">&lt;-</span>
+  <span class="fu">MASS</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/MASS/man/survey.html">survey</a></span> <span class="op">%&gt;%</span> <span class="co"># you will need to install the MASS package</span>
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">Sex</span>, <span class="va">Smoke</span>, <span class="va">Pulse</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>
+    gender <span class="op">=</span> <span class="va">Sex</span>,
+    smoke <span class="op">=</span> <span class="va">Smoke</span>,
+    pulse_rate <span class="op">=</span> <span class="va">Pulse</span>
+  <span class="op">)</span></pre></div>
 <p>The final results is this dataset:</p>
 <pre><code>## # A tibble: 237 x 3
 ##    gender smoke pulse_rate
@@ -136,14 +134,13 @@
 ## # … with 227 more rows</code></pre>
 <p>Note that there’s only four categories in the <code>smoke</code> variable. Let’s try to estimate the percentile difference.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">smoking_data</span> <span class="op">&lt;-</span>
-  <span class="kw">smoking_data</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(smoke = <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw">smoke</span>,
-                        levels = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Never"</span>, <span class="st">"Occas"</span>, <span class="st">"Regul"</span>, <span class="st">"Heavy"</span>),
-                        ordered = <span class="fl">TRUE</span>))
+<span class="va">smoking_data</span> <span class="op">&lt;-</span>
+  <span class="va">smoking_data</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>smoke <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">smoke</span>,
+                        levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Never"</span>, <span class="st">"Occas"</span>, <span class="st">"Regul"</span>, <span class="st">"Heavy"</span><span class="op">)</span>,
+                        ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span>(<span class="kw">smoking_data</span>, <span class="kw">smoke</span>, <span class="kw">pulse_rate</span>)
-</pre></div>
+<span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">smoking_data</span>, <span class="va">smoke</span>, <span class="va">pulse_rate</span><span class="op">)</span></pre></div>
 <pre><code>## Warning in perc_diff_(data_model = data_model, categorical_var =
 ## categorical_var, : Too few categories in categorical variable to estimate the
 ## variance-covariance matrix and standard errors. Proceeding without estimated
@@ -152,9 +149,8 @@
 ##   390.6092         NA</code></pre>
 <p><code>perc_diff</code> returns the estimated coefficient but also warns you that it’s difficult for the function to estimate the standard error. This happens similarly for <code>perc_dist</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../reference/perc_dist.html">perc_dist</a></span>(<span class="kw">smoking_data</span>, <span class="kw">smoke</span>, <span class="kw">pulse_rate</span>) <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>()
-</pre></div>
+<span class="fu"><a href="../reference/perc_dist.html">perc_dist</a></span><span class="op">(</span><span class="va">smoking_data</span>, <span class="va">smoke</span>, <span class="va">pulse_rate</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>## Warning in perc_dist(smoking_data, smoke, pulse_rate): Too few categories in
 ## categorical variable to estimate the variance-covariance matrix and standard
 ## errors. Proceeding without estimated standard errors but perhaps you should
