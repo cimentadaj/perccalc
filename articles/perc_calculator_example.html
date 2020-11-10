@@ -85,13 +85,14 @@
 
       
 
-      </header><div class="row">
+      </header><link href="perc_calculator_example_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="perc_calculator_example_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Case study: percentile distributions using the General Social Survey</h1>
                         <h4 class="author">Jorge Cimentada</h4>
             
-            <h4 class="date">2020-09-29</h4>
+            <h4 class="date">2020-11-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/cimentadaj/perccalc/blob/master/vignettes/perc_calculator_example.Rmd"><code>vignettes/perc_calculator_example.Rmd</code></a></small>
       <div class="hidden name"><code>perc_calculator_example.Rmd</code></div>
@@ -103,13 +104,13 @@
 <p>Reardon (2011) introduced a very interesting concept in which he calculates percentile differences from ordered categorical variables. He explains his procedure very much in detail in the appendix of the book chapter but no formal implementation has been yet available on the web. With this package I introduce a function that applies the procedure, following a step-by-step Stata script that Sean Reardon kindly sent me.</p>
 <p>In this vignette I show you how to use the function and match the results to the Stata code provided by Reardon himself.</p>
 <p>We’ll be using a real world data set, the General Social Survey, that surveys American citizens on attitudes, behaviors and attributes. For this example we’ll need the packages below.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/car/">carData</a></span><span class="op">)</span></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/car/">carData</a></span><span class="op">)</span></code></pre></div>
 <p>Let’s prepare the data.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">213141</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">213141</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"GSSvocab"</span><span class="op">)</span>
 
 <span class="va">gss</span> <span class="op">&lt;-</span> 
@@ -119,7 +120,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ageGroup</span>, <span class="va">vocab</span>, <span class="va">weight</span><span class="op">)</span>
 
 
-<span class="va">gss</span></pre></div>
+<span class="va">gss</span></code></pre></div>
 <pre><code>## # A tibble: 1,532 x 3
 ##    ageGroup vocab weight
 ##    &lt;fct&gt;    &lt;dbl&gt;  &lt;int&gt;
@@ -136,40 +137,40 @@
 ## # … with 1,522 more rows</code></pre>
 <p>This is the minimum dataset that the function will accept. This means that it needs to have at least one categorical variable (<code>ageGroup</code>) and a continuous variable (<code>vocab</code>) (the vector of weights is optional). The first variable is the typical age variable but asked in age brackets rather than in a continuous fashion. The second one measures the number of words out of 10 correct on a vocabulary test.</p>
 <p>The package is called <code>perccalc</code>, short for percentile calculator and we can install and load it with this code:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"cimentadaj/perccalc"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cimentadaj.github.io/perccalc/">perccalc</a></span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"cimentadaj/perccalc"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cimentadaj.github.io/perccalc/">perccalc</a></span><span class="op">)</span></code></pre></div>
 <p>The package only has two functions called <code>perc_diff</code> and <code>perc_dist</code>. They’re very easy to use, we just specify the data, the name of the categorical and continuous variable and the percentile difference we want.</p>
 <p>Let’s put it to use!</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Error in category_summary(data_model, categorical_var, continuous_var, : `categorical_var` should be an ordered factor</code></pre>
 <p>I generated that error on purpose to raise a very important requirement of the function: the categorical variable needs to be an ordered factor. This is very important because otherwise we could be calculating percentile differences from categorical variables which have no apparent order such as married, single and widowed.</p>
 <p>We can turn the previous into an ordered factor with the code below.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="va">gss</span> <span class="op">&lt;-</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">gss</span> <span class="op">&lt;-</span>
   <span class="va">gss</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ageGroup <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">ageGroup</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ageGroup <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">ageGroup</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Now it’ll work.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## difference         se 
 ##  0.2185802  0.3905549</code></pre>
 <p>We can play around with other percentiles</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## difference         se 
 ##  0.8618113  0.3403813</code></pre>
 <p>And we can add a vector of weights</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, <span class="va">weight</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, <span class="va">weight</span><span class="op">)</span></code></pre></div>
 <pre><code>## difference         se 
 ##  0.1760728  0.3775078</code></pre>
 <p>Now, how are we sure that these estimates are as accurate as the Reardon (2011) implementation? We can compare the Stata output using this data set.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="co"># Saving the dataset to a path</span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Saving the dataset to a path</span>
 <span class="va">gss</span> <span class="op">%&gt;%</span>
-  <span class="fu">write_dta</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"C:\\Users\\cimentadaj\\Downloads\\gss_data.dta"</span>, version <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></pre></div>
+  <span class="fu">write_dta</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"C:\\Users\\cimentadaj\\Downloads\\gss_data.dta"</span>, version <span class="op">=</span> <span class="fl">13</span><span class="op">)</span></code></pre></div>
 <p>Running the code below using the <code>gss_data.dta</code>..</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="op">*--------</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">use <span class="st">"/Users/cimentadaj/Downloads/gss_data.dta"</span>, clear</a>
@@ -252,14 +253,14 @@
 <a class="sourceLine" id="cb15-79" data-line-number="79">    di <span class="st">"`hi_p'-`lo_p' gap:     `diff`hi_p'`lo_p''"</span></a>
 <a class="sourceLine" id="cb15-80" data-line-number="80">    di <span class="st">"se(`hi_p'-`lo_p' gap): `se`hi_p'`lo_p''"</span></a></code></pre></div>
 <p>I get that the 90/10 difference is <code>0.1760</code> with a standard error of <code>0.377</code>. Does it sound familiar?</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, <span class="va">weight</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, <span class="va">weight</span><span class="op">)</span></code></pre></div>
 <pre><code>## difference         se 
 ##  0.1760728  0.3775078</code></pre>
 <p>Finally, there’s <code>perc_dist</code> that shares a lot of similarity with <code>perc_diff</code>. It calculates the estimate for every percentile. You can use this to perform your own analysis. For example,</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="../reference/perc_dist.html">perc_dist</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/perc_dist.html">perc_dist</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 3
 ##   percentile estimate std.error
 ##        &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;
@@ -270,29 +271,29 @@
 ## 5          5   0.281     0.268 
 ## 6          6   0.333     0.315</code></pre>
 <p>We can also add the optional set of weights and graph it in a more convenient way.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="va">gss</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">gss</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/perc_dist.html">perc_dist</a></span><span class="op">(</span><span class="va">ageGroup</span>, <span class="va">vocab</span>, <span class="va">weight</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ci_low <span class="op">=</span> <span class="va">estimate</span> <span class="op">-</span> <span class="fl">1.96</span> <span class="op">*</span> <span class="va">std.error</span>,
          ci_hi <span class="op">=</span> <span class="va">estimate</span> <span class="op">+</span> <span class="fl">1.96</span> <span class="op">*</span> <span class="va">std.error</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">percentile</span>, <span class="va">estimate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">ci_low</span>, ymax <span class="op">=</span> <span class="va">ci_hi</span><span class="op">)</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">ci_low</span>, ymax <span class="op">=</span> <span class="va">ci_hi</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="perc_calculator_example_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Please note that for calculating the difference between two percentiles it is more accurate to use the <code>perc_diff</code> function. The <code>perc_diff</code> function calculates the difference through a linear combination of coefficients.</p>
 <p>For example:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="fu"><a href="../reference/perc_dist.html">perc_dist</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, <span class="va">weight</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/perc_dist.html">perc_dist</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, <span class="va">weight</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">percentile</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>diff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">estimate</span><span class="op">)</span>,
-            se_diff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">std.error</span><span class="op">)</span><span class="op">)</span></pre></div>
+            se_diff <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">std.error</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##    diff se_diff
 ##   &lt;dbl&gt;   &lt;dbl&gt;
 ## 1 0.176   0.312</code></pre>
 <p>compared to</p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, <span class="va">weight</span>, percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/perc_diff.html">perc_diff</a></span><span class="op">(</span><span class="va">gss</span>, <span class="va">ageGroup</span>, <span class="va">vocab</span>, <span class="va">weight</span>, percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">90</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## difference         se 
 ##  0.1760728  0.3775078</code></pre>
 <p>Note how the coefficients are the same but the standard error is different.</p>
